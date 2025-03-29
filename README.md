@@ -18,6 +18,7 @@ STILL TESTING - if this line is still here this repo is still WIP for use even a
 ---
 
 Watch NixOS related videos on my [YouTube channel](https://www.youtube.com/@Emergent_Mind).
+Chat with me directly on our [Discord server](https://discord.gg/XTFg57xGxC).
 
 ## Secrets Management
 
