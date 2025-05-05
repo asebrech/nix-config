@@ -25,9 +25,8 @@
         name: disk: swapSize:
         (
           let
-            diskSpecPath =
-              ../hosts/common/disks/btrfs-disk.nix;
-         in
+            diskSpecPath = ../hosts/common/disks/btrfs-disk.nix;
+          in
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             specialArgs = minimalSpecialArgs;

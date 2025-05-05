@@ -9,17 +9,18 @@ let
   hostSpec = config.hostSpec;
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 
-  # Decrypt password to /run/secrets-for-users/ so it can be used to create the user
-  sopsHashedPasswordFile = lib.optionalString (
-    !config.hostSpec.isMinimal
-  ) config.sops.secrets."passwords/${hostSpec.username}".path;
 in
+# Decrypt password to /run/secrets-for-users/ so it can be used to create the user
+# sopsHashedPasswordFile = lib.optionalString (
+#   !config.hostSpec.isMinimal
+# ) config.sops.secrets."passwords/${hostSpec.username}".path;
 {
   users.mutableUsers = false; # Only allow declarative credentials; Required for password to be set via sops during system activation!
   users.users.${hostSpec.username} = {
     home = "/home/${hostSpec.username}";
     isNormalUser = true;
-    hashedPasswordFile = sopsHashedPasswordFile; # Blank if sops is not working.
+    # hashedPasswordFile = sopsHashedPasswordFile; # Blank if sops is not working.
+    hashedPassword = "$y$j9T$Ac.m5IZ6ku/nrqK9K9kBi1$lRHp3Xg4Vk7Ly/VAiv5d839VlwDRNt2w9ACMMKe8kR2";
 
     extraGroups = lib.flatten [
       "wheel"
@@ -46,4 +47,3 @@ in
     openssh.authorizedKeys.keys = config.users.users.${hostSpec.username}.openssh.authorizedKeys.keys; # root's ssh keys are mainly used for remote deployment.
   };
 }
-

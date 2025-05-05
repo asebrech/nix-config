@@ -7,7 +7,7 @@
     inherit (pkgs)
 
       signal-desktop
-      discord
+      # discord
       ;
   };
 }

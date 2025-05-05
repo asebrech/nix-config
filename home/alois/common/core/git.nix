@@ -20,6 +20,10 @@
       # direnv
       ".direnv"
     ];
- };
+
+    userName = "asebrech";
+    userEmail = "alois.sebrechts@gmail.com";
+
+  };
 
 }

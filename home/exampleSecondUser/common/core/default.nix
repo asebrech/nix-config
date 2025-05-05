@@ -17,7 +17,7 @@
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "24.11";
     sessionPath = [ "$HOME/.local/bin" ];
- };
+  };
 
   home.packages = builtins.attrValues {
     inherit (pkgs)

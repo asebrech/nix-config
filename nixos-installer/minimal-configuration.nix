@@ -44,7 +44,7 @@
     "systemd.journald.forward_to_console=1"
   ];
 
- environment.systemPackages = builtins.attrValues {
+  environment.systemPackages = builtins.attrValues {
     inherit (pkgs)
       wget
       curl

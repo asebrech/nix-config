@@ -40,24 +40,24 @@ in
     sessionVariables = {
       FLAKE = "$HOME/src/nix/nix-config";
       SHELL = "bash";
-   };
- };
+    };
+  };
 
   home.packages = builtins.attrValues {
-      inherit (pkgs)
+    inherit (pkgs)
 
-        # FIXME(starter): add/edit as desired
-        # Packages that don't have custom configs go here
-        curl
-        pciutils
-        pfetch # system info
-        pre-commit # git hooks
-        p7zip # compression & encryption
-        usbutils
-        unzip # zip extraction
-        unrar # rar extraction
-        ;
-    };
+      # FIXME(starter): add/edit as desired
+      # Packages that don't have custom configs go here
+      curl
+      pciutils
+      pfetch # system info
+      pre-commit # git hooks
+      p7zip # compression & encryption
+      usbutils
+      unzip # zip extraction
+      unrar # rar extraction
+      ;
+  };
 
   nix = {
     package = lib.mkDefault pkgs.nix;

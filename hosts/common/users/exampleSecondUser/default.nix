@@ -1,7 +1,7 @@
 # FIXME(starter): this is an example of how a secondary user called "exampleSecondUser" can be declared.
 # NOTE that this file's parent directory matches the username!
 # Modify the directory name and all instances of `exampleSecondUser` in this file to a real username to
-# make use of this file. You'll also need to import this file in the relevant `nix-config/hosts/[platform]/[hostname]/default.nix` 
+# make use of this file. You'll also need to import this file in the relevant `nix-config/hosts/[platform]/[hostname]/default.nix`
 # host file for the user to be created on the host.
 # NOTE that this file also assumes you will be declaring the user's password via sops.
 # .
