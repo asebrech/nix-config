@@ -25,7 +25,7 @@ in
       "modules/hosts/common"
       "modules/hosts/${platform}"
       "hosts/common/core/${platform}.nix"
-      # "hosts/common/core/sops.nix" # Core because it's used for backups, mail
+      "hosts/common/core/sops.nix" # Core because it's used for backups, mail
       "hosts/common/core/ssh.nix"
       #"hosts/common/core/services" # uncomment this line if you add any modules to services directory
       "hosts/common/users/primary"
@@ -43,12 +43,12 @@ in
     handle = "asebrech";
     # FIXME(starter): modify the attribute sets hostSpec will inherit from your nix-secrets.
     # If you're not using nix-secrets then remove the following six lines below.
-    # inherit (inputs.nix-secrets)
-    #   domain
-    #   email
-    #   userFullName
-    #   networking
-    #   ;
+    inherit (inputs.nix-secrets)
+      domain
+      email
+      userFullName
+      networking
+      ;
   };
 
   networking.hostName = config.hostSpec.hostName;

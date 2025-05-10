@@ -1,23 +1,21 @@
-# FIXME(starter): The nix-config-starter repo assumes use of a `simple` nix-secrets scheme.
-# The complex scheme will require modification to this file. Refer to the relevant files in
-# EmergentMind's Nix-Config (the full version) to determine the required changes.
-
 # hosts level sops. see home/[user]/common/optional/sops.nix for home/user level
+
 {
+  # pkgs,
   lib,
   inputs,
   config,
   ...
 }:
 let
-  sopsFolder = builtins.toString inputs.nix-secrets;
-  secretsFile = "${sopsFolder}/secrets.yaml";
+  sopsFolder = builtins.toString inputs.nix-secrets + "/sops";
 in
 {
   #the import for inputs.sops-nix.nixosModules.sops is handled in hosts/common/core/default.nix so that it can be dynamically input according to the platform
 
   sops = {
-    defaultSopsFile = "${secretsFile}";
+    #    defaultSopsFile = "${secretsFile}";
+    defaultSopsFile = "${sopsFolder}/${config.hostSpec.hostName}.yaml";
     validateSopsFiles = false;
     age = {
       # automatically import host SSH keys as age keys
@@ -38,7 +36,7 @@ in
       # These age keys are are unique for the user on each host and are generated on their own (i.e. they are not derived
       # from an ssh key).
 
-      "keys/age/${config.hostSpec.username}_${config.networking.hostName}" = {
+      "keys/age" = {
         owner = config.users.users.${config.hostSpec.username}.name;
         inherit (config.users.users.${config.hostSpec.username}) group;
         # We need to ensure the entire directory structure is that of the user...
@@ -49,11 +47,23 @@ in
         sopsFile = "${sopsFolder}/shared.yaml";
         neededForUsers = true;
       };
+      "passwords/msmtp" = {
+        sopsFile = "${sopsFolder}/shared.yaml";
+      };
     }
+    # only reference borg password if host is using backup
+    # (lib.mkIf config.services.backup.enable {
+    #   "passwords/borg" = {
+    #     owner = "root";
+    #     group = if pkgs.stdenv.isLinux then "root" else "wheel";
+    #     mode = "0600";
+    #     path = "/etc/borg/passphrase";
+    #   };
+    # })
   ];
   # The containing folders are created as root and if this is the first ~/.config/ entry,
   # the ownership is busted and home-manager can't target because it can't write into .config...
-  # In the future this may not be needed, depending on how https://github.com/Mic92/sops-nix/issues/381 is fixed
+  # FIXME(sops): We might not need this depending on how https://github.com/Mic92/sops-nix/issues/381 is fixed
   system.activationScripts.sopsSetAgeKeyOwnership =
     let
       ageFolder = "${config.hostSpec.home}/.config/sops/age";
