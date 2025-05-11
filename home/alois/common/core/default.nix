@@ -18,11 +18,14 @@ in
     ./${platform}.nix
 
     # FIXME(starter): add/edit as desired
+    ./zsh
     ./bash.nix
+    ./bat.nix
     ./direnv.nix
     ./fonts.nix
     ./kitty.nix
     ./git.nix
+    ./screen.nix
     ./ssh.nix
   ];
 
@@ -39,7 +42,12 @@ in
     ];
     sessionVariables = {
       FLAKE = "$HOME/src/nix/nix-config";
-      SHELL = "bash";
+      SHELL = "zsh";
+      TERM = "kitty";
+      TERMINAL = "kitty";
+      VISUAL = "nvim";
+      EDITOR = "nvim";
+      MANPAGER = "batman"; # see ./cli/bat.nix
     };
   };
 
@@ -49,6 +57,7 @@ in
       # FIXME(starter): add/edit as desired
       # Packages that don't have custom configs go here
       curl
+      eza # ls replacement
       pciutils
       pfetch # system info
       pre-commit # git hooks
@@ -56,6 +65,7 @@ in
       usbutils
       unzip # zip extraction
       unrar # rar extraction
+      wev # show wayland events. also handy for detecting keypress codes
       ;
   };
 

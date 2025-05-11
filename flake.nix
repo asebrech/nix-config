@@ -148,11 +148,21 @@
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # vim4LMFQR!
+    nixvim = {
+      url = "github:nix-community/nixvim/nixos-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+      #url = "github:nix-community/nixvim";
+      #inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     # Pre-commit
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Theming
+    stylix.url = "github:danth/stylix/release-24.11";
+    rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
 
     #
     # ========= Personal Repositories =========
