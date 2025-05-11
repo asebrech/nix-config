@@ -28,7 +28,7 @@
             diskSpecPath = ../hosts/common/disks/btrfs-disk.nix;
           in
           nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
+            system = "aarch64-linux";
             specialArgs = minimalSpecialArgs;
             modules = [
               inputs.disko.nixosModules.disko

@@ -27,12 +27,12 @@
   hostSpec = {
     hostName = "iso";
     # FIXME(starter): the username below will be available in additional the the standard `root` and `nixos` users from the nixos installation image.
-    username = "hiro";
+    username = "alois";
     isProduction = lib.mkForce false;
 
     # FIXME(starter): add your github username and github-noreply email address
-    handle = "hiroprotagonist";
-    email.gitHub = "foo@users.noreply.github.com";
+    handle = "asebrech";
+    email.gitHub = "alois.sebrechts@gmail.com";
   };
 
   # root's ssh key are mainly used for remote deployment
@@ -63,7 +63,7 @@
   isoImage.squashfsCompression = "zstd -Xcompression-level 3";
 
   nixpkgs = {
-    hostPlatform = lib.mkDefault "x86_64-linux";
+    hostPlatform = lib.mkDefault "aarch64-linux";
     config.allowUnfree = true;
   };
 
