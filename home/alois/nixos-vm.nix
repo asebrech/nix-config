@@ -16,6 +16,8 @@
     common/optional/media
     common/optional/vscode.nix
 
+    # common/optional/atuin.nix
+    common/optional/xdg.nix # file associations
     common/optional/sops.nix
   ];
 

@@ -27,6 +27,7 @@ in
     ./git.nix
     ./screen.nix
     ./ssh.nix
+    ./zoxide.nix
   ];
 
   inherit hostSpec;
@@ -49,7 +50,31 @@ in
       EDITOR = "nvim";
       MANPAGER = "batman"; # see ./cli/bat.nix
     };
+    preferXdgDirectories = true; # whether to make programs use XDG directories whenever supported
   };
+  #TODO(xdg): maybe move this to its own xdg.nix?
+  # xdg packages are pulled in below
+  # xdg = {
+  #   enable = true;
+  #   userDirs = {
+  #     enable = true;
+  #     createDirectories = true;
+  #     desktop = "${config.home.homeDirectory}/.desktop";
+  #     documents = "${config.home.homeDirectory}/doc";
+  #     download = "${config.home.homeDirectory}/downloads";
+  #     music = "${config.home.homeDirectory}/media/audio";
+  #     pictures = "${config.home.homeDirectory}/media/images";
+  #     videos = "${config.home.homeDirectory}/media/video";
+  #     # publicshare = "/var/empty"; #using this option with null or "/var/empty" barfs so it is set properly in extraConfig below
+  #     # templates = "/var/empty"; #using this option with null or "/var/empty" barfs so it is set properly in extraConfig below
+
+  #     extraConfig = {
+  #       # publicshare and templates defined as null here instead of as options because
+  #       XDG_PUBLICSHARE_DIR = "/var/empty";
+  #       XDG_TEMPLATES_DIR = "/var/empty";
+  #     };
+  #   };
+  # };
 
   home.packages = builtins.attrValues {
     inherit (pkgs)
@@ -66,6 +91,8 @@ in
       unzip # zip extraction
       unrar # rar extraction
       wev # show wayland events. also handy for detecting keypress codes
+      xdg-utils # provide cli tools such as `xdg-mime` and `xdg-open`
+      xdg-user-dirs
       ;
   };
 
