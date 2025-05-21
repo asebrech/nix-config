@@ -19,6 +19,7 @@ in
 
     # FIXME(starter): add/edit as desired
     ./zsh
+    # ./nixvim
     ./bash.nix
     ./bat.nix
     ./direnv.nix
