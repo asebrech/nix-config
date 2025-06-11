@@ -6,7 +6,10 @@
 
 # EmergentMind's Nix-Config Starter
 
-STILL TESTING - if this line is still here this repo is still WIP for use even as a starter
+
+> [!WARNING]
+> **THIS REPO IS STILL WIP FOR USE EVEN AS A STARTER**
+
 
 ## Table of Contents
 
