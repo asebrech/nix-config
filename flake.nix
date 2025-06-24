@@ -1,10 +1,14 @@
 {
   description = "EmergentMind's Nix-Config Starter";
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      # nix-darwin,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
-      inherit (nixpkgs) lib;
 
       #
       # ========= Architectures =========
@@ -15,58 +19,59 @@
         "aarch64-darwin"
       ];
 
-      #
-      # ========= Host Config Functions =========
-      #
-      # Handle a given host config based on whether its underlying system is nixos or darwin
-      mkHost = host: isDarwin: {
-        ${host} =
-          let
-            func = if isDarwin then inputs.nix-darwin.lib.darwinSystem else lib.nixosSystem;
-            systemFunc = func;
-          in
-          systemFunc {
-            specialArgs = {
-              inherit
-                inputs
-                outputs
-                isDarwin
-                ;
+      # ========== Extend lib with lib.custom ==========
+      # NOTE: This approach allows lib.custom to propagate into hm
+      # see: https://github.com/nix-community/home-manager/pull/3454
+      lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
 
-              # ========== Extend lib with lib.custom ==========
-              # This approach allows lib.custom to propagate into hm
-              # see: https://github.com/nix-community/home-manager/pull/3454
-              lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
-
-            };
-            modules = [ ./hosts/${if isDarwin then "darwin" else "nixos"}/${host} ];
-          };
-      };
-      # Invoke mkHost for each host config that is declared for either nixos or darwin
-      mkHostConfigs =
-        hosts: isDarwin: lib.foldl (acc: set: acc // set) { } (lib.map (host: mkHost host isDarwin) hosts);
-      # Return the hosts declared in the given directory
-      readHosts = folder: lib.attrNames (builtins.readDir ./hosts/${folder});
     in
     {
       #
       # ========= Overlays =========
       #
-      # Custom modifications/overrides to upstream packages.
+      # Custom modifications/overrides to upstream packages
       overlays = import ./overlays { inherit inputs; };
 
       #
       # ========= Host Configurations =========
       #
       # Building configurations is available through `just rebuild` or `nixos-rebuild --flake .#hostname`
-      # NOTE(starter): Only uncomment darwinConfigurations if you actually have a host module configured in `./hosts/darwin`
-      nixosConfigurations = mkHostConfigs (readHosts "nixos") false;
-      #darwinConfigurations = mkHostConfigs (readHosts "darwin") true;
+      nixosConfigurations = builtins.listToAttrs (
+        map (host: {
+          name = host;
+          value = nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs outputs lib;
+              isDarwin = false;
+            };
+            modules = [ ./hosts/nixos/${host} ];
+          };
+        }) (builtins.attrNames (builtins.readDir ./hosts/nixos))
+      );
+
+      # darwinConfigurations = builtins.listToAttrs (
+      #   map (host: {
+      #     name = host;
+      #     value = nix-darwin.lib.darwinSystem {
+      #       specialArgs = {
+      #         inherit inputs outputs lib;
+      #         isDarwin = true;
+      #       };
+      #       modules = [ ./hosts/darwin/${host} ];
+      #     };
+      #   }) (builtins.attrNames (builtins.readDir ./hosts/darwin))
+      # );
 
       #
       # ========= Packages =========
       #
-      # Add custom packages to be shared or upstreamed.
+      # Expose custom packages
+
+      /*
+        NOTE: This is only for exposing packages exterally; ie, `nix build .#packages.x86_64-linux.cd-gitroot`
+        For internal use, these packages are added through the default overlay in `overlays/default.nix`
+      */
+
       packages = forAllSystems (
         system:
         let
@@ -75,8 +80,8 @@
             overlays = [ self.overlays.default ];
           };
         in
-        lib.packagesFromDirectoryRecursive {
-          callPackage = lib.callPackageWith pkgs;
+        nixpkgs.lib.packagesFromDirectoryRecursive {
+          callPackage = nixpkgs.lib.callPackageWith pkgs;
           directory = ./pkgs/common;
         }
       );
@@ -84,7 +89,7 @@
       #
       # ========= Formatting =========
       #
-      # Nix formatter available through 'nix fmt' https://nix-community.github.io/nixpkgs-fmt
+      # Nix formatter available through 'nix fmt' https://github.com/NixOS/nixfmt
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
       # Pre-commit checks
       checks = forAllSystems (
@@ -114,22 +119,22 @@
     #
     # NOTE(starter): As with typical flake-based configs, you'll need to update the nixOS, hm,
     # and darwin version numbers below when new releases are available.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     # The next two inputs are for pinning nixpkgs to stable vs unstable regardless of what the above is set to.
     # This is particularly useful when an upcoming stable release is in beta because you can effectively
     # keep 'nixpkgs-stable' set to stable for critical packages while setting 'nixpkgs' to the beta branch to
     # get a jump start on deprecation changes.
     # See also 'stable-packages' and 'unstable-packages' overlays at 'overlays/default.nix"
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.05-darwin";
     nix-darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
@@ -152,7 +157,7 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
- 
+
     #
     # ========= Personal Repositories =========
     #

@@ -6,7 +6,10 @@
 
 # EmergentMind's Nix-Config Starter
 
-STILL TESTING - if this line is still here this repo is still WIP for use even as a starter
+
+> [!WARNING]
+> **THIS REPO IS STILL WIP FOR USE EVEN AS A STARTER**
+
 
 ## Table of Contents
 
@@ -18,6 +21,7 @@ STILL TESTING - if this line is still here this repo is still WIP for use even a
 ---
 
 Watch NixOS related videos on my [YouTube channel](https://www.youtube.com/@Emergent_Mind).
+Chat with me directly on our [Discord server](https://discord.gg/XTFg57xGxC).
 
 ## Secrets Management
 
