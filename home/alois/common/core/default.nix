@@ -24,13 +24,15 @@ in
     ./fonts.nix
     ./git.nix
     ./kitty.nix
+    # ./ghostty.nix  # Currently broken on macOS
+    ./alacritty.nix
     ./nixos.nix
     ./ssh.nix
   ];
 
   inherit hostSpec;
 
-  services.ssh-agent.enable = true;
+  services.ssh-agent.enable = lib.mkIf pkgs.stdenv.isLinux true;
 
   home = {
     username = lib.mkDefault config.hostSpec.username;
@@ -58,6 +60,7 @@ in
       usbutils
       unzip # zip extraction
       unrar # rar extraction
+      vim
       ;
   };
 

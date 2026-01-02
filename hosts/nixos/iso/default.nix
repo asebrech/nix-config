@@ -27,11 +27,11 @@
   hostSpec = {
     hostName = "iso";
     # FIXME(starter): the username below will be available in additional the the standard `root` and `nixos` users from the nixos installation image.
-    username = "hiro";
+    username = "alois";
     isProduction = lib.mkForce false;
 
     # FIXME(starter): add your github username and github-noreply email address
-    handle = "hiroprotagonist";
+    handle = "asebrech";
     email.gitHub = "foo@users.noreply.github.com";
   };
 

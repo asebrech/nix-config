@@ -10,14 +10,13 @@
   ...
 }:
 let
-  sopsFolder = builtins.toString inputs.nix-secrets;
-  secretsFile = "${sopsFolder}/secrets.yaml";
+  sopsFolder = builtins.toString inputs.nix-secrets + "/sops";
 in
 {
   #the import for inputs.sops-nix.nixosModules.sops is handled in hosts/common/core/default.nix so that it can be dynamically input according to the platform
 
   sops = {
-    defaultSopsFile = "${secretsFile}";
+    defaultSopsFile = "${sopsFolder}/${config.hostSpec.hostName}.yaml";
     validateSopsFiles = false;
     age = {
       # automatically import host SSH keys as age keys
@@ -38,11 +37,13 @@ in
       # These age keys are are unique for the user on each host and are generated on their own (i.e. they are not derived
       # from an ssh key).
 
-      "keys/age/${config.hostSpec.username}_${config.networking.hostName}" = {
+      "keys/age" = {
         owner = config.users.users.${config.hostSpec.username}.name;
-        inherit (config.users.users.${config.hostSpec.username}) group;
         # We need to ensure the entire directory structure is that of the user...
         path = "${config.hostSpec.home}/.config/sops/age/keys.txt";
+      }
+      // lib.optionalAttrs (config.users.users.${config.hostSpec.username} ? group) {
+        inherit (config.users.users.${config.hostSpec.username}) group;
       };
       # extract password/username to /run/secrets-for-users/ so it can be used to create the user
       "passwords/${config.hostSpec.username}" = {
@@ -58,7 +59,12 @@ in
     let
       ageFolder = "${config.hostSpec.home}/.config/sops/age";
       user = config.users.users.${config.hostSpec.username}.name;
-      group = config.users.users.${config.hostSpec.username}.group;
+      # On macOS, users don't have a group attribute, default to "staff"
+      group =
+        if (config.users.users.${config.hostSpec.username} ? group) then
+          config.users.users.${config.hostSpec.username}.group
+        else
+          "staff";
     in
     ''
       mkdir -p ${ageFolder} || true
