@@ -137,6 +137,21 @@
           default = "1";
           description = "Used to indicate what scaling to use. Floating point number";
         };
+        useWayland = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Indicate a host that uses Wayland";
+        };
+        defaultEditor = lib.mkOption {
+          type = lib.types.str;
+          default = "nvim";
+          description = "The default editor command to use on the host";
+        };
+        primaryUsername = lib.mkOption {
+          type = lib.types.str;
+          default = config.hostSpec.username;
+          description = "The primary username for home-manager";
+        };
       };
     };
   };

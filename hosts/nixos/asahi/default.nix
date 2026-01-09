@@ -8,6 +8,7 @@
     # ========== Hardware ==========
     #
     ./hardware-configuration.nix
+    ./monitors.nix
 
     (map lib.custom.relativeToRoot [
       #
@@ -32,7 +33,8 @@
       # The following are for example sake only and are not necessarily required.
       "hosts/common/optional/services/openssh.nix" # allow remote SSH access
       "hosts/common/optional/audio.nix" # pipewire and cli controls
-      "hosts/common/optional/gnom.nix"
+      "hosts/common/optional/hyprland.nix" # hyprland window manager
+      "hosts/common/optional/wayland.nix" # wayland packages
     ])
   ];
 
@@ -45,6 +47,7 @@
   # for examples.
   hostSpec = {
     hostName = "asahi";
+    useWayland = true;
   };
 
   networking = {
