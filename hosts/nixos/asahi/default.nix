@@ -32,6 +32,7 @@
       # FIXME(starter): add or remove any optional host-level configuration files the host will use
       # The following are for example sake only and are not necessarily required.
       "hosts/common/optional/services/openssh.nix" # allow remote SSH access
+      "hosts/common/optional/services/greetd.nix" # display manager with tuigreet greeter
       "hosts/common/optional/audio.nix" # pipewire and cli controls
       "hosts/common/optional/hyprland.nix" # hyprland window manager
       "hosts/common/optional/wayland.nix" # wayland packages
@@ -48,6 +49,12 @@
   hostSpec = {
     hostName = "asahi";
     useWayland = true;
+  };
+
+  # Enable auto-login for the primary user
+  autoLogin = {
+    enable = true;
+    username = "alois";
   };
 
   networking = {
