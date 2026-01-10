@@ -17,5 +17,6 @@
     pkgs.wl-clipboard # wayland copy and paste
     pkgs.galculator # gtk based calculator
     pkgs.unstable.grimblast # screenshot tool
+    pkgs.foot # lightweight wayland terminal without GPU acceleration
   ];
 }
