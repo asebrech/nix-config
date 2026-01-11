@@ -8,7 +8,7 @@
 {
   imports = [
     # extra settings
-    ./binds.nix
+    ./bindings
     ./rules.nix
     ./scripts.nix
 
