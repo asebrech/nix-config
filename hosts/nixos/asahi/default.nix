@@ -51,10 +51,10 @@
     useWayland = true;
   };
 
-  # Enable auto-login for the primary user
+  # Enable auto-login for the primary user with greetd
   autoLogin = {
     enable = true;
-    username = "alois";
+    username = config.hostSpec.username;
   };
 
   networking = {
