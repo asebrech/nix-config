@@ -9,7 +9,7 @@
   imports = [
     # extra settings
     ./bindings
-    ./rules.nix
+    ./envs.nix
 
     #hyprland utilities
     ./hyprlock.nix
@@ -24,17 +24,11 @@
       enable = true;
       variables = [ "--all" ]; # fix for https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#programs-dont-work-in-systemd-services-but-do-on-the-terminal
     };
-
     settings = {
       debug = {
         disable_logs = true;
       };
-      env = [
-      ];
-      ecosystem = {
-        no_update_news = true;
-        no_donation_nag = true;
-      };
+      # Environment variables and ecosystem settings are now configured in ./envs.nix
       #
       # ========== Monitor ==========
       #
