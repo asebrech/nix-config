@@ -53,12 +53,6 @@
       "SUPER, TAB, workspace, e+1"
       "SUPER SHIFT, TAB, workspace, e-1"
 
-      # Move workspaces to other monitors
-      "CTRL SHIFT, LEFT, movecurrentworkspacetomonitor, l"
-      "CTRL SHIFT, RIGHT, movecurrentworkspacetomonitor, r"
-      "CTRL SHIFT, UP, movecurrentworkspacetomonitor, u"
-      "CTRL SHIFT, DOWN, movecurrentworkspacetomonitor, d"
-
       # Swap active window with SUPER + SHIFT + arrow keys
       "SUPER SHIFT, LEFT, swapwindow, l"
       "SUPER SHIFT, RIGHT, swapwindow, r"

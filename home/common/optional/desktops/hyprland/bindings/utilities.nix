@@ -51,11 +51,6 @@ in
       "SUPER CTRL, L, exec, hyprlock"
       "SUPER SHIFT, R, exec, hyprctl reload"
       "SUPER, E, exec, wlogout"
-
-      # Custom scripts from scripts.nix
-      "SUPER, M, exec, toggleMonitors"
-      "SUPER, N, exec, toggleMonitorsNonPrimary"
-      "SUPER SHIFT, T, exec, arrangeTiles"
     ];
   };
 }

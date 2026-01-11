@@ -10,7 +10,6 @@
     # extra settings
     ./bindings
     ./rules.nix
-    ./scripts.nix
 
     #hyprland utilities
     ./hyprlock.nix
