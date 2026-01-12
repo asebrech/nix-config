@@ -2,11 +2,8 @@
 {
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      # Notification daemon (dunst instead of mako)
-      "dunst"
-
-      # Status bar
-      "waybar"
+      # Notification daemon (dunst is managed by systemd service)
+      # Status bar (waybar is managed by systemd service)
 
       # Clipboard manager
       "[workspace 1 silent] copyq"
