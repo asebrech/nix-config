@@ -13,6 +13,7 @@
     ./autostart.nix
     ./windows.nix
     ./looknfeel.nix
+    ./apps
 
     #hyprland utilities
     ./hyprlock.nix
