@@ -28,6 +28,10 @@
       variables = [ "--all" ]; # fix for https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#programs-dont-work-in-systemd-services-but-do-on-the-terminal
     };
     settings = {
+      debug = {
+        disable_logs = false;
+        enable_stdout_logs = true;
+      };
       #
       # ========== Monitor ==========
       #
