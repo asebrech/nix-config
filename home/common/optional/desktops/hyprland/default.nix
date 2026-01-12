@@ -11,6 +11,7 @@
     ./bindings
     ./envs.nix
     ./input.nix
+    ./autostart.nix
 
     #hyprland utilities
     ./hyprlock.nix
@@ -126,14 +127,7 @@
         workspace_swipe = false;
       };
 
-      #
-      # ========== Autostart ==========
-      #
-      # exec-once = "${startupScript}/path";
-      # To determine path, run `which foo`
-      exec-once = [
-        "[workspace 1 silent]copyq"
-      ];
+      # Autostart applications are now configured in ./autostart.nix
 
     };
 
