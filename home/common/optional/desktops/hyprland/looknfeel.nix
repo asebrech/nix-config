@@ -65,8 +65,6 @@
         gaps_in = 5;
         gaps_out = 0;
 
-        text_color = "rgb(ffffff)";
-        text_color_inactive = "rgba(ffffff90)";
         "col.active" = "rgba(00000040)";
         "col.inactive" = "rgba(00000020)";
 
@@ -125,7 +123,6 @@
       disable_splash_rendering = true;
       focus_on_activate = true;
       anr_missed_pings = 3;
-      on_focus_under_fullscreen = 1;
     };
 
     # https://wiki.hypr.land/Configuring/Variables/#cursor
