@@ -10,6 +10,7 @@
     # extra settings
     ./bindings
     ./envs.nix
+    ./input.nix
 
     #hyprland utilities
     ./hyprlock.nix
@@ -120,20 +121,7 @@
       master = {
         new_status = "master";
       };
-      misc = {
-        force_default_wallpaper = 0; # Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo = true; # If true disables the random hyprland logo / anime girl background.
-        mouse_move_enables_dpms = true; # wake up monitors on mouse movement
-        key_press_enables_dpms = true; # wake up monitors on key press
-      };
-      input = {
-        kb_layout = "us";
-        follow_mouse = 1;
-        sensitivity = 0; # -1.0 to 1.0, 0 means no modification.
-        touchpad = {
-          natural_scroll = false;
-        };
-      };
+      # Input and misc settings are now configured in ./input.nix
       gestures = {
         workspace_swipe = false;
       };
