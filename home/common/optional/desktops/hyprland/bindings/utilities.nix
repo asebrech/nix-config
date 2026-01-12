@@ -50,7 +50,6 @@ in
       # System control
       "SUPER CTRL, L, exec, hyprlock"
       "SUPER SHIFT, R, exec, hyprctl reload"
-      "SUPER, E, exec, wlogout"
     ];
   };
 }

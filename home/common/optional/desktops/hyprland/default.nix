@@ -17,7 +17,7 @@
 
     #hyprland utilities
     ./hyprlock.nix
-    ./wlogout.nix
+    ./hypridle.nix
     ./preview-share-picker.nix
   ];
 
