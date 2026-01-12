@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 {
   programs.hyprlock = {
     enable = true;
@@ -10,34 +10,45 @@
     ];
     settings = {
       general = {
-        disable_loading_bar = true;
-        grace = 5; # grace period in seconds that the lock will unlock on mouse movement.
-        hide_cursor = true;
-        no_fade_in = false;
+        ignore_empty_input = true;
       };
 
-      background = lib.mkDefault [
+      background = [
         {
-          path = "screenshot";
+          monitor = "";
+          color = "rgb(0, 0, 0)";
           blur_passes = 3;
-          blur_size = 8;
         }
       ];
 
-      input-field = lib.mkDefault [
+      animations = {
+        enabled = false;
+      };
+
+      input-field = [
         {
-          size = "200, 50";
-          position = "0, -80";
           monitor = "";
-          dots_center = true;
+          size = "650, 100";
+          position = "0, 0";
+          halign = "center";
+          valign = "center";
+          inner_color = "rgb(40, 40, 40)";
+          outer_color = "rgb(100, 100, 100)";
+          outline_thickness = 4;
+          font_family = "JetBrainsMono Nerd Font";
+          font_color = "rgb(255, 255, 255)";
+          placeholder_text = "Enter Password";
+          check_color = "rgb(100, 200, 100)";
+          fail_text = "<i>$FAIL ($ATTEMPTS)</i>";
+          rounding = 0;
+          shadow_passes = 0;
           fade_on_empty = false;
-          font_color = "rgb(202, 211, 245)";
-          inner_color = "rgb(91, 96, 120)";
-          outer_color = "rgb(24, 25, 38)";
-          outline_thickness = 5;
-          shadow_passes = 2;
         }
       ];
+
+      auth = {
+        "fingerprint:enabled" = true;
+      };
     };
   };
 }
