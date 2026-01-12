@@ -10,9 +10,9 @@
   monitors = [
     {
       name = "Virtual-1";
-      width = 1920;
-      height = 1080;
-      refreshRate = 75;
+      width = 3840;
+      height = 2160;
+      refreshRate = 60;
       primary = true;
       x = 0;
       y = 0;
