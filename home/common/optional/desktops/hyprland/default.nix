@@ -18,7 +18,8 @@
     #hyprland utilities
     ./hyprlock.nix
     ./hypridle.nix
-    ./preview-share-picker.nix
+    ./xdph.nix
+    ./hyprland-preview-share-picker.nix
   ];
 
   wayland.windowManager.hyprland = {
