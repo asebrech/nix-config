@@ -12,6 +12,7 @@
     ./envs.nix
     ./input.nix
     ./autostart.nix
+    ./windows.nix
 
     #hyprland utilities
     ./hyprlock.nix
