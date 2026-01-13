@@ -19,7 +19,7 @@
   hostSpec = {
     isMinimal = lib.mkForce true;
     hostName = "installer";
-    # FIXME(starter): Add your primary username or whatever user you want to use for installation
+    # Add your primary username or whatever user you want to use for installation
     username = "alois";
   };
 

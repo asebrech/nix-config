@@ -1,4 +1,4 @@
-# FIXME(starter): modify this file and the other .nix files in `nix-config/hosts/common/core/` to declare
+# Modify this file and the other .nix files in `nix-config/hosts/common/core/` to declare
 # settings that will occur across all hosts
 
 # IMPORTANT: This is used by NixOS and nix-darwin so options must exist in both!
@@ -36,12 +36,12 @@ in
   #
   # ========== Core Host Specifications ==========
   #
-  # FIXME(starter): modify the hostSpec options below to define values that are common across all hosts
+  # Modify the hostSpec options below to define values that are common across all hosts
   # such as the username and handle of the primary user (see also `nix-config/hosts/common/users/primary`)
   hostSpec = {
     username = "alois";
     handle = "asebrech";
-    # FIXME(starter): modify the attribute sets hostSpec will inherit from your nix-secrets.
+    # Modify the attribute sets hostSpec will inherit from your nix-secrets.
     # If you're not using nix-secrets then remove the following six lines below.
     inherit (inputs.nix-secrets)
       domain

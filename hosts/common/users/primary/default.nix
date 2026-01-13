@@ -1,4 +1,4 @@
-# NOTE(starter): this is the primary user across all hosts. The username for primary is defined in hostSpec,
+# This is the primary user across all hosts. The username for primary is defined in hostSpec,
 # and is declared in `nix-config/common/core/default.nix`
 
 # User config applicable to both nixos and darwin

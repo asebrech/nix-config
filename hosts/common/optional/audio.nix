@@ -1,4 +1,4 @@
-# NOTE(starter): configure your audio needs as required.
+# Configure your audio needs as required.
 { pkgs, ... }:
 {
   services.pulseaudio.enable = false;

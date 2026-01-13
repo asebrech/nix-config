@@ -1,4 +1,4 @@
-# NOTE(starter): This is a "bonus" custom package that has been left here because the
+# This is a "bonus" custom package that has been left here because the
 # inclusion of custom pkgs in `nix-config/flake.nix` was never designed to work with an
 # empty `nix-config/pkgs/common` directory.
 # If nothing else, it can serve as an example of how to package something similar.

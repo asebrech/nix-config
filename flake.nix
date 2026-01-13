@@ -9,7 +9,6 @@
       #
       # ========= Architectures =========
       #
-      # NOTE(starter): Comment or uncomment architectures below as required by your hosts.
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
         #"x86_64-linux"
@@ -60,7 +59,6 @@
       # ========= Host Configurations =========
       #
       # Building configurations is available through `just rebuild` or `nixos-rebuild --flake .#hostname`
-      # NOTE(starter): Only uncomment darwinConfigurations if you actually have a host module configured in `./hosts/darwin`
       nixosConfigurations = mkHostConfigs (readHosts "nixos") false;
       darwinConfigurations = mkHostConfigs (readHosts "darwin") true;
 
@@ -113,7 +111,7 @@
     #
     # ========= Official NixOS, Nix-Darwin, and HM Package Sources =========
     #
-    # NOTE(starter): As with typical flake-based configs, you'll need to update the nixOS, hm,
+    # As with typical flake-based configs, you'll need to update the nixOS, hm,
     # and darwin version numbers below when new releases are available.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     # The next two inputs are for pinning nixpkgs to stable vs unstable regardless of what the above is set to.

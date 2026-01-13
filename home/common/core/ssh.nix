@@ -1,4 +1,3 @@
-# FIXME(starter): adjust to you security requirements
 {
   config,
   ...

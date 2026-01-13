@@ -17,7 +17,6 @@ in
     ])
     ./${platform}.nix
 
-    # FIXME(starter): add/edit as desired
     ./bash.nix
     ./darwin.nix
     ./direnv.nix
@@ -49,7 +48,6 @@ in
   home.packages = builtins.attrValues {
     inherit (pkgs)
 
-      # FIXME(starter): add/edit as desired
       # Packages that don't have custom configs go here
       curl
       pciutils
