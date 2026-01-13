@@ -72,25 +72,10 @@ in
         };
       };
 
-      # Target-specific overrides
+      # Target-specific overrides (host-level only)
       targets = {
         # Ensure GTK is styled
         gtk.enable = true;
-
-        # Keep your custom Hyprland config but allow color theming
-        hyprland.enable = lib.mkDefault true;
-
-        # Theme waybar
-        waybar.enable = lib.mkDefault true;
-
-        # Theme terminal
-        alacritty.enable = lib.mkDefault true;
-
-        # Theme rofi
-        rofi.enable = lib.mkDefault true;
-
-        # Theme dunst notifications
-        dunst.enable = lib.mkDefault true;
 
         # Disable Plymouth if it conflicts
         plymouth.enable = lib.mkDefault false;
