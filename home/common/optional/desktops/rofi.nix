@@ -3,7 +3,6 @@
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
-    theme = "gruvbox-dark";
     terminal = "alacritty";
     extraConfig = {
       modi = "drun,run,ssh,window";
