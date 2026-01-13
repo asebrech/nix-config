@@ -2,7 +2,6 @@
 {
   imports = [
     ./config.nix
-    ./style.nix
   ];
 
   services.network-manager-applet.enable = true;
