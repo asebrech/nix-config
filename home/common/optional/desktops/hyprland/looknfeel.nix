@@ -39,11 +39,6 @@
 
     # https://wiki.hypr.land/Configuring/Variables/#group
     group = {
-      "col.border_active" = "$activeBorderColor";
-      "col.border_inactive" = "$inactiveBorderColor";
-      "col.border_locked_active" = -1;
-      "col.border_locked_inactive" = -1;
-
       groupbar = {
         font_size = 12;
         font_family = "monospace";
@@ -55,9 +50,6 @@
         height = 22;
         gaps_in = 5;
         gaps_out = 0;
-
-        "col.active" = "rgba(00000040)";
-        "col.inactive" = "rgba(00000020)";
 
         gradients = true;
         gradient_rounding = 0;
