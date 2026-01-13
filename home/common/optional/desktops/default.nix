@@ -7,7 +7,7 @@
 
     ########## Utilities ##########
     ./services/dunst.nix # Notification daemon
-    ./waybar.nix # infobar
+    ./waybar # infobar
     ./rofi.nix # app launcher
     ./gtk.nix
   ];
