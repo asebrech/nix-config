@@ -29,7 +29,7 @@ in
           # Default fallback wallpaper
           pkgs.fetchurl {
             url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/master/wallpapers/nix-wallpaper-simple-dark-gray.png";
-            hash = "sha256-9cSEaK+BJdKCY+ZqYKVHH3P4lZp+mB8O1CKzNLvpq08=";
+            hash = "sha256-JaLHdBxwrphKVherDVe5fghs3zqUtpcwuNbjwrBlAok=";
           }
       );
 
