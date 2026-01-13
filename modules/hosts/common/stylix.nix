@@ -71,15 +71,6 @@ in
           applications = 12;
         };
       };
-
-      # Target-specific overrides (host-level only)
-      targets = {
-        # Ensure GTK is styled
-        gtk.enable = true;
-
-        # Disable Plymouth if it conflicts
-        plymouth.enable = lib.mkDefault false;
-      };
     };
   };
 }
