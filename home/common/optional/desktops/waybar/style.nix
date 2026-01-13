@@ -4,7 +4,6 @@
     text = ''
       * {
         background-color: transparent;
-        color: #ffffff;
 
         border: none;
         border-radius: 0;

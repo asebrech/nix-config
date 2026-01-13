@@ -21,7 +21,6 @@ in
     ./bash.nix
     ./darwin.nix
     ./direnv.nix
-    ./fonts.nix
     ./git.nix
     ./kitty.nix
     # ./ghostty.nix  # Currently broken on macOS

@@ -112,6 +112,16 @@
           default = false;
           description = "Used to indicate a host that wants auto styling like stylix";
         };
+        theme = lib.mkOption {
+          type = lib.types.str;
+          default = "gruvbox-dark-hard";
+          description = "The base16 theme name to use for styling (from pkgs.base16-schemes)";
+        };
+        wallpaper = lib.mkOption {
+          type = lib.types.either lib.types.path lib.types.str;
+          default = "";
+          description = "Path or URL to wallpaper image for stylix";
+        };
         useNeovimTerminal = lib.mkOption {
           type = lib.types.bool;
           default = false;
