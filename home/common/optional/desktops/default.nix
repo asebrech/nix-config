@@ -7,7 +7,7 @@
 
     ########## Utilities ##########
     ./services/dunst.nix # Notification daemon
-    ./waybar # infobar
+    ./waybar.nix # infobar
     ./rofi.nix # app launcher
   ];
   home.packages = [
