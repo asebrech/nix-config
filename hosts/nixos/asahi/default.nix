@@ -51,8 +51,8 @@
     hostName = "asahi";
     useWayland = true;
     isAutoStyled = true; # Enable Stylix theming
-    theme = "gruvbox-dark-hard"; # Base16 theme (can also try: dracula, nord, catppuccin-mocha, etc.)
-    # wallpaper = ./path/to/your/wallpaper.png; # Optional: set custom wallpaper
+    theme = "tokyo-night-dark"; # Base16 Tokyo Night theme
+    wallpaper = ../../assets/wallpapers/tokyo-night.jpg;
   };
 
   # Enable auto-login for the primary user with greetd
