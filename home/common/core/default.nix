@@ -21,8 +21,6 @@ in
     ./darwin.nix
     ./direnv.nix
     ./git.nix
-    ./kitty.nix
-    # ./ghostty.nix  # Currently broken on macOS
     ./alacritty.nix
     ./nixos.nix
     ./ssh.nix
