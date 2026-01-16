@@ -39,11 +39,7 @@
               lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
 
             };
-            modules = [
-              ./hosts/${if isDarwin then "darwin" else "nixos"}/${host}
-              # Add vicinae home-manager module for all hosts
-              inputs.vicinae.homeManagerModules.default
-            ];
+            modules = [ ./hosts/${if isDarwin then "darwin" else "nixos"}/${host} ];
           };
       };
       # Invoke mkHost for each host config that is declared for either nixos or darwin

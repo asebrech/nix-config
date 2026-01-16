@@ -62,6 +62,9 @@ in
   # If there is a conflict file that is backed up, use this extension
   home-manager.backupFileExtension = "bk";
 
+  # Import vicinae home-manager module
+  home-manager.sharedModules = [ inputs.vicinae.homeManagerModules.default ];
+
   #
   # ========== Overlays ==========
   #
