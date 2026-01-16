@@ -52,7 +52,7 @@
     useWayland = true;
     isAutoStyled = true; # Enable Stylix theming
     theme = "tokyo-night-dark"; # Base16 Tokyo Night theme
-    wallpaper = ../../assets/wallpapers/tokyo-night.jpg;
+    wallpaper = ../../../assets/wallpapers/tokyo-night.jpg;
   };
 
   # Enable auto-login for the primary user with greetd
