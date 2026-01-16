@@ -33,9 +33,8 @@ in
           }
       );
 
-      # Base16 color scheme - Gruvbox Dark Hard (matches Omarchy aesthetic)
-      # Can be overridden per-host via hostSpec.theme
-      base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+      # Base16 color scheme - uses hostSpec.theme
+      base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/${config.hostSpec.theme}.yaml";
 
       # Opacity settings
       opacity = {
