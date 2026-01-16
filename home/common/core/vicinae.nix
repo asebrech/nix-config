@@ -9,6 +9,7 @@
   config = lib.mkIf (pkgs.stdenv.isLinux && osConfig.hostSpec.useWayland) {
     services.vicinae = {
       enable = true;
+      package = pkgs.vicinae; # Use nixpkgs version (Hydra cached, may be older)
       systemd = {
         enable = true;
         autoStart = false; # Let Hyprland start it with exec-once
