@@ -11,9 +11,9 @@
       enable = true;
       systemd = {
         enable = true;
-        autoStart = true;
+        autoStart = false; # Let Hyprland start it with exec-once
         environment = {
-          USE_LAYER_SHELL = "1"; # Use layer-shell for Wayland integration
+          USE_LAYER_SHELL = "1";
         };
       };
       settings = {

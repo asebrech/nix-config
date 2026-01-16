@@ -7,9 +7,9 @@ in
   wayland.windowManager.hyprland.settings = {
     # Application launchers and menus
     bind = [
-      "SUPER, SPACE, exec, vicinae"
-      "SUPER, TAB, exec, vicinae windows"
-      ", XF86Calculator, exec, vicinae extensions calculator"
+      "SUPER, SPACE, exec, vicinae toggle"
+      "SUPER, TAB, exec, vicinae toggle vicinae://windows"
+      ", XF86Calculator, exec, vicinae toggle vicinae://extensions/vicinae/calculator"
 
       # Terminal and common apps
       "SUPER, Return, exec, ${terminal}"

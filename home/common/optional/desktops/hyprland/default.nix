@@ -29,5 +29,15 @@
       enable = true;
       variables = [ "--all" ]; # fix for https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#programs-dont-work-in-systemd-services-but-do-on-the-terminal
     };
+    settings = {
+      # Vicinae integration
+      exec-once = [ "vicinae server" ];
+      layerrule = [
+        # Blur for vicinae
+        "blur on, ignore_alpha 0, match:namespace vicinae"
+        # Disable animations for vicinae
+        "no_anim on, match:namespace vicinae"
+      ];
+    };
   };
 }
