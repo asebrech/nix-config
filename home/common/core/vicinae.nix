@@ -8,7 +8,7 @@
   # Only enable on Linux with Wayland
   config = lib.mkIf (pkgs.stdenv.isLinux && osConfig.hostSpec.useWayland) {
     services.vicinae = {
-      enable = false; # Temporarily disabled - will re-enable after Cachix is active
+      enable = true;
       systemd = {
         enable = true;
         autoStart = false; # Let Hyprland start it with exec-once
