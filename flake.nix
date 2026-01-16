@@ -161,6 +161,14 @@
     };
 
     #
+    # ========= Launcher =========
+    #
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+      # Don't follow nixpkgs to use Cachix cache
+    };
+
+    #
     # ========= Personal Repositories =========
     #
     # Private secrets repo.  See ./docs/secretsmgmt.md

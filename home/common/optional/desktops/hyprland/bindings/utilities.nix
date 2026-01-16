@@ -7,11 +7,9 @@ in
   wayland.windowManager.hyprland.settings = {
     # Application launchers and menus
     bind = [
-      "SUPER, SPACE, exec, rofi -show drun"
-      "SUPER SHIFT, SPACE, exec, rofi -show run"
-      "SUPER, S, exec, rofi -show ssh"
-      "SUPER, TAB, exec, rofi -show window"
-      ", XF86Calculator, exec, gnome-calculator"
+      "SUPER, SPACE, exec, vicinae"
+      "SUPER, TAB, exec, vicinae windows"
+      ", XF86Calculator, exec, vicinae extensions calculator"
 
       # Terminal and common apps
       "SUPER, Return, exec, ${terminal}"

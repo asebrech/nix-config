@@ -24,6 +24,7 @@ in
     ./alacritty.nix
     ./nixos.nix
     ./ssh.nix
+    ./vicinae.nix
   ];
 
   inherit hostSpec;

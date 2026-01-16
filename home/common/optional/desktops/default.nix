@@ -8,7 +8,6 @@
     ########## Utilities ##########
     ./services/dunst.nix # Notification daemon
     ./waybar.nix # infobar
-    ./rofi.nix # app launcher
   ];
   home.packages = [
     pkgs.pulseaudio # add pulse audio to the user path
