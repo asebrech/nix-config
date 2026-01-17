@@ -5,6 +5,7 @@
 {
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false; # Manually configure defaults in matchBlocks
 
     # Global defaults for all hosts
     matchBlocks."*" = {
