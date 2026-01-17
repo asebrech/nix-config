@@ -110,6 +110,13 @@ in
       # Clipboard
       "SUPER, C, exec, wl-copy"
       "SUPER, V, exec, wl-paste"
+
+      # Media controls
+      ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
+      ", XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
+      ", XF86AudioPlay, exec, playerctl play-pause"
+      ", XF86AudioNext, exec, playerctl next"
+      ", XF86AudioPrev, exec, playerctl previous"
     ];
 
     # Resize bindings with repeat
@@ -126,15 +133,6 @@ in
       # Brightness controls
       ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
       ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
-    ];
-
-    # Media controls
-    bind = [
-      ", XF86AudioMute, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"
-      ", XF86AudioMicMute, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle"
-      ", XF86AudioPlay, exec, playerctl play-pause"
-      ", XF86AudioNext, exec, playerctl next"
-      ", XF86AudioPrev, exec, playerctl previous"
     ];
 
     # Mouse bindings
