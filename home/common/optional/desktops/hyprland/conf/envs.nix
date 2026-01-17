@@ -1,52 +1,46 @@
+# ML4W environment variables
+# Based on: https://github.com/mylinuxforwork/dotfiles
+# Adapted for 4K@2x scaling
 { ... }:
 {
   wayland.windowManager.hyprland.settings = {
-    # Cursor size (scaled for 2x display)
     env = [
+      # XDG Desktop Portal
+      "XDG_CURRENT_DESKTOP,Hyprland"
+      "XDG_SESSION_TYPE,wayland"
+      "XDG_SESSION_DESKTOP,Hyprland"
+
+      # Qt
+      "QT_QPA_PLATFORM,wayland;xcb"
+      "QT_QPA_PLATFORMTHEME,qt6ct"
+      "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+      "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+
+      # GDK (adjusted for 4K@2x)
+      "GDK_SCALE,2"
+      "GDK_DPI_SCALE,0.5"
+
+      # Toolkit Backend
+      "GDK_BACKEND,wayland,x11,*"
+      "CLUTTER_BACKEND,wayland"
+
+      # Mozilla
+      "MOZ_ENABLE_WAYLAND,1"
+
+      # Cursor size (adjusted for 4K@2x)
       "XCURSOR_SIZE,48"
       "HYPRCURSOR_SIZE,48"
 
-      # Scaling for GUI apps (2x for 4K with 2.0 monitor scale)
-      "GDK_SCALE,2"
-      "GDK_DPI_SCALE,0.5"
-      "QT_AUTO_SCREEN_SCALE_FACTOR,1"
-      "QT_SCALE_FACTOR,2"
-      "QT_ENABLE_HIGHDPI_SCALING,1"
-      "ELM_SCALE,2"
-
-      # Java apps scaling
-      "_JAVA_OPTIONS,-Dsun.java2d.uiScale=2"
-
-      # Wine apps scaling
-      "WINE_SCALE,2"
-
-      # Force all apps to use Wayland
-      "GDK_BACKEND,wayland,x11,*"
-      "QT_QPA_PLATFORM,wayland;xcb"
-      "CLUTTER_BACKEND,wayland"
-      "SDL_VIDEODRIVER,wayland"
-      "MOZ_ENABLE_WAYLAND,1"
-      "NIXOS_OZONE_WL,1"
-      "ELECTRON_OZONE_PLATFORM_HINT,wayland"
+      # Ozone
       "OZONE_PLATFORM,wayland"
-      "XDG_SESSION_TYPE,wayland"
-      "WLR_NO_HARDWARE_CURSORS,1"
+      "ELECTRON_OZONE_PLATFORM_HINT,wayland"
 
-      # Allow better support for screen sharing (Google Meet, Discord, etc)
-      "XDG_CURRENT_DESKTOP,Hyprland"
-      "XDG_SESSION_DESKTOP,Hyprland"
-
-      # Use XCompose file
-      "XCOMPOSEFILE,~/.XCompose"
+      # SDL
+      "SDL_VIDEODRIVER,wayland"
     ];
 
     xwayland = {
       force_zero_scaling = true;
-    };
-
-    ecosystem = {
-      no_update_news = true;
-      no_donation_nag = true;
     };
   };
 }
