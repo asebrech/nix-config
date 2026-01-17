@@ -13,7 +13,7 @@
       width = 3840;
       height = 2160;
       refreshRate = 60;
-      scale = 1.5; # Makes 4K comfortable (effective 2560x1440)
+      scale = 2.0; # Makes 4K feel like 1080p but crisp (effective 1920x1080)
       primary = true;
       x = 0;
       y = 0;
