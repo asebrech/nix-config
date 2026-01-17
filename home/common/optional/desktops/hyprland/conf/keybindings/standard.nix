@@ -3,7 +3,7 @@
 # Adapted for nix-config
 { osConfig, ... }:
 let
-  terminal = "alacritty";
+  terminal = "foot";
   editor = osConfig.hostSpec.defaultEditor or "nvim";
 in
 {

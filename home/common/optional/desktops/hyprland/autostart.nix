@@ -3,6 +3,9 @@
 {
   wayland.windowManager.hyprland.settings = {
     exec-once = [
+      # Vicinae server
+      "vicinae server"
+
       # Wallpaper with swww
       "${pkgs.swww}/bin/swww-daemon"
       "${pkgs.swww}/bin/swww img ${config.stylix.image}"
