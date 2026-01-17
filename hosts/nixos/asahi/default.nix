@@ -58,7 +58,7 @@
 
   # Enable auto-login for the primary user with greetd
   autoLogin = {
-    enable = true;
+    enable = false; # Disabled to see Plymouth boot splash
     username = config.hostSpec.username;
   };
 
