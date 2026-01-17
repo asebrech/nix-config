@@ -24,38 +24,13 @@
     ./xdph.nix # XDG Desktop Portal
   ];
 
-  # Additional packages for Hyprland
+  # Hyprland-specific packages
   home.packages = with pkgs; [
-    # Screenshot and color picker
-    unstable.grimblast
-    hyprpicker
-
-    # Clipboard manager
-    copyq
-
-    # Brightness control
-    brightnessctl
-
-    # Notification daemon (managed via systemd)
-    # dunst is configured in ../services/dunst.nix
-
-    # Audio control
-    pulseaudio # for pactl
-    pavucontrol
-
-    # Wayland utilities
-    wl-clipboard
-
-    # File manager
-    xfce.thunar
-
-    # Calculator
-    galculator
-
-    # Player control
-    playerctl
-
-    # Terminal
-    foot
+    unstable.grimblast # screenshot tool (used in keybindings)
+    hyprpicker # color picker (used in keybindings)
+    xfce.thunar # file manager (used in keybindings)
+    copyq # clipboard manager (used in autostart)
+    brightnessctl # brightness control (used in keybindings)
+    playerctl # player control (used in keybindings)
   ];
 }
