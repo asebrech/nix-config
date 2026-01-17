@@ -1,8 +1,12 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   programs.hyprlock = {
     enable = true;
     settings = {
+      general = {
+        ignore_empty_input = true;
+      };
+
       # Day label
       label = [
         {
@@ -86,6 +90,25 @@
           rotate = 0;
           xray = false;
           position = "0, -130";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+
+      # Input field (Style-10 layout, override Stylix)
+      input-field = lib.mkForce [
+        {
+          monitor = "";
+          size = "300, 60";
+          outline_thickness = 2;
+          dots_size = 0.2;
+          dots_spacing = 0.2;
+          dots_center = true;
+          fade_on_empty = false;
+          font_family = config.stylix.fonts.sansSerif.name;
+          placeholder_text = ''<i><span foreground="##ffffff99">🔒 Enter Pass</span></i>'';
+          hide_input = false;
+          position = "0, -210";
           halign = "center";
           valign = "center";
         }
