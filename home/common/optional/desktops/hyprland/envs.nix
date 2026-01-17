@@ -8,9 +8,17 @@
 
       # Scaling for GUI apps (2x for 4K with 2.0 monitor scale)
       "GDK_SCALE,2"
-      "GDK_DPI_SCALE,1"
+      "GDK_DPI_SCALE,0.5"
       "QT_AUTO_SCREEN_SCALE_FACTOR,1"
       "QT_SCALE_FACTOR,2"
+      "QT_ENABLE_HIGHDPI_SCALING,1"
+      "ELM_SCALE,2"
+
+      # Java apps scaling
+      "_JAVA_OPTIONS,-Dsun.java2d.uiScale=2"
+
+      # Wine apps scaling
+      "WINE_SCALE,2"
 
       # Force all apps to use Wayland
       "GDK_BACKEND,wayland,x11,*"
