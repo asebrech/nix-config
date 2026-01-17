@@ -1,5 +1,14 @@
-{ ... }:
+{ config, ... }:
 {
+  # Wallpaper service
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      preload = [ "${config.stylix.image}" ];
+      wallpaper = [ ",${config.stylix.image}" ]; # Apply to all monitors
+    };
+  };
+
   wayland.windowManager.hyprland.settings = {
     exec-once = [
       # Notification daemon (dunst is managed by systemd service)
