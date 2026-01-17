@@ -51,6 +51,7 @@ in
       enable = true;
       extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
         hypr-keybinds
+        nix
       ];
       systemd = {
         enable = true;
