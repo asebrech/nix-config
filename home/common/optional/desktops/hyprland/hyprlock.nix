@@ -1,6 +1,6 @@
 { config, ... }:
 {
-  # Let Stylix handle colors and wallpaper
+  # Let Stylix handle colors, wallpaper, and background
   stylix.targets.hyprlock = {
     enable = true;
     useWallpaper = true;
@@ -18,18 +18,6 @@
       general = {
         ignore_empty_input = true;
       };
-
-      # Background with Stylix wallpaper (blur from Style-10)
-      background = [
-        {
-          monitor = "";
-          blur_passes = 2;
-          contrast = 0.8916;
-          brightness = 0.8172;
-          vibrancy = 0.1696;
-          vibrancy_darkness = 0.0;
-        }
-      ];
 
       # Day label
       label = [
@@ -114,25 +102,6 @@
           rotate = 0;
           xray = false;
           position = "0, -130";
-          halign = "center";
-          valign = "center";
-        }
-      ];
-
-      # Input field (Stylix handles colors)
-      input-field = [
-        {
-          monitor = "";
-          size = "300, 60";
-          outline_thickness = 2;
-          dots_size = 0.2;
-          dots_spacing = 0.2;
-          dots_center = true;
-          fade_on_empty = false;
-          font_family = config.stylix.fonts.sansSerif.name;
-          placeholder_text = ''<i><span foreground="##ffffff99">🔒 Enter Pass</span></i>'';
-          hide_input = false;
-          position = "0, -210";
           halign = "center";
           valign = "center";
         }
