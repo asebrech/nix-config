@@ -7,7 +7,7 @@
 
     ########## Utilities ##########
     ./services/dunst.nix # Notification daemon
-    ./waybar.nix # infobar
+    ./waybar # infobar
   ];
   home.packages = [
     pkgs.pulseaudio # add pulse audio to the user path
