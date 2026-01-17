@@ -1,24 +1,8 @@
 { config, ... }:
 {
-  # Let Stylix handle colors, wallpaper, and background
-  stylix.targets.hyprlock = {
-    enable = true;
-    useWallpaper = true;
-  };
-
   programs.hyprlock = {
     enable = true;
-    importantPrefixes = [
-      "$"
-      "monitor"
-      "size"
-      "source"
-    ];
     settings = {
-      general = {
-        ignore_empty_input = true;
-      };
-
       # Day label
       label = [
         {
