@@ -26,7 +26,7 @@ in
         margin-bottom = 0;
         margin-left = 0;
         margin-right = 0;
-        spacing = 0;
+        spacing = 10;
         height = 52;
 
         # Modules Layout (ML4W minimal theme)
