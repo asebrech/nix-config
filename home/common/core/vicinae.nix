@@ -2,6 +2,7 @@
   pkgs,
   lib,
   osConfig,
+  inputs,
   ...
 }:
 {
@@ -9,6 +10,9 @@
   config = lib.mkIf (pkgs.stdenv.isLinux && osConfig.hostSpec.useWayland) {
     services.vicinae = {
       enable = true;
+      extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+        hypr-keybinds
+      ];
       systemd = {
         enable = true;
         autoStart = false; # Let Hyprland start it with exec-once
@@ -22,7 +26,7 @@
         font = {
           normal = {
             size = 12;
-            normal = "JetBrainsMono Nerd Font";
+            normal = osConfig.stylix.fonts.monospace.name;
           };
         };
         launcher_window = {

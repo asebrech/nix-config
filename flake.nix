@@ -167,6 +167,10 @@
       url = "github:vicinaehq/vicinae";
       # Don't follow nixpkgs to use Cachix cache
     };
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     #
     # ========= Personal Repositories =========
