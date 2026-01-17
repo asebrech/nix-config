@@ -18,6 +18,9 @@ in
       enable = true;
     };
 
+    # Font sizing for HiDPI (Stylix handles colors)
+    style = builtins.readFile ./style.css;
+
     # Main configuration based on ML4W minimal theme
     settings = {
       mainBar = {

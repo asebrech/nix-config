@@ -1,0 +1,30 @@
+/* Font sizing for HiDPI - Stylix handles all colors */
+
+* {
+    font-size: 18px;
+}
+
+#workspaces button {
+    padding: 0 14px;
+    font-size: 18px;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#bluetooth,
+#language,
+#power-profiles-daemon {
+    padding: 0 14px;
+    font-size: 18px;
+}
+
+#tray {
+    padding: 0 14px;
+}
