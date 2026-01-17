@@ -33,9 +33,7 @@
       # Vicinae integration
       exec-once = [ "vicinae server" ];
       layerrule = [
-        # Blur for vicinae
         "blur on, ignore_alpha 0, match:namespace vicinae"
-        # Disable animations for vicinae
         "no_anim on, match:namespace vicinae"
       ];
     };
