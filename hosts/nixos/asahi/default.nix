@@ -37,6 +37,7 @@
       "hosts/common/optional/audio.nix" # pipewire and cli controls
       "hosts/common/optional/hyprland.nix" # hyprland window manager
       "hosts/common/optional/wayland.nix" # wayland packages
+      "hosts/common/optional/plymouth.nix" # boot splash screen
     ])
   ];
 
