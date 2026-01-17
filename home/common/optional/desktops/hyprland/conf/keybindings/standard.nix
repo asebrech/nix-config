@@ -77,7 +77,7 @@ in
       "SUPER SHIFT, apostrophe, changegroupactive, b"
 
       # Application launchers
-      "SUPER, SPACE, exec, rofi -show drun"
+      "SUPER, SPACE, exec, vicinae toggle"
       "SUPER, Return, exec, ${terminal}"
       "CTRL SUPER, V, exec, ${terminal} ${editor}"
       "CTRL SUPER, F, exec, thunar"
