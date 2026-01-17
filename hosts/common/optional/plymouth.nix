@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   ...
 }:
 {
@@ -11,7 +12,14 @@
 
     plymouth = {
       enable = true;
-      # Theme will be automatically set by Stylix
+      # Note: Stylix will override this theme with its own styling if it has plymouth support
+      # Otherwise we fall back to this default theme
+      theme = lib.mkDefault "hexagon_hud";
+      themePackages = lib.mkDefault [
+        (pkgs.adi1090x-plymouth-themes.override {
+          selected_themes = [ "hexagon_hud" ];
+        })
+      ];
     };
 
     # Reduce console log level for cleaner boot
