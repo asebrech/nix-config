@@ -21,6 +21,9 @@ in
       autoEnable = true; # Auto-enable styling for all supported targets
       polarity = "dark";
 
+      # Disable desktop environments we don't use
+      targets.gnome.enable = false;
+
       # Wallpaper - can be overridden per-host via hostSpec.wallpaper
       image = lib.mkDefault (
         if config.hostSpec ? wallpaper && config.hostSpec.wallpaper != "" then
