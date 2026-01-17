@@ -25,7 +25,7 @@
     initrd.systemd.enable = true;
 
     # Hide bootloader menu (press any key during boot to show it)
-    loader.timeout = 0;
+    loader.timeout = lib.mkDefault 0;
   };
 
   # Increase configuration limit when using plymouth
