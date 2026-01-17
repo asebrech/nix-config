@@ -95,7 +95,7 @@
         }
       ];
 
-      # Input field (Style-10 layout, override Stylix)
+      # Input field (Style-10 layout with Stylix colors)
       input-field = lib.mkForce [
         {
           monitor = "";
@@ -104,6 +104,10 @@
           dots_size = 0.2;
           dots_spacing = 0.2;
           dots_center = true;
+          # Use Stylix colors instead of hardcoded grays
+          outer_color = "rgba(${config.lib.stylix.colors.base05-rgb-r}, ${config.lib.stylix.colors.base05-rgb-g}, ${config.lib.stylix.colors.base05-rgb-b}, 0)";
+          inner_color = "rgba(${config.lib.stylix.colors.base00-rgb-r}, ${config.lib.stylix.colors.base00-rgb-g}, ${config.lib.stylix.colors.base00-rgb-b}, 0.5)";
+          font_color = "rgb(${config.lib.stylix.colors.base05-rgb-r}, ${config.lib.stylix.colors.base05-rgb-g}, ${config.lib.stylix.colors.base05-rgb-b})";
           fade_on_empty = false;
           font_family = config.stylix.fonts.sansSerif.name;
           placeholder_text = ''<i><span foreground="##ffffff99">🔒 Enter Pass</span></i>'';
