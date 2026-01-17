@@ -34,17 +34,17 @@ in
   "${mainMod}, up" = "movefocus, u";
   "${mainMod}, down" = "movefocus, d";
 
-  # Move windows with mainMod + SHIFT + arrow keys
-  "${mainMod} SHIFT, left" = "movewindow, l";
-  "${mainMod} SHIFT, right" = "movewindow, r";
-  "${mainMod} SHIFT, up" = "movewindow, u";
-  "${mainMod} SHIFT, down" = "movewindow, d";
+  # Move windows with mainMod + ALT + arrow keys (changed from SHIFT to avoid conflict)
+  "${mainMod} ALT, left" = "movewindow, l";
+  "${mainMod} ALT, right" = "movewindow, r";
+  "${mainMod} ALT, up" = "movewindow, u";
+  "${mainMod} ALT, down" = "movewindow, d";
 
-  # Swap windows with mainMod + ALT + arrow keys
-  "${mainMod} ALT, left" = "swapwindow, l";
-  "${mainMod} ALT, right" = "swapwindow, r";
-  "${mainMod} ALT, up" = "swapwindow, u";
-  "${mainMod} ALT, down" = "swapwindow, d";
+  # Swap windows with mainMod + CTRL + arrow keys
+  "${mainMod} CTRL, left" = "swapwindow, l";
+  "${mainMod} CTRL, right" = "swapwindow, r";
+  "${mainMod} CTRL, up" = "swapwindow, u";
+  "${mainMod} CTRL, down" = "swapwindow, d";
 
   # Resize windows with mainMod + SHIFT + arrow keys
   "${mainMod} SHIFT, right" = "resizeactive, 100 0";
