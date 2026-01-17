@@ -1,5 +1,11 @@
-{ config, ... }:
+{ ... }:
 {
+  # Let Stylix handle all theming (colors, wallpaper, fonts)
+  stylix.targets.hyprlock = {
+    enable = true;
+    useWallpaper = true;
+  };
+
   programs.hyprlock = {
     enable = true;
     importantPrefixes = [
@@ -13,18 +19,11 @@
         ignore_empty_input = true;
       };
 
-      background = [
-        {
-          monitor = "";
-          path = "${config.stylix.image}"; # Stylix wallpaper
-          blur_passes = 3;
-        }
-      ];
-
       animations = {
         enabled = false;
       };
 
+      # Additional input-field configuration (Stylix provides base config)
       input-field = [
         {
           monitor = "";
@@ -33,10 +32,7 @@
           halign = "center";
           valign = "center";
 
-          # Colors handled by Stylix
           outline_thickness = 4;
-
-          font_family = config.stylix.fonts.monospace.name;
 
           placeholder_text = "Enter Password";
           fail_text = "<i>$FAIL ($ATTEMPTS)</i>";
