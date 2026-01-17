@@ -1,16 +1,11 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
-  # Wallpaper service
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      preload = [ "${config.stylix.image}" ];
-      wallpaper = [ ",${config.stylix.image}" ]; # Apply to all monitors
-    };
-  };
-
   wayland.windowManager.hyprland.settings = {
     exec-once = [
+      # Wallpaper with swww
+      "${pkgs.swww}/bin/swww-daemon"
+      "${pkgs.swww}/bin/swww img ${config.stylix.image}"
+
       # Notification daemon (dunst is managed by systemd service)
       # Status bar (waybar is managed by systemd service)
 
