@@ -1,67 +1,61 @@
-{
-  pkgs,
-  lib,
-  ...
-}:
-
+# Hyprland window manager configuration
+# ML4W-inspired modular structure adapted for NixOS
+# Theming handled by Stylix
+{ pkgs, ... }:
 {
   imports = [
-    # Environment variables (cursor, scaling, wayland)
-    ./conf/envs.nix
+    # Core Hyprland configuration
+    ./hyprland.nix
 
-    # Monitor configuration
-    ./conf/monitors.nix
-
-    # Autostart applications
-    ./autostart.nix
+    # Configuration modules (import selectors)
+    ./conf/animations # Animation styles
+    ./conf/decorations # Window decorations
+    ./conf/windows # Window layout and gaps
+    ./conf/keybindings # Keybindings
+    ./conf/monitors # Monitor configuration
+    ./conf/environments # Environment variables
+    ./conf/windowrules # Window rules
 
     # Hyprland utilities
-    ./hyprlock.nix
-    ./hypridle.nix
-    ./xdph.nix
-    ./wlogout.nix
+    ./hypridle.nix # Idle management
+    ./hyprlock.nix # Lock screen
+    ./hyprpaper.nix # Wallpaper engine
+    ./autostart.nix # Autostart applications
+    ./xdph.nix # XDG Desktop Portal
   ];
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = pkgs.unstable.hyprland;
-    systemd = {
-      enable = true;
-      variables = [ "--all" ];
-    };
+  # Additional packages for Hyprland
+  home.packages = with pkgs; [
+    # Screenshot and color picker
+    unstable.grimblast
+    hyprpicker
 
-    settings = {
-      # General window layout (ML4W style)
-      general = import ./conf/general.nix;
+    # Clipboard manager
+    copyq
 
-      # Decorations (ML4W style)
-      decoration = import ./conf/decorations.nix;
+    # Brightness control
+    brightnessctl
 
-      # Animations (ML4W End-4 style)
-      animations = import ./conf/animations.nix;
+    # Notification daemon (managed via systemd)
+    # dunst is configured in ../services/dunst.nix
 
-      # Input settings
-      input = import ./conf/input.nix;
+    # Audio control
+    pulseaudio # for pactl
+    pavucontrol
 
-      # Layouts
-      inherit (import ./conf/layouts.nix) dwindle master binds;
+    # Wayland utilities
+    wl-clipboard
 
-      # Misc settings
-      misc = import ./conf/misc.nix;
+    # File manager
+    xfce.thunar
 
-      # Keybindings (ML4W adapted)
-      bind = lib.mapAttrsToList (key: cmd: "${key}, ${cmd}") (
-        import ./conf/keybindings.nix { inherit pkgs; }
-      );
+    # Calculator
+    galculator
 
-      # Mouse bindings
-      bindm = [
-        "SUPER, mouse:272, movewindow"
-        "SUPER, mouse:273, resizewindow"
-      ];
+    # Player control
+    playerctl
 
-      # Window rules (ML4W adapted)
-      windowrule = import ./conf/windowrules.nix;
-    };
-  };
+    # Terminal
+    foot
+  ];
 }

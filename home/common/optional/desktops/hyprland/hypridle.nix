@@ -1,3 +1,5 @@
+# Hypridle - Idle management daemon
+# Automatically locks screen and manages power
 { ... }:
 {
   services.hypridle = {

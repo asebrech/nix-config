@@ -1,20 +1,13 @@
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [
-    # Packages with custom configs go here
-
+    # Hyprland window manager (ML4W-inspired structure)
     ./hyprland
 
     ########## Utilities ##########
     ./services/dunst.nix # Notification daemon
-    ./waybar # infobar
+    ./waybar # Status bar
   ];
-  home.packages = [
-    pkgs.pulseaudio # add pulse audio to the user path
-    pkgs.pavucontrol # gui for pulseaudio server and volume controls
-    pkgs.wl-clipboard # wayland copy and paste
-    pkgs.galculator # gtk based calculator
-    pkgs.unstable.grimblast # screenshot tool
-    pkgs.foot # lightweight wayland terminal without GPU acceleration
-  ];
+
+  # Note: Hyprland-specific packages are now managed in ./hyprland/default.nix
 }

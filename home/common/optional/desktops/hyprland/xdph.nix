@@ -1,3 +1,4 @@
+# XDG Desktop Portal configuration for Hyprland
 {
   config,
   pkgs,

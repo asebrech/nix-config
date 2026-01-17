@@ -1,8 +1,15 @@
-# ML4W misc settings
-
+# Miscellaneous Hyprland settings
+{ ... }:
 {
-  disable_hyprland_logo = true;
-  disable_splash_rendering = true;
-  initial_workspace_tracking = 1;
-  allow_session_lock_restore = true;
+  wayland.windowManager.hyprland.settings = {
+    misc = {
+      disable_hyprland_logo = true;
+      disable_splash_rendering = true;
+      mouse_move_enables_dpms = true;
+      key_press_enables_dpms = true;
+      vrr = 0;
+      enable_swallow = true;
+      swallow_regex = "^(alacritty|kitty|foot)$";
+    };
+  };
 }

@@ -1,6 +1,5 @@
-# ML4W environment variables
+# Standard environment variables from ML4W
 # Based on: https://github.com/mylinuxforwork/dotfiles
-# Adapted for 4K@2x scaling
 { ... }:
 {
   wayland.windowManager.hyprland.settings = {
@@ -12,24 +11,21 @@
 
       # Qt
       "QT_QPA_PLATFORM,wayland;xcb"
-      "QT_QPA_PLATFORMTHEME,qt6ct"
       "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
       "QT_AUTO_SCREEN_SCALE_FACTOR,1"
 
-      # GDK (adjusted for 4K@2x)
-      "GDK_SCALE,2"
-      "GDK_DPI_SCALE,0.5"
+      # GDK
+      "GDK_BACKEND,wayland,x11,*"
 
       # Toolkit Backend
-      "GDK_BACKEND,wayland,x11,*"
       "CLUTTER_BACKEND,wayland"
 
       # Mozilla
       "MOZ_ENABLE_WAYLAND,1"
 
-      # Cursor size (adjusted for 4K@2x)
-      "XCURSOR_SIZE,48"
-      "HYPRCURSOR_SIZE,48"
+      # Cursor
+      "XCURSOR_SIZE,24"
+      "HYPRCURSOR_SIZE,24"
 
       # Ozone
       "OZONE_PLATFORM,wayland"
@@ -37,6 +33,11 @@
 
       # SDL
       "SDL_VIDEODRIVER,wayland"
+
+      # NVIDIA (if needed, uncomment)
+      # "LIBVA_DRIVER_NAME,nvidia"
+      # "GBM_BACKEND,nvidia-drm"
+      # "__GLX_VENDOR_LIBRARY_NAME,nvidia"
     ];
 
     xwayland = {

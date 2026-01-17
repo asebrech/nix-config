@@ -1,6 +1,7 @@
-{ config, lib, ... }:
+# Hyprlock - Lock screen
+# Layout from ML4W, colors handled by Stylix
+{ config, ... }:
 {
-  # Style based on: https://github.com/MrVivekRajan/Hyprlock-Styles/tree/main/Style-3
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -8,7 +9,7 @@
         ignore_empty_input = true;
       };
 
-      # Style-3 labels
+      # Labels (ML4W layout)
       label = [
         # Day-Month-Date
         {
@@ -57,8 +58,8 @@
         }
       ];
 
-      # Input field (Style-3 layout with Stylix colors)
-      input-field = lib.mkForce [
+      # Input field (layout only, Stylix handles colors)
+      input-field = [
         {
           monitor = "";
           size = "300, 60";
@@ -66,13 +67,9 @@
           dots_size = 0.2;
           dots_spacing = 0.2;
           dots_center = true;
-          # Use Stylix colors
-          outer_color = "rgba(0, 0, 0, 0)";
-          inner_color = "rgba(${config.lib.stylix.colors.base00-rgb-r}, ${config.lib.stylix.colors.base00-rgb-g}, ${config.lib.stylix.colors.base00-rgb-b}, 0.5)";
-          font_color = "rgb(${config.lib.stylix.colors.base05-rgb-r}, ${config.lib.stylix.colors.base05-rgb-g}, ${config.lib.stylix.colors.base05-rgb-b})";
           fade_on_empty = false;
           font_family = config.stylix.fonts.sansSerif.name;
-          placeholder_text = ''<i><span foreground="##ffffff99">Enter Pass</span></i>'';
+          placeholder_text = ''<i><span>Enter Password</span></i>'';
           hide_input = false;
           position = "0, -210";
           halign = "center";
@@ -80,10 +77,12 @@
         }
       ];
 
+      # Animations
       animations = {
-        enabled = false;
+        enabled = true;
       };
 
+      # Authentication
       auth = {
         "fingerprint:enabled" = true;
       };
