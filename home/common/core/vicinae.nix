@@ -6,24 +6,11 @@
   ...
 }:
 let
-  # Map Stylix base16 theme names to Vicinae theme names
+  # Map Stylix base16 theme names to Vicinae theme names (only when different)
   # Vicinae themes: https://github.com/vicinaehq/vicinae/tree/main/extra/themes
   # Base16 themes: https://github.com/tinted-theming/schemes/tree/main/base16
   stylixToVicinae = {
-    # Ayu
-    "ayu-dark" = "ayu-dark";
-    "ayu-mirage" = "ayu-mirage";
-
-    # Catppuccin
-    "catppuccin-frappe" = "catppuccin-frappe";
-    "catppuccin-latte" = "catppuccin-latte";
-    "catppuccin-macchiato" = "catppuccin-macchiato";
-    "catppuccin-mocha" = "catppuccin-mocha";
-
-    # Dracula
-    "dracula" = "dracula";
-
-    # Gruvbox
+    # Gruvbox variants → simplified names
     "gruvbox-dark-hard" = "gruvbox-dark";
     "gruvbox-dark-medium" = "gruvbox-dark";
     "gruvbox-dark-pale" = "gruvbox-dark";
@@ -38,30 +25,13 @@ let
     "gruvbox-material-light-medium" = "gruvbox-light";
     "gruvbox-material-light-soft" = "gruvbox-light";
 
-    # Kanagawa
-    "kanagawa" = "kanagawa";
-
-    # Nord
-    "nord" = "nord";
-    "nord-light" = "nord-light";
-
-    # One Dark
+    # One Dark variants
     "onedark" = "one-dark";
     "onedark-dark" = "one-dark";
 
-    # Rosé Pine
-    "rose-pine" = "rose-pine";
-    "rose-pine-dawn" = "rose-pine-dawn";
-    "rose-pine-moon" = "rose-pine-moon";
-
-    # Solarized
-    "solarized-dark" = "solarized-dark";
-    "solarized-light" = "solarized-light";
-
-    # Tokyo Night
+    # Tokyo Night variants
     "tokyo-night-dark" = "tokyo-night";
     "tokyo-night-light" = "tokyo-night";
-    "tokyo-night-storm" = "tokyo-night-storm";
     "tokyo-night-terminal-dark" = "tokyo-night";
     "tokyo-night-terminal-light" = "tokyo-night";
     "tokyo-night-terminal-storm" = "tokyo-night-storm";
@@ -71,8 +41,8 @@ let
     "tokyo-city-terminal-light" = "tokyo-night";
   };
 
-  # Get the Vicinae theme name from Stylix theme, fallback to tokyo-night
-  vicinaeTheme = stylixToVicinae.${osConfig.hostSpec.theme} or "tokyo-night";
+  # Get the Vicinae theme name from Stylix theme, use same name if not mapped
+  vicinaeTheme = stylixToVicinae.${osConfig.hostSpec.theme} or osConfig.hostSpec.theme;
 in
 {
   # Only enable on Linux with Wayland
