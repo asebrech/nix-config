@@ -5,6 +5,18 @@
   inputs,
   ...
 }:
+let
+  # Map Stylix base16 theme names to Vicinae theme names
+  stylixToVicinae = {
+    "tokyo-night-dark" = "Tokyo Night";
+    "gruvbox-dark-hard" = "Gruvbox Dark";
+    "catppuccin-mocha" = "Catppuccin Mocha";
+    # Add more mappings as needed
+  };
+
+  # Get the Vicinae theme name from Stylix theme, fallback to Tokyo Night
+  vicinaeTheme = stylixToVicinae.${osConfig.hostSpec.theme} or "Tokyo Night";
+in
 {
   # Only enable on Linux with Wayland
   config = lib.mkIf (pkgs.stdenv.isLinux && osConfig.hostSpec.useWayland) {
@@ -27,6 +39,12 @@
           normal = {
             size = 12;
             normal = osConfig.stylix.fonts.monospace.name;
+          };
+        };
+        theme = {
+          dark = {
+            name = vicinaeTheme;
+            icon_theme = "default";
           };
         };
         launcher_window = {
