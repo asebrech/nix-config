@@ -1,5 +1,5 @@
 # Hyprlock - Lock screen
-# Layout from ML4W, colors handled by Stylix
+# Layout from ML4W, colors and input-field handled by Stylix
 { config, ... }:
 {
   programs.hyprlock = {
@@ -58,24 +58,8 @@
         }
       ];
 
-      # Input field (layout only, Stylix handles colors)
-      input-field = [
-        {
-          monitor = "";
-          size = "300, 60";
-          outline_thickness = 2;
-          dots_size = 0.2;
-          dots_spacing = 0.2;
-          dots_center = true;
-          fade_on_empty = false;
-          font_family = config.stylix.fonts.sansSerif.name;
-          placeholder_text = ''<i><span>Enter Password</span></i>'';
-          hide_input = false;
-          position = "0, -210";
-          halign = "center";
-          valign = "center";
-        }
-      ];
+      # Note: input-field is configured by Stylix
+      # Stylix will automatically theme and position the input field
 
       # Animations
       animations = {
