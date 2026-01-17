@@ -22,6 +22,6 @@
     enabled = true;
     range = 32;
     render_power = 2;
-    color = "rgba(00000050)";
+    # color managed by Stylix
   };
 }
