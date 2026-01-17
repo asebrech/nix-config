@@ -22,7 +22,7 @@
 
   "wlr/taskbar" = {
     format = "{icon}";
-    icon-size = 24;
+    icon-size = 28;
     tooltip-format = "{title}";
     on-click = "activate";
     on-click-middle = "close";
@@ -51,7 +51,7 @@
   };
 
   tray = {
-    icon-size = 24;
+    icon-size = 28;
     spacing = 20;
   };
 
