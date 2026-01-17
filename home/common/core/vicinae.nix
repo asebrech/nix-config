@@ -8,9 +8,6 @@
 {
   # Only enable on Linux with Wayland
   config = lib.mkIf (pkgs.stdenv.isLinux && osConfig.hostSpec.useWayland) {
-    # Let Stylix handle theming automatically
-    stylix.targets.vicinae.enable = true;
-
     services.vicinae = {
       enable = true;
       extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
