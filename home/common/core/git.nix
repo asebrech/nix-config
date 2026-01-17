@@ -21,8 +21,12 @@
       ".direnv"
     ];
 
-    userName = "asebrech";
-    userEmail = "alois.sebrechts@gmail.com";
+    settings = {
+      user = {
+        name = "asebrech";
+        email = "alois.sebrechts@gmail.com";
+      };
+    };
 
   };
 

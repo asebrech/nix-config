@@ -18,6 +18,7 @@ in
   config = lib.mkIf config.hostSpec.isAutoStyled {
     stylix = {
       enable = true;
+      enableReleaseChecks = false; # Using master branch for vicinae support
       autoEnable = true; # Auto-enable styling for all supported targets
       polarity = "dark";
 
