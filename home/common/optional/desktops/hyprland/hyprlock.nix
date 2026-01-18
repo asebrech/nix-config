@@ -3,6 +3,7 @@
 # Colors handled by Stylix, layout and structure from ML4W
 {
   config,
+  lib,
   ...
 }:
 let
@@ -17,7 +18,44 @@ in
         ignore_empty_input = true;
       };
 
-      # Note: background and input-field are configured by Stylix
+      # Note: background is configured by Stylix
+
+      # Input field - ML4W layout with Stylix colors
+      input-field = lib.mkForce [
+        {
+          monitor = "";
+          size = "200, 50";
+          dots_size = 0.33;
+          dots_spacing = 0.15;
+          dots_center = true;
+          dots_rounding = -1;
+          inner_color = "rgb(${colors.base0D})"; # Primary accent
+          font_color = "rgb(${colors.base05})"; # Foreground
+          font_family = config.stylix.fonts.sansSerif.name;
+          outer_color = "rgb(${colors.base05})"; # Foreground
+          outline_thickness = 3;
+          fade_on_empty = true;
+          fade_timeout = 1000;
+          placeholder_text = "<i>Input Password...</i>";
+          hide_input = false;
+          rounding = 10;
+          check_color = "rgb(${colors.base0D})"; # Primary accent
+          fail_color = "rgb(${colors.base08})"; # Error/red
+          fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>";
+          capslock_color = -1;
+          numlock_color = -1;
+          bothlock_color = -1;
+          invert_numlock = false;
+          swap_font_color = false;
+          position = "0, -20";
+          halign = "center";
+          valign = "center";
+          shadow_passes = 10;
+          shadow_size = 20;
+          shadow_color = "rgb(${colors.base00})"; # Shadow
+          shadow_boost = 1.6;
+        }
+      ];
 
       # Clock label (top right)
       label = [
