@@ -41,6 +41,7 @@ in
   hostSpec = {
     username = "alois";
     handle = "asebrech";
+    userAvatar = ../../../assets/avatar.jpg;
     # Modify the attribute sets hostSpec will inherit from your nix-secrets.
     # If you're not using nix-secrets then remove the following six lines below.
     inherit (inputs.nix-secrets)

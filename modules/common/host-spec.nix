@@ -122,6 +122,11 @@
           default = "";
           description = "Path or URL to wallpaper image for stylix";
         };
+        userAvatar = lib.mkOption {
+          type = lib.types.either lib.types.path lib.types.str;
+          default = "";
+          description = "Path to user avatar image for hyprlock";
+        };
         useNeovimTerminal = lib.mkOption {
           type = lib.types.bool;
           default = false;

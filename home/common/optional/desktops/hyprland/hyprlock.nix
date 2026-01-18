@@ -78,7 +78,7 @@
       image = [
         {
           monitor = "";
-          path = "${config.stylix.image}";
+          path = "${config.hostSpec.userAvatar}";
           size = 280;
           rounding = 40;
           border_size = 4;
