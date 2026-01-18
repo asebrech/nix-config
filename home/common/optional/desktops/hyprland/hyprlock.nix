@@ -10,15 +10,7 @@
         ignore_empty_input = true;
       };
 
-      # Background - uses screenshot with blur (Stylix manages wallpaper)
-      background = [
-        {
-          monitor = "";
-          path = "screenshot";
-          blur_passes = 3;
-          blur_size = 8;
-        }
-      ];
+      # Note: background is configured by Stylix
 
       # Input field - ML4W layout, Stylix colors
       input-field = [
