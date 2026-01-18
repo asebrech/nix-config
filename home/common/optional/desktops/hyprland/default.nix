@@ -16,6 +16,9 @@
     ./conf/environments # Environment variables
     ./conf/windowrules # Window rules
     ./conf/autostart.nix # Autostart applications
+    ./conf/keyboard.nix # Keyboard and input settings
+    ./conf/cursor.nix # Cursor configuration
+    ./conf/misc.nix # Miscellaneous settings
 
     # Hyprland utilities
     ./hypridle.nix # Idle management
