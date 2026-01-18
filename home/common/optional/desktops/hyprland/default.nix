@@ -15,11 +15,11 @@
     ./conf/monitors # Monitor configuration
     ./conf/environments # Environment variables
     ./conf/windowrules # Window rules
+    ./conf/autostart.nix # Autostart applications
 
     # Hyprland utilities
     ./hypridle.nix # Idle management
     ./hyprlock.nix # Lock screen
-    ./autostart.nix # Autostart applications
   ];
 
   # Hyprland-specific packages
@@ -28,7 +28,7 @@
     unstable.grimblast # screenshot tool (used in keybindings)
     hyprpicker # color picker (used in keybindings)
     xfce.thunar # file manager (used in keybindings)
-    copyq # clipboard manager (used in autostart)
+    cliphist # clipboard history (used in autostart)
     brightnessctl # brightness control (used in keybindings)
     playerctl # player control (used in keybindings)
   ];
