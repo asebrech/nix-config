@@ -39,7 +39,7 @@ in
           placeholder_text = "<i>Input Password...</i>";
           hide_input = false;
           rounding = 10;
-          check_color = "rgb(${colors.base0B})"; # Green for success
+          check_color = "rgb(${colors.base0D})"; # Primary accent for checking
           fail_color = "rgb(${colors.base08})"; # Error/red
           fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>";
           capslock_color = -1;
