@@ -19,13 +19,12 @@
     # Hyprland utilities
     ./hypridle.nix # Idle management
     ./hyprlock.nix # Lock screen
-    ./hyprpaper.nix # Wallpaper engine
     ./autostart.nix # Autostart applications
-    ./xdph.nix # XDG Desktop Portal
   ];
 
   # Hyprland-specific packages
   home.packages = with pkgs; [
+    swww # wallpaper daemon (used in autostart)
     unstable.grimblast # screenshot tool (used in keybindings)
     hyprpicker # color picker (used in keybindings)
     xfce.thunar # file manager (used in keybindings)

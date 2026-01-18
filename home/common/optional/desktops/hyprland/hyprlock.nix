@@ -1,5 +1,6 @@
-# Hyprlock - Lock screen
-# Layout from ML4W, colors and input-field handled by Stylix
+# Hyprlock - Lock screen configuration
+# Adapted from ML4W dotfiles: https://github.com/mylinuxforwork/dotfiles
+# Colors handled by Stylix, layout and structure from ML4W
 { config, ... }:
 {
   programs.hyprlock = {
@@ -9,67 +10,92 @@
         ignore_empty_input = true;
       };
 
-      # Labels (ML4W layout)
+      # Background - uses screenshot with blur (Stylix manages wallpaper)
+      background = [
+        {
+          monitor = "";
+          path = "screenshot";
+          blur_passes = 3;
+          blur_size = 8;
+        }
+      ];
+
+      # Input field - ML4W layout, Stylix colors
+      input-field = [
+        {
+          monitor = "";
+          size = "200, 50";
+          dots_size = 0.33;
+          dots_spacing = 0.15;
+          dots_center = true;
+          dots_rounding = -1;
+          font_family = config.stylix.fonts.sansSerif.name;
+          outline_thickness = 3;
+          fade_on_empty = true;
+          fade_timeout = 1000;
+          placeholder_text = "<i>Input Password...</i>";
+          hide_input = false;
+          rounding = 10;
+          fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>";
+          capslock_color = -1;
+          numlock_color = -1;
+          bothlock_color = -1;
+          invert_numlock = false;
+          swap_font_color = false;
+          position = "0, -20";
+          halign = "center";
+          valign = "center";
+          shadow_passes = 10;
+          shadow_size = 20;
+          shadow_boost = 1.6;
+        }
+      ];
+
+      # Clock label (top right)
       label = [
-        # Day-Month-Date
         {
           monitor = "";
-          text = ''cmd[update:1000] echo -e "$(date +"%A, %B %d")"'';
-          font_size = 25;
+          text = ''cmd[update:1000] echo "$TIME"'';
+          font_size = 70;
           font_family = config.stylix.fonts.sansSerif.name;
-          position = "0, 350";
-          halign = "center";
-          valign = "center";
+          position = "-50, 20";
+          halign = "right";
+          valign = "bottom";
+          shadow_passes = 5;
+          shadow_size = 10;
         }
-        # Time
+        # User label (below clock)
         {
           monitor = "";
-          text = ''cmd[update:1000] echo "<span>$(date +"%I:%M")</span>"'';
-          font_size = 120;
+          text = "$USER";
+          font_size = 20;
           font_family = config.stylix.fonts.sansSerif.name;
-          position = "0, 250";
-          halign = "center";
-          valign = "center";
-        }
-        # User label
-        {
-          monitor = "";
-          text = "    $USER";
-          font_size = 18;
-          font_family = config.stylix.fonts.sansSerif.name;
-          position = "0, -130";
-          halign = "center";
-          valign = "center";
+          position = "-50, 120";
+          halign = "right";
+          valign = "bottom";
+          shadow_passes = 5;
+          shadow_size = 10;
         }
       ];
 
-      # User box shape
-      shape = [
+      # Profile image (centered above input)
+      image = [
         {
           monitor = "";
-          size = "300, 60";
-          rounding = -1;
-          border_size = 0;
+          path = "${config.stylix.image}";
+          size = 280;
+          rounding = 40;
+          border_size = 4;
           rotate = 0;
-          xray = false;
-          position = "0, -130";
+          reload_time = -1;
+          position = "0, 200";
           halign = "center";
           valign = "center";
+          shadow_passes = 10;
+          shadow_size = 20;
+          shadow_boost = 1.6;
         }
       ];
-
-      # Note: input-field is configured by Stylix
-      # Stylix will automatically theme and position the input field
-
-      # Animations
-      animations = {
-        enabled = true;
-      };
-
-      # Authentication
-      auth = {
-        "fingerprint:enabled" = true;
-      };
     };
   };
 }
