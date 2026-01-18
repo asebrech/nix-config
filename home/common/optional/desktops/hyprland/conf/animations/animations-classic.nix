@@ -1,5 +1,5 @@
-# Smooth animations
-# Slower, more fluid animations
+# Classic animations
+# Adapted from ML4W dotfiles: https://github.com/mylinuxforwork/dotfiles
 { ... }:
 {
   wayland.windowManager.hyprland.settings = {

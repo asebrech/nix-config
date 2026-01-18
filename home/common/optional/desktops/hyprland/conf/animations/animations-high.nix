@@ -1,5 +1,5 @@
-# End-4 style animations
-# Smoother, more polished animations
+# High animations
+# Adapted from ML4W dotfiles: https://github.com/mylinuxforwork/dotfiles
 { ... }:
 {
   wayland.windowManager.hyprland.settings = {
