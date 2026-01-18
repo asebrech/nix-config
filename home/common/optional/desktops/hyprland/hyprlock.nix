@@ -3,6 +3,12 @@
 # Colors handled by Stylix, layout and structure from ML4W
 { config, ... }:
 {
+  # Stylix handles colors and base styling
+  stylix.targets.hyprlock = {
+    enable = true;
+    useWallpaper = true;
+  };
+
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -12,7 +18,7 @@
 
       # Note: background is configured by Stylix
 
-      # Input field - ML4W layout, Stylix colors
+      # Input field - ML4W layout with Stylix colors overridden
       input-field = [
         {
           monitor = "";
@@ -29,11 +35,6 @@
           hide_input = false;
           rounding = 10;
           fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>";
-          capslock_color = -1;
-          numlock_color = -1;
-          bothlock_color = -1;
-          invert_numlock = false;
-          swap_font_color = false;
           position = "0, -20";
           halign = "center";
           valign = "center";
