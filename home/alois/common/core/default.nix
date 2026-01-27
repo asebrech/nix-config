@@ -46,6 +46,7 @@
       pfetch # system info
       pre-commit # git hooks
       p7zip # compression & encryption
+      ripgrep # better grep
       usbutils
       unzip # zip extraction
       unrar # rar extraction
