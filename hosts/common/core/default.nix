@@ -33,7 +33,7 @@
   # Modify the hostSpec options below to define values that are common across all hosts
   # such as the username and handle of the primary user (see also `nix-config/hosts/common/users/primary`)
   hostSpec = {
-    username = "alois";
+    username = "neo";
     handle = "asebrech";
     userAvatar = ../../../assets/avatar.jpg;
     # Modify the attribute sets hostSpec will inherit from your nix-secrets.

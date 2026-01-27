@@ -27,11 +27,10 @@
   hostSpec = {
     hostName = "iso";
     # The username below will be available in additional the the standard `root` and `nixos` users from the nixos installation image.
-    username = "alois";
+    # Inheriting from common core hostSpec settings
     isProduction = lib.mkForce false;
 
     # Add your github username and github-noreply email address
-    handle = "asebrech";
     email.gitHub = "foo@users.noreply.github.com";
   };
 
