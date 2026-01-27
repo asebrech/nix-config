@@ -1,35 +1,29 @@
 # Modify this file and the other .nix files in `nix-config/hosts/common/core/` to declare
 # settings that will occur across all hosts
 
-# IMPORTANT: This is used by NixOS and nix-darwin so options must exist in both!
+# Core configuration shared across all NixOS hosts
 {
   inputs,
   outputs,
   config,
   lib,
   pkgs,
-  isDarwin,
   ...
 }:
-let
-  platform = if isDarwin then "darwin" else "nixos";
-  platformModules = "${platform}Modules";
-in
 {
   imports = lib.flatten [
-    inputs.home-manager.${platformModules}.home-manager
-    inputs.sops-nix.${platformModules}.sops
+    inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
 
     (map lib.custom.relativeToRoot [
       "modules/common"
-      "modules/hosts/common"
-      "modules/hosts/${platform}"
-      "hosts/common/core/${platform}.nix"
+      "modules/hosts"
+      "hosts/common/core/nixos.nix"
       "hosts/common/core/sops.nix" # Core because it's used for backups, mail
       "hosts/common/core/ssh.nix"
       #"hosts/common/core/services" # uncomment this line if you add any modules to services directory
       "hosts/common/users/primary"
-      "hosts/common/users/primary/${platform}.nix"
+      "hosts/common/users/primary/nixos.nix"
     ])
   ];
 
@@ -78,7 +72,6 @@ in
   #
   # ========== Basic Shell Enablement ==========
   #
-  # On darwin it's important this is outside home-manager
   programs.zsh = {
     enable = true;
     enableCompletion = true;

@@ -1,7 +1,7 @@
 # This is the primary user across all hosts. The username for primary is defined in hostSpec,
-# and is declared in `nix-config/common/core/default.nix`
+# and is declared in `nix-config/hosts/common/core/default.nix`
 
-# User config applicable to both nixos and darwin
+# User config applicable to all NixOS hosts
 {
   inputs,
   pkgs,

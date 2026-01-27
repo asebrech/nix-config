@@ -3,16 +3,11 @@
   inputs,
   config,
   lib,
-  isDarwin,
   ...
 }:
-let
-  platform = if isDarwin then "darwin" else "nixos";
-  platformModules = "${platform}Modules";
-in
 {
   imports = [
-    inputs.stylix.${platformModules}.stylix
+    inputs.stylix.nixosModules.stylix
   ];
 
   config = lib.mkIf config.hostSpec.isAutoStyled {

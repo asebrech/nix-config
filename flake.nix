@@ -12,41 +12,28 @@
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
         #"x86_64-linux"
-        "aarch64-darwin"
       ];
 
       #
       # ========= Host Config Functions =========
       #
-      # Handle a given host config based on whether its underlying system is nixos or darwin
-      mkHost = host: isDarwin: {
-        ${host} =
-          let
-            func = if isDarwin then inputs.nix-darwin.lib.darwinSystem else lib.nixosSystem;
-            systemFunc = func;
-          in
-          systemFunc {
-            specialArgs = {
-              inherit
-                inputs
-                outputs
-                isDarwin
-                ;
-
-              # ========== Extend lib with lib.custom ==========
-              # This approach allows lib.custom to propagate into hm
-              # see: https://github.com/nix-community/home-manager/pull/3454
-              lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
-
-            };
-            modules = [ ./hosts/${if isDarwin then "darwin" else "nixos"}/${host} ];
+      # Create a NixOS host configuration
+      mkHost = host: {
+        ${host} = lib.nixosSystem {
+          specialArgs = {
+            inherit inputs outputs;
+            # ========== Extend lib with lib.custom ==========
+            # This approach allows lib.custom to propagate into hm
+            # see: https://github.com/nix-community/home-manager/pull/3454
+            lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
           };
+          modules = [ ./hosts/${host} ];
+        };
       };
-      # Invoke mkHost for each host config that is declared for either nixos or darwin
-      mkHostConfigs =
-        hosts: isDarwin: lib.foldl (acc: set: acc // set) { } (lib.map (host: mkHost host isDarwin) hosts);
-      # Return the hosts declared in the given directory
-      readHosts = folder: lib.attrNames (builtins.readDir ./hosts/${folder});
+      # Invoke mkHost for each NixOS host config
+      mkHostConfigs = hosts: lib.foldl (acc: set: acc // set) { } (lib.map mkHost hosts);
+      # Return the hosts declared in the hosts directory (excluding 'common')
+      readHosts = lib.filter (name: name != "common") (lib.attrNames (builtins.readDir ./hosts));
     in
     {
       #
@@ -59,8 +46,7 @@
       # ========= Host Configurations =========
       #
       # Building configurations is available through `just rebuild` or `nixos-rebuild --flake .#hostname`
-      nixosConfigurations = mkHostConfigs (readHosts "nixos") false;
-      darwinConfigurations = mkHostConfigs (readHosts "darwin") true;
+      nixosConfigurations = mkHostConfigs readHosts;
 
       #
       # ========= Packages =========
@@ -109,10 +95,9 @@
 
   inputs = {
     #
-    # ========= Official NixOS, Nix-Darwin, and HM Package Sources =========
+    # ========= Official NixOS and Home Manager Package Sources =========
     #
-    # As with typical flake-based configs, you'll need to update the nixOS, hm,
-    # and darwin version numbers below when new releases are available.
+    # Update the NixOS and HM version numbers below when new releases are available.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     # The next two inputs are for pinning nixpkgs to stable vs unstable regardless of what the above is set to.
     # This is particularly useful when an upcoming stable release is in beta because you can effectively
@@ -131,12 +116,6 @@
     nixvim = {
       url = "github:nix-community/nixvim/nixos-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
-    nix-darwin = {
-      url = "github:lnl7/nix-darwin/nix-darwin-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
     #

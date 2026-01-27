@@ -35,55 +35,13 @@ else
 fi
 switch_args="$switch_args .#$HOST switch"
 
-os=$(uname -s)
-if [ "$os" == "Darwin" ]; then
-	# FIXME: This might not have to be darwin specific
-
-	# FIXME: This will break if HM tries to create the file. We should use environment variables instead
-	mkdir -p ~/.config/nix || true
-	CONF=~/.config/nix/nix.conf
-	if [ ! -f $CONF ]; then
-		# Enable nix-command and flakes to bootstrap
-		cat <<-EOF >$CONF
-			experimental-features = nix-command flakes
-		EOF
-	fi
-
-	# Do some darwin pre-installation for bootstrapping
-	if ! which git &>/dev/null; then
-		echo "Installing xcode tools"
-		xcode-select --install
-	fi
-
-	# https://docs.brew.sh/Installation
-	if [ ! -e /opt/homebrew/bin/brew ]; then
-		echo "Installing rosetta"
-		# This is required for emulation of x86_64 binaries, so let's just
-		# assume if they didn't install brew yet, they need this
-		softwareupdate --install-rosetta --agree-to-license
-		echo "Installing homebrew"
-		export NONINTERACTIVE=1
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-	fi
-
-	green "====== REBUILD ======"
-	# Test if there's no darwin-rebuild, then use nix build and then run it
-	if ! which darwin-rebuild &>/dev/null; then
-		nix build --show-trace .#darwinConfigurations."$HOST".system
-		./result/sw/bin/darwin-rebuild $switch_args
-	else
-		echo $switch_args
-		darwin-rebuild $switch_args
-	fi
+green "====== REBUILD ======"
+if command -v nh &>/dev/null; then
+	REPO_PATH=$(pwd)
+	export REPO_PATH
+	nh os switch . -- --impure --show-trace
 else
-	green "====== REBUILD ======"
-	if command -v nh &>/dev/null; then
-		REPO_PATH=$(pwd)
-		export REPO_PATH
-		nh os switch . -- --impure --show-trace
-	else
-		sudo nixos-rebuild $switch_args
-	fi
+	sudo nixos-rebuild $switch_args
 fi
 
 # shellcheck disable=SC2181

@@ -43,7 +43,7 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 20d --keep 20";
-    # `config.hostSpec.home` will be `/home/foo/`, or `/Users/foo/` if you are on Darwin. Edit the rest of the path
+    # `config.hostSpec.home` will be `/home/foo/`. Edit the rest of the path
     # so that it leads to where you store your nix-config.  e.g. if you have your config at `/home/foo/src/nix/nix-config` then the following
     # would be `flake = "${config.hostSpec.home}/src/nixnix-config";`
     flake = "${config.hostSpec.home}/nix-config";

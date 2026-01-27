@@ -1,7 +1,6 @@
 # Specifications For Differentiating Hosts
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -53,11 +52,7 @@
         home = lib.mkOption {
           type = lib.types.str;
           description = "The home directory of the user";
-          default =
-            let
-              user = config.hostSpec.username;
-            in
-            if pkgs.stdenv.isLinux then "/home/${user}" else "/Users/${user}";
+          default = "/home/${config.hostSpec.username}";
         };
         persistFolder = lib.mkOption {
           type = lib.types.str;
@@ -90,12 +85,6 @@
           type = lib.types.bool;
           default = false;
           description = "Used to indicate a host that uses work resources";
-        };
-        # Sometimes we can't use pkgs.stdenv.isLinux due to infinite recursion
-        isDarwin = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = "Used to indicate a host that is darwin";
         };
         useYubikey = lib.mkOption {
           type = lib.types.bool;

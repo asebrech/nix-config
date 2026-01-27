@@ -1,4 +1,4 @@
-#FIXME: Move attrs that will only work on linux to nixos.nix
+# Core home-manager configuration for all NixOS hosts
 {
   config,
   lib,
@@ -6,16 +6,13 @@
   hostSpec,
   ...
 }:
-let
-  platform = if hostSpec.isDarwin then "darwin" else "nixos";
-in
 {
   imports = lib.flatten [
     (map lib.custom.relativeToRoot [
       "modules/common/host-spec.nix"
       "modules/home"
     ])
-    ./${platform}.nix
+    ./nixos.nix
 
     ./direnv.nix
     ./git.nix
@@ -28,7 +25,7 @@ in
 
   inherit hostSpec;
 
-  services.ssh-agent.enable = lib.mkIf pkgs.stdenv.isLinux true;
+  services.ssh-agent.enable = true;
 
   home = {
     username = lib.mkDefault config.hostSpec.username;
