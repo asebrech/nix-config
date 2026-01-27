@@ -175,7 +175,7 @@ function nixos_anywhere() {
 		green "Generating hardware-configuration.nix on $target_hostname and adding it to the local nix-config."
 		$ssh_root_cmd "nixos-generate-config --no-filesystems --root /mnt"
 		$scp_cmd root@"$target_destination":/mnt/etc/nixos/hardware-configuration.nix \
-			"${git_root}"/hosts/nixos/"$target_hostname"/hardware-configuration.nix
+			"${git_root}"/hosts/"$target_hostname"/hardware-configuration.nix
 		generated_hardware_config=1
 	fi
 

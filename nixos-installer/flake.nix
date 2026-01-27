@@ -41,7 +41,7 @@
                 };
               }
               ./minimal-configuration.nix
-              ../hosts/nixos/${name}/hardware-configuration.nix
+              ../hosts/${name}/hardware-configuration.nix
 
               { networking.hostName = name; }
             ];

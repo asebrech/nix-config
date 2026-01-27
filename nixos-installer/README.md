@@ -28,7 +28,7 @@ For users new to Nix and NixOS it may be worth noting that because this script i
 
 ## Generating a custom NixOS ISO
 
-We recommend using a custom ISO similar to what is defined in `nix-config/hosts/nixos/iso`. The official minimal NixOS iso has historical omitted some basic tty utilities that are expected by the installer scripts. The config for the ISO used in nix-config are similarly light-weight to [`nixos-installer/flake.nix`](flake.nix).
+We recommend using a custom ISO similar to what is defined in `nix-config/hosts/iso`. The official minimal NixOS iso has historical omitted some basic tty utilities that are expected by the installer scripts. The config for the ISO used in nix-config are similarly light-weight to [`nixos-installer/flake.nix`](flake.nix).
 
 To generate the ISO, simply run `just iso` from the root of your `nix-config` directory. The resulting .iso file will be saved to `nix-config/result/iso/foo.iso`. A symlink to the file is also created at `nix-config/latest.iso`. The filename is time stamped for convenient reference when frequently trying out different ISOs in VMs. For example, `nixos-24.11.20250123.035f8c0-x86_64-linux.iso`.
 
@@ -40,7 +40,7 @@ If you are installing on a bare metal machine, write the .iso to a USB device. Y
 
 ### Pre-installation steps:
 
-1. Add `nix-config/hosts/nixos/[hostname]/` and `nix-config/home/[user]/[hostname].nix` files. You must declare the configuration settings for the target host as usual in your nix-config.
+1. Add `nix-config/hosts/[hostname]/` and `nix-config/home/[user]/[hostname].nix` files. You must declare the configuration settings for the target host as usual in your nix-config.
    Be sure to specify the device name (e.g. sda, nvme0n1, vda, etc) you want to install to along with the desired `nix-config/hosts/common/disks` disko spec.
 
    If needed, you can find the device name on the target machine itself by booting it into the iso environment and running `lsblk` to see a list of the devices. Virtual Machines often using a device called `vda`.
@@ -48,7 +48,7 @@ If you are installing on a bare metal machine, write the .iso to a USB device. Y
 3. If you are planning to use the `backup` module on the target host, you _must_ temporarily disable it in the target host's config options until bootstrapping is complete. Failure to disable these two modules, will cause nix-config to look for the associated secrets in the new `[hostname].yaml` secrets file where they have not yet been added, causing sops-nix to fail to start during the build process. After rebuilding, we'll add the required keys to secrets and re-enable these modules.
     For example:
     ```nix
-    # nix-config/hosts/nixos/guppy/default.nix
+    # nix-config/hosts/guppy/default.nix
     #--------------------
 
     # ...
@@ -91,7 +91,7 @@ As mentioned, the time for manual steps will be noted below.
 
 ## Requirements for installing an existing nix-config host on a new machine
 
-Prior to installing an existing host config onto a new machine you likely only need to ensure that the `nix-config//hosts/nixos/[hostname]/default.nix`specific the correct disk device for disko.
+Prior to installing an existing host config onto a new machine you likely only need to ensure that the `nix-config/hosts/[hostname]/default.nix` specifies the correct disk device for disko.
 
 Your existing config should already have a `hardware-configuration.nix` and a functioning compliment of sops secrets and sops creation rules. Therefore, many of the steps presented by the script can be safely skipped. The applicable steps will be noted below.
 
@@ -240,7 +240,7 @@ The secondary drive will be unlocked and made available under /dev/mapper/crypts
 Enable the backup module in the target host's config file. For example:
 
     ```nix
-    # nix-config/hosts/nixos/guppy/default.nix
+    # nix-config/hosts/guppy/default.nix
     #--------------------
 
     # ...
@@ -282,7 +282,7 @@ There are two know causes for this issue:
 2. The `hardware-configuration.nix` file may not have the required virtual I/O kernel module. Depending on the VM device type you will need to add either `virtio_pci` or `virtio_scsi` to the list of `availableKernelModules` in the host's `hardware-configuration.nix`
    For example:
    ```nix
-   # nix-config/hosts/nixos/guppy/hardware-configuration.nix
+   # nix-config/hosts/guppy/hardware-configuration.nix
    # -------------------
 
     # ...
