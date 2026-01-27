@@ -1,4 +1,4 @@
-# NOTE(starter): this is the primary user across all hosts. The username for primary is defined in hostSpec,
+# This is the primary user across all hosts. The username for primary is defined in hostSpec,
 # and is declared in `nix-config/common/core/default.nix`
 
 # User config applicable to both nixos and darwin
@@ -16,7 +16,6 @@ in
 {
   users.users.${hostSpec.username} = {
     name = hostSpec.username;
-    shell = pkgs.bash; # default shell
 
     # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
     openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);

@@ -1,4 +1,3 @@
-# FIXME(starter): add/edit any optional, communications related pkgs here
 { pkgs, ... }:
 {
   #imports = [ ./foo.nix ];

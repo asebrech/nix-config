@@ -1,13 +1,20 @@
 { pkgs, ... }:
 {
   imports = [
-    # Packages with custom configs go here
+    # Hyprland window manager (ML4W-inspired structure)
+    ./hyprland
 
     ########## Utilities ##########
-    ./gtk.nix
+    ./services/swaync # SwayNotificationCenter (ML4W-style modular structure)
+    ./playerctl.nix # Media player control
+    ./vicinae.nix # Vicinae command palette
+    ./waybar # Status bar
   ];
-  home.packages = [
-    pkgs.pavucontrol # gui for pulseaudio server and volume controls
-    pkgs.galculator # gtk based calculator
+
+  home.packages = with pkgs; [
+    pulseaudio # add pulse audio to the user path
+    pavucontrol # gui for pulseaudio server and volume controls
+    wl-clipboard # wayland copy and paste
+    galculator # gtk based calculator
   ];
 }

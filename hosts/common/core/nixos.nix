@@ -6,6 +6,9 @@
   ...
 }:
 {
+  # Import vicinae home-manager module (Linux/Wayland only)
+  home-manager.sharedModules = [ inputs.vicinae.homeManagerModules.default ];
+
   # Database for aiding terminal-based programs
   environment.enableAllTerminfo = true;
   # Enable firmware with a license allowing redistribution
@@ -24,34 +27,36 @@
   # ========== Nix Configuration (NixOS-specific) ==========
   #
   nix = {
-    # This will add each flake input as a registry
-    # To make nix3 commands consistent with your flake
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-
-    # This will add your inputs to the system's legacy channels
-    # Making legacy nix commands consistent as well, awesome!
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    # Cachix cache for vicinae (use extra- prefix to append to defaults)
+    settings = {
+      extra-substituters = [ "https://vicinae.cachix.org" ];
+      extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
+    };
   };
 
   #
   # ========== Nix Helper ==========
   #
   # Provide better build output and will also handle garbage collection in place of standard nix gc (garbace collection)
-  # FIXME(starter): customize garbage collection rules as desired.
+  # Customize garbage collection rules as desired.
   programs.nh = {
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 20d --keep 20";
-    # FIXME(starter): `config.hostSpec.home` will be `/home/foo/`, or `/Users/foo/` if you are on Darwin. Edit the rest of the path
+    # `config.hostSpec.home` will be `/home/foo/`, or `/Users/foo/` if you are on Darwin. Edit the rest of the path
     # so that it leads to where you store your nix-config.  e.g. if you have your config at `/home/foo/src/nix/nix-config` then the following
     # would be `flake = "${config.hostSpec.home}/src/nixnix-config";`
     flake = "${config.hostSpec.home}/nix-config";
   };
 
   #
+  # ========== Shell Configuration ==========
+  #
+  programs.zsh.enable = true;
+
+  #
   # ========== Localization ==========
   #
-  # FIXME(starter): customize localization values as desired.
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
-  time.timeZone = lib.mkDefault "America/Edmonton";
+  time.timeZone = lib.mkDefault "Europe/Paris";
 }

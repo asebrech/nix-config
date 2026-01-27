@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   ...
 }:
@@ -8,43 +9,69 @@
     # ========== Hardware ==========
     #
     ./hardware-configuration.nix
+    ./monitors.nix
 
-    (map lib.custom.relativeToRoot [
+    (map lib.custom.relativeToRoot (
       #
       # ========== Required Configs ==========
       #
-      "hosts/common/core"
+      [
+        "hosts/common/core"
 
-      #
-      # ========== Non-Primary Users to Create ==========
-      #
-      # FIXME(starter): the primary user, defined in `nix-config/hosts/common/users`, is added by default, via
-      # `hosts/common/core` above.
-      # To create additional users, specify the path to their config file, as shown in the commented line below, and create/modify
-      # the specified file as required. See `nix-config/hosts/common/users/exampleSecondUser` for more info.
+        #
+        # ========== Non-Primary Users to Create ==========
+        #
+        # The primary user, defined in `nix-config/hosts/common/users`, is added by default, via
+        # `hosts/common/core` above.
+        # To create additional users, specify the path to their config file, as shown in the commented line below, and create/modify
+        # the specified file as required. See `nix-config/hosts/common/users/exampleSecondUser` for more info.
 
-      #"hosts/common/users/exampleSecondUser"
+        #"hosts/common/users/exampleSecondUser"
+      ]
+      ++
+        #
+        # ========== Optional Configs ==========
+        #
+        (map (f: "hosts/common/optional/${f}") [
+          # Services
+          "services/bluetooth.nix" # bluetooth support
+          "services/openssh.nix" # allow remote SSH access
+          "services/greetd.nix" # display manager with tuigreet greeter
+          "services/logrotate.nix" # hyprland log rotation
+          "services/x11.nix" # X11 DPI settings for xwayland apps
 
-      #
-      # ========== Optional Configs ==========
-      #
-      # FIXME(starter): add or remove any optional host-level configuration files the host will use
-      # The following are for example sake only and are not necessarily required.
-      "hosts/common/optional/services/openssh.nix" # allow remote SSH access
-      "hosts/common/optional/audio.nix" # pipewire and cli controls
-      "hosts/common/optional/gnom.nix"
-    ])
+          # Desktop and Window Manager
+          "hyprland.nix" # hyprland window manager
+          "wayland.nix" # wayland packages
+          "plymouth.nix" # boot splash screen
+
+          # System
+          "audio.nix" # pipewire and cli controls
+          "thunar.nix" # thunar file manager with plugins
+        ])
+    ))
   ];
 
   #
   # ========== Host Specification ==========
   #
 
-  # FIXME(starter): declare any host-specific hostSpec options. Note that hostSpec options pertaining to
+  # Declare any host-specific hostSpec options. Note that hostSpec options pertaining to
   # more than one host can be declared in `nix-config/hosts/common/core/` see the default.nix file there
   # for examples.
   hostSpec = {
     hostName = "asahi";
+    useWayland = true;
+    isAutoStyled = true; # Enable Stylix theming
+    theme = "catppuccin-mocha"; # Base16 Tokyo Night theme
+    wallpaper = ../../../assets/wallpapers/tokyo-night.jpg;
+    scaling = "1.5"; # 4K display scaling (150% - more screen space)
+  };
+
+  # Enable auto-login for the primary user with greetd
+  autoLogin = {
+    enable = false; # Disabled to see Plymouth boot splash
+    username = config.hostSpec.username;
   };
 
   networking = {
@@ -69,6 +96,7 @@
   hardware.graphics = {
     enable = true;
   };
+
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.11";
 }

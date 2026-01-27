@@ -17,17 +17,13 @@ in
     ])
     ./${platform}.nix
 
-    # FIXME(starter): add/edit as desired
-    ./bash.nix
-    ./darwin.nix
     ./direnv.nix
-    ./fonts.nix
     ./git.nix
-    ./kitty.nix
-    # ./ghostty.nix  # Currently broken on macOS
     ./alacritty.nix
-    ./nixos.nix
+    ./nixvim
     ./ssh.nix
+    ./starship.nix
+    ./zsh
   ];
 
   inherit hostSpec;
@@ -41,17 +37,13 @@ in
     sessionPath = [
       "$HOME/.local/bin"
     ];
-    sessionVariables = {
-      FLAKE = "$HOME/src/nix/nix-config";
-      SHELL = "bash";
-    };
   };
 
   home.packages = builtins.attrValues {
     inherit (pkgs)
 
-      # FIXME(starter): add/edit as desired
       # Packages that don't have custom configs go here
+      btop # system monitor
       curl
       pciutils
       pfetch # system info
@@ -60,7 +52,7 @@ in
       usbutils
       unzip # zip extraction
       unrar # rar extraction
-      vim
+      foot # wayland terminal
       ;
   };
 

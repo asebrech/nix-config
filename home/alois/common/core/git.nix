@@ -6,7 +6,7 @@
 {
   programs.git = {
     enable = true;
-    package = pkgs.gitAndTools.gitFull;
+    package = pkgs.gitFull;
 
     ignores = [
       ".csvignore"
@@ -21,8 +21,12 @@
       ".direnv"
     ];
 
-    userName = "asebrech";
-    userEmail = "alois.sebrechts@gmail.com";
+    settings = {
+      user = {
+        name = "asebrech";
+        email = "alois.sebrechts@gmail.com";
+      };
+    };
 
   };
 

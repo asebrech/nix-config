@@ -112,6 +112,21 @@
           default = false;
           description = "Used to indicate a host that wants auto styling like stylix";
         };
+        theme = lib.mkOption {
+          type = lib.types.str;
+          default = "gruvbox-dark-hard";
+          description = "The base16 theme name to use for styling (from pkgs.base16-schemes)";
+        };
+        wallpaper = lib.mkOption {
+          type = lib.types.either lib.types.path lib.types.str;
+          default = "";
+          description = "Path or URL to wallpaper image for stylix";
+        };
+        userAvatar = lib.mkOption {
+          type = lib.types.either lib.types.path lib.types.str;
+          default = "";
+          description = "Path to user avatar image for hyprlock";
+        };
         useNeovimTerminal = lib.mkOption {
           type = lib.types.bool;
           default = false;
@@ -136,6 +151,21 @@
           type = lib.types.str;
           default = "1";
           description = "Used to indicate what scaling to use. Floating point number";
+        };
+        useWayland = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Indicate a host that uses Wayland";
+        };
+        defaultEditor = lib.mkOption {
+          type = lib.types.str;
+          default = "nvim";
+          description = "The default editor command to use on the host";
+        };
+        primaryUsername = lib.mkOption {
+          type = lib.types.str;
+          default = config.hostSpec.username;
+          description = "The primary username for home-manager";
         };
       };
     };

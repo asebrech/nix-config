@@ -1,0 +1,5 @@
+# Basic zsh options
+unsetopt correct # disable autocorrect
+
+setopt hist_ignore_all_dups # remove duplicate history entries
+setopt inc_append_history # save history immediately

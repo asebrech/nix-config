@@ -1,7 +1,3 @@
-# FIXME(starter): The nix-config-starter repo assumes use of a `simple` nix-secrets scheme.
-# The complex scheme will require modification to this file. Refer to the relevant files in
-# EmergentMind's Nix-Config (the full version) to determine the required changes.
-
 # hosts level sops. see home/[user]/common/optional/sops.nix for home/user level
 {
   lib,

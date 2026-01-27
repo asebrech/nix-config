@@ -19,6 +19,7 @@ in
   users.users.${hostSpec.username} = {
     home = "/home/${hostSpec.username}";
     isNormalUser = true;
+    shell = pkgs.zsh; # Default shell
     hashedPasswordFile = sopsHashedPasswordFile; # Blank if sops is not working.
 
     extraGroups = lib.flatten [

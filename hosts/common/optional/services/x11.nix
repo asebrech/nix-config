@@ -1,0 +1,16 @@
+# X11 server configuration
+{ config, ... }:
+{
+  services.xserver = {
+    enable = true;
+
+    dpi = if config.hostSpec.hdr then 192 else 96;
+    upscaleDefaultCursor = config.hostSpec.hdr;
+
+    # Configure keymap in X11
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
+  };
+}
