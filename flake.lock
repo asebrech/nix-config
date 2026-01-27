@@ -305,10 +305,10 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1767341571,
-        "narHash": "sha256-24m8aAhoTYbPQHRB30Dc4OyQwKGxClmUBw5U+q1O6v4=",
+        "lastModified": 1769510583,
+        "narHash": "sha256-m+56VuJIejNtzr0eCDrXfnuMk4ppJ3h4ckxK7pM2DdU=",
         "ref": "main",
-        "rev": "f37f8812095d6d94043202073da662ad941d8771",
+        "rev": "1184a00a3c96d9d92102a77ad2e55bd1b04b0c45",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/asebrech/nix-secrets.git"
