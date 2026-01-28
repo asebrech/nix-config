@@ -5,6 +5,9 @@
 { inputs, ... }:
 
 let
+  # Apple Silicon support overlay (for Asahi Linux)
+  asahi-overlay = import ../hosts/asahi/apple-silicon-support/packages/overlay.nix;
+
   # Add in custom packages from this config
   additions =
     final: prev:
@@ -44,7 +47,8 @@ in
   default =
     final: prev:
 
-    (additions final prev)
+    (asahi-overlay final prev)
+    // (additions final prev)
     // (modifications final prev)
     // (linuxModifications final prev)
     // (stable-packages final prev)

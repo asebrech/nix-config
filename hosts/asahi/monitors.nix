@@ -12,11 +12,11 @@ in
 
   monitors = [
     {
-      name = "Virtual-1";
-      width = 3840;
+      name = "eDP-1";
+      width = 3456;
       height = 2160;
       refreshRate = 60;
-      scale = scaling; # Uses hostSpec.scaling value
+      scale = scaling; # e.g. 1.5
       primary = true;
       x = 0;
       y = 0;

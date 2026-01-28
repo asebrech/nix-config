@@ -61,7 +61,7 @@
   # ========== Overlays ==========
   #
   nixpkgs = {
-    overlays = [
+    overlays = lib.mkAfter [
       outputs.overlays.default
     ];
     config = {

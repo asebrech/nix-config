@@ -27,6 +27,8 @@
         excludes = [
           "\\.png"
           "\\.jpg"
+          "hosts/asahi/firmware/kernelcache\\.release\\.mac13j"
+          "hosts/asahi/firmware/all_firmware\\.tar\\.gz"
         ];
       };
       check-case-conflicts.enable = true;

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -9,6 +10,7 @@
     # ========== Hardware ==========
     #
     ./hardware-configuration.nix
+    ./apple-silicon-support
     ./monitors.nix
 
     (map lib.custom.relativeToRoot (
@@ -43,7 +45,7 @@
           # Desktop and Window Manager
           "hyprland.nix" # hyprland window manager
           "wayland.nix" # wayland packages
-          "plymouth.nix" # boot splash screen
+          #"plymouth.nix" # boot splash screen
 
           # System
           "audio.nix" # pipewire and cli controls
@@ -51,6 +53,10 @@
         ])
     ))
   ];
+
+  hardware.asahi.peripheralFirmwareDirectory = ./firmware;
+  # Explicitly set pkgs for asahi modules (workaround for overlay timing issue)
+  hardware.asahi.pkgs = lib.mkForce pkgs;
 
   #
   # ========== Host Specification ==========
@@ -83,10 +89,10 @@
     systemd-boot = {
       enable = true;
       # When using plymouth, initrd can expand by a lot each time, so limit how many we keep around
-      configurationLimit = lib.mkDefault 10;
+      #configurationLimit = lib.mkDefault 10;
     };
-    efi.canTouchEfiVariables = true;
-    timeout = 3;
+    efi.canTouchEfiVariables = false;
+    #timeout = 3;
   };
 
   boot.initrd = {

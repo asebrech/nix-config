@@ -9,31 +9,31 @@
 
 {
   imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")
+    (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
   boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "virtio_pci"
-    "usbhid"
     "usb_storage"
-    "sr_mod"
+    "sdhci_pci"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/15470c72-8fb0-433b-a3c4-fa5ef3c49a7d";
+    device = "/dev/mapper/cryptroot";
     fsType = "ext4";
   };
 
+  boot.initrd.luks.devices."cryptroot".device =
+    "/dev/disk/by-uuid/5b92be89-5bde-446e-a57f-b04943db71b0";
+
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3CA2-00A9";
+    device = "/dev/disk/by-uuid/3FC1-1016";
     fsType = "vfat";
     options = [
-      "fmask=0077"
-      "dmask=0077"
+      "fmask=0022"
+      "dmask=0022"
     ];
   };
 

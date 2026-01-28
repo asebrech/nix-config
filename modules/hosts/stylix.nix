@@ -32,6 +32,9 @@
       # Base16 color scheme - uses hostSpec.theme
       base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/${config.hostSpec.theme}.yaml";
 
+      # Disable GNOME shell theming (not needed for Hyprland, and avoids GitLab fetch issues)
+      targets.gnome.enable = false;
+
       # Opacity settings
       opacity = {
         applications = 1.0;

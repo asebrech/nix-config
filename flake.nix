@@ -142,6 +142,8 @@
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
+      # Don't fetch gnome-shell - we don't use GNOME and gitlab.gnome.org can be unreliable
+      inputs.gnome-shell.follows = "";
     };
 
     #
