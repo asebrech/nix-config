@@ -42,6 +42,8 @@
       # Packages that don't have custom configs go here
       btop # system monitor
       curl
+      devenv # development environment management
+      lazygit # git TUI
       pciutils
       pfetch # system info
       pre-commit # git hooks
