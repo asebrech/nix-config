@@ -9,6 +9,7 @@
     ./playerctl.nix # Media player control
     ./vicinae.nix # Vicinae command palette
     ./waybar # Status bar
+    ./hyprdynamicmonitors.nix # Dynamic monitor management
   ];
 
   home.packages = with pkgs; [

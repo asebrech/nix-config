@@ -167,5 +167,13 @@
       url = "git+ssh://git@github.com/asebrech/nix-secrets.git?ref=main&shallow=1";
       inputs = { };
     };
+
+    #
+    # ========= Display Management =========
+    #
+    hyprdynamicmonitors = {
+      url = "github:fiffeek/hyprdynamicmonitors";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

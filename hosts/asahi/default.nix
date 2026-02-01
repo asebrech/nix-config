@@ -41,6 +41,7 @@
           "services/greetd.nix" # display manager with tuigreet greeter
           "services/logrotate.nix" # hyprland log rotation
           "services/x11.nix" # X11 DPI settings for xwayland apps
+          "services/upower.nix" # power management and lid detection
 
           # Desktop and Window Manager
           "hyprland.nix" # hyprland window manager
