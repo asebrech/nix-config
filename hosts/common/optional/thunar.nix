@@ -19,4 +19,7 @@
     udisks2.enable = true; # storage device manipulation
     tumbler.enable = true; # thumbnail generation service for Thunar
   };
+
+  # Archive manager for Thunar's archive plugin
+  environment.systemPackages = [ pkgs.file-roller ];
 }
