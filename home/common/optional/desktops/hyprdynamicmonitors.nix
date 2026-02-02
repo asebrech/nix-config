@@ -1,18 +1,18 @@
-# HyprDynamicMonitors configuration for automatic monitor management
-# Uses the official Home Manager module for proper systemd integration
 {
   config,
   pkgs,
   inputs,
+  osConfig,
   ...
 }:
+let
+  laptopMonitor = builtins.head osConfig.monitors;
+in
 {
-  # Use the official Home Manager module provided by hyprdynamicmonitors flake
   home.hyprdynamicmonitors = {
     enable = true;
     package = inputs.hyprdynamicmonitors.packages.${pkgs.system}.default;
 
-    # Inline TOML configuration (takes precedence over configFile)
     config = ''
       [general]
       destination = "${config.home.homeDirectory}/.config/hypr/monitors.conf"
@@ -27,50 +27,36 @@
       config_file_type = "static"
 
       [[profiles.laptop_only.conditions.required_monitors]]
-      name = "eDP-1"
+      name = "${laptopMonitor.name}"
 
       [profiles.mirrored]
       config_file = "${config.home.homeDirectory}/.config/hyprdynamicmonitors/profiles/mirrored.conf"
       config_file_type = "static"
 
       [[profiles.mirrored.conditions.required_monitors]]
-      name = "eDP-1"
+      name = "${laptopMonitor.name}"
 
       [[profiles.mirrored.conditions.required_monitors]]
       name = "HDMI-A-1"
     '';
 
     extraFlags = [
-      "--disable-power-events" # Disabled due to Asahi-specific UPower paths
+      "--disable-power-events"
       "--debug"
     ];
 
     installExamples = false;
     installThemes = false;
-
-    # The module automatically creates:
-    # - systemd.user.services.hyprdynamicmonitors (main daemon)
-    # - systemd.user.services.hyprdynamicmonitors-prepare (boot cleanup)
-    # Both bound to graphical-session.target by default
   };
 
-  # Create profile configuration files
   home.file."${config.home.homeDirectory}/.config/hyprdynamicmonitors/profiles/laptop-only.conf".text =
     ''
-      monitor = eDP-1,3456x2160@60,0x0,1.5
+      monitor = ${laptopMonitor.name},${toString laptopMonitor.width}x${toString laptopMonitor.height}@${toString laptopMonitor.refreshRate},${toString laptopMonitor.x}x${toString laptopMonitor.y},${toString laptopMonitor.scale}
     '';
 
   home.file."${config.home.homeDirectory}/.config/hyprdynamicmonitors/profiles/mirrored.conf".text =
     ''
-      # External monitor - the source for mirroring
       monitor = HDMI-A-1,3840x2160@60,0x0,1.0
-      # Laptop display - mirrors the external monitor
-      # All parameters required: resolution, position, scale, then mirror keyword
-      monitor = eDP-1,3456x2160@60,0x0,1.0,mirror,HDMI-A-1
+      monitor = ${laptopMonitor.name},${toString laptopMonitor.width}x${toString laptopMonitor.height}@${toString laptopMonitor.refreshRate},0x0,1.0,mirror,HDMI-A-1
     '';
-
-  # NOTE: Do NOT create ~/.config/hypr/monitors.conf here!
-  # hyprdynamicmonitors manages this file itself (creates symlink or generates it).
-  # Creating it here causes conflicts during home-manager activation.
-  # The hyprdynamicmonitors-prepare.service handles initial setup before Hyprland starts.
 }
