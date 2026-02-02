@@ -6,6 +6,7 @@
     rewrite = {
       "" = "Desktop";
       "foot" = "Terminal";
+      "alacritty" = "Terminal";
       "kitty" = "Terminal";
       "zsh" = "Terminal";
       "~" = "Terminal";

@@ -52,7 +52,6 @@
       usbutils
       unzip # zip extraction
       unrar # rar extraction
-      foot # wayland terminal
       ;
   };
 

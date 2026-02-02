@@ -20,7 +20,7 @@ in
     ];
     min-length = 2;
     max-length = 2;
-    on-click = "foot -e ${scriptsPath}/network.sh";
+    on-click = "alacritty -e ${scriptsPath}/network.sh";
     on-click-right = "nmcli radio wifi off && notify-send 'Wi-Fi Disabled' -i 'network-wireless-off' -h string:x-canonical-private-synchronous:network";
     tooltip-format = "<b>Gateway</b>: {gwaddr}";
     tooltip-format-ethernet = "<b>Interface</b>: {ifname}";

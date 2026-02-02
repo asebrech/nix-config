@@ -13,7 +13,7 @@ in
     # Keybindings
     bind = [
       # Applications
-      "${mainMod}, RETURN, exec, foot" # Open terminal (foot)
+      "${mainMod}, RETURN, exec, alacritty" # Open terminal (alacritty)
       "${mainMod}, B, exec, brave" # Open browser
       "${mainMod}, E, exec, thunar" # Open file manager
       "${mainMod} CTRL, C, exec, galculator" # Open calculator

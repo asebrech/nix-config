@@ -15,7 +15,7 @@ in
     interval = 300; # Update display every 5 minutes
     min-length = 2;
     max-length = 2;
-    on-click = "foot -e sh -c 'cd ~/nix-config && nix flake update && echo && echo Press any key to close... && read -n1'";
+    on-click = "alacritty -e sh -c 'cd ~/nix-config && nix flake update && echo && echo Press any key to close... && read -n1'";
     signal = 1; # Update with pkill -RTMIN+1 waybar
   };
 }

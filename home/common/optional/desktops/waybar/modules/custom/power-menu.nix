@@ -9,7 +9,7 @@ in
   #-----------------
   "custom/power_menu" = {
     format = "󰤄";
-    on-click = "foot -e " + scriptsPath + "/power-menu.sh";
+    on-click = "alacritty -e " + scriptsPath + "/power-menu.sh";
     tooltip-format = "Power Menu";
   };
 }

@@ -19,7 +19,7 @@ in
     format-connected = iconConnected;
     min-length = 2;
     max-length = 2;
-    on-click = "foot -e ${scriptsPath}/bluetooth.sh";
+    on-click = "alacritty -e ${scriptsPath}/bluetooth.sh";
     on-click-right = "bluetoothctl power off && notify-send 'Bluetooth Off' -i 'network-bluetooth-inactive' -h string:x-canonical-private-synchronous:bluetooth";
     tooltip-format = "Device Addr: {device_address}";
     tooltip-format-disabled = "Bluetooth Disabled";
