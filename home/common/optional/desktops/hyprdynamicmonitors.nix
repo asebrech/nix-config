@@ -17,6 +17,7 @@ in
       [general]
       destination = "${config.home.homeDirectory}/.config/hypr/monitors.conf"
       debounce_time_ms = 500
+      exec_on_change = "${pkgs.systemd}/bin/systemctl --user restart waybar.service"
 
       [notifications]
       disabled = false
