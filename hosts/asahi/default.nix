@@ -86,6 +86,13 @@
     enableIPv6 = false;
   };
 
+  # Lid close behavior for clamshell mode
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchDocked = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+  };
+
   boot.loader = {
     systemd-boot = {
       enable = true;
