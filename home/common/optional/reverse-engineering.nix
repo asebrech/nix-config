@@ -7,6 +7,7 @@
 #   cutter <binary>          # GUI: Visual interface with decompiler tab
 #   rizin -A <binary>        # CLI: Terminal-based reverse engineering
 #   pdg @ main               # CLI: Decompile function to C
+#   ghidra                   # Standalone Ghidra GUI
 
 { pkgs, ... }:
 {
@@ -19,6 +20,9 @@
         sigdb # Function signature database
       ]
     ))
+
+    # Standalone Ghidra for advanced reverse engineering
+    pkgs.ghidra
   ];
 
   # Rizin configuration
