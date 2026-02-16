@@ -49,12 +49,14 @@ in
       config_file = "${config.home.homeDirectory}/.config/hyprdynamicmonitors/profiles/external.go.tmpl"
       config_file_type = "template"
 
-      [profiles.with_external.conditions]
-      min_monitor_count = 2
-
       [[profiles.with_external.conditions.required_monitors]]
       name = "${primaryMonitor.name}"
       monitor_tag = "laptop"
+
+      [[profiles.with_external.conditions.required_monitors]]
+      name = "(HDMI|DP).*"
+      match_name_using_regex = true
+      monitor_tag = "external"
     '';
 
     extraFlags = [
@@ -73,15 +75,12 @@ in
   home.file."${config.home.homeDirectory}/.config/hyprdynamicmonitors/profiles/external.go.tmpl".text =
     ''
       {{- $laptop := index .MonitorsByTag "laptop" -}}
-      {{- range .ExtraMonitors}}
-      monitor={{.Name}},preferred,0x0,1.0
-      {{- end }}
+      {{- $external := index .MonitorsByTag "external" -}}
+      monitor={{$external.Name}},preferred,0x0,1.0
       {{- if isLidClosed}}
       monitor={{$laptop.Name}},disable
       {{- else}}
-      {{- range .ExtraMonitors}}
-      monitor={{$laptop.Name}},${toString primaryMonitor.width}x${toString primaryMonitor.height}@${toString primaryMonitor.refreshRate},0x0,${toString primaryMonitor.scale},mirror,{{.Name}}
-      {{- end }}
+      monitor={{$laptop.Name}},${toString primaryMonitor.width}x${toString primaryMonitor.height}@${toString primaryMonitor.refreshRate},0x0,${toString primaryMonitor.scale},mirror,{{$external.Name}}
       {{- end }}
     '';
 }
