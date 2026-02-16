@@ -42,6 +42,7 @@
           "services/logrotate.nix" # hyprland log rotation
           "services/x11.nix" # X11 DPI settings for xwayland apps
           "services/upower.nix" # power management and lid detection
+          "services/protonvpn.nix" # Proton VPN
 
           # Desktop and Window Manager
           "hyprland.nix" # hyprland window manager
