@@ -49,6 +49,9 @@ in
       config_file = "${config.home.homeDirectory}/.config/hyprdynamicmonitors/profiles/external.go.tmpl"
       config_file_type = "template"
 
+      [profiles.with_external.conditions]
+      min_monitor_count = 2
+
       [[profiles.with_external.conditions.required_monitors]]
       name = "${primaryMonitor.name}"
       monitor_tag = "laptop"
@@ -77,7 +80,7 @@ in
       monitor={{$laptop.Name}},disable
       {{- else}}
       {{- range .ExtraMonitors}}
-      monitor={{$laptop.Name}},${toString primaryMonitor.width}x${toString primaryMonitor.height}@${toString primaryMonitor.refreshRate},0x0,1.0,mirror,{{.Name}}
+      monitor={{$laptop.Name}},${toString primaryMonitor.width}x${toString primaryMonitor.height}@${toString primaryMonitor.refreshRate},0x0,${toString primaryMonitor.scale},mirror,{{.Name}}
       {{- end }}
       {{- end }}
     '';

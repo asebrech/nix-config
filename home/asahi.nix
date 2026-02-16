@@ -19,5 +19,12 @@
     common/optional/opencode.nix
 
     common/optional/sops.nix
+
+    #
+    # ========== Asahi-Specific: Dynamic Monitor Management ==========
+    #
+    # Asahi needs hyprdynamicmonitors for handling HDMI hotplug and lid events
+    # Other hosts use static monitor config from hyprland/conf/monitors.nix
+    common/optional/desktops/hyprdynamicmonitors.nix
   ];
 }

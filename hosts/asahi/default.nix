@@ -73,7 +73,7 @@
     isAutoStyled = true; # Enable Stylix theming
     theme = "catppuccin-mocha"; # Base16 Tokyo Night theme
     wallpaper = ../../assets/wallpapers/tokyo-night.jpg;
-    scaling = "1.5"; # 4K display scaling (150% - more screen space)
+    scaling = "1"; # No scaling (100% - native resolution)
   };
 
   # Enable auto-login for the primary user with greetd
