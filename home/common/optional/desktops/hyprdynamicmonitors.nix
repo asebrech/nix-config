@@ -23,21 +23,6 @@ in
       disabled = false
       timeout_ms = 3000
 
-      [power_events.dbus_query_object]
-      path = "/org/freedesktop/UPower/devices/line_power_macsmc_ac"
-
-      [[power_events.dbus_signal_match_rules]]
-      object_path = "/org/freedesktop/UPower/devices/line_power_macsmc_ac"
-
-      [lid_events]
-      disabled = false
-
-      [lid_events.dbus_query_object]
-      path = "/org/freedesktop/UPower"
-
-      [[lid_events.dbus_signal_match_rules]]
-      object_path = "/org/freedesktop/UPower"
-
       [profiles.single]
       config_file = "${config.home.homeDirectory}/.config/hyprdynamicmonitors/profiles/single.conf"
       config_file_type = "static"
@@ -60,8 +45,8 @@ in
     '';
 
     extraFlags = [
+      "--disable-power-events"
       "--debug"
-      "--enable-lid-events"
     ];
 
     installExamples = false;
@@ -75,12 +60,9 @@ in
   home.file."${config.home.homeDirectory}/.config/hyprdynamicmonitors/profiles/external.go.tmpl".text =
     ''
       {{- $laptop := index .MonitorsByTag "laptop" -}}
-      {{- $external := index .MonitorsByTag "external" -}}
-      monitor={{$external.Name}},preferred,0x0,1.0
-      {{- if isLidClosed}}
-      monitor={{$laptop.Name}},disable
-      {{- else}}
-      monitor={{$laptop.Name}},${toString primaryMonitor.width}x${toString primaryMonitor.height}@${toString primaryMonitor.refreshRate},0x0,${toString primaryMonitor.scale},mirror,{{$external.Name}}
+      {{- range .ExtraMonitors}}
+      monitor={{.Name}},preferred,0x0,1.0
+      monitor={{$laptop.Name}},${toString primaryMonitor.width}x${toString primaryMonitor.height}@${toString primaryMonitor.refreshRate},0x0,${toString primaryMonitor.scale},mirror,{{.Name}}
       {{- end }}
     '';
 }
