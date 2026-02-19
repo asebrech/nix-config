@@ -16,8 +16,6 @@
         natural_scroll = false;
         scroll_factor = 1.0; # Touchpad scroll factor
         disable_while_typing = false;
-        clickfinger_behavior = true; # Two-finger tap/click for right-click, three-finger for middle-click
-        tap-to-click = true; # Enable tap-to-click
       };
 
       sensitivity = 0; # Pointer speed: -1.0 - 1.0, 0 means no modification
