@@ -87,6 +87,17 @@
     enableIPv6 = false;
   };
 
+  # Disable suspend - HDMI hotplug detection broken after suspend on Asahi Linux
+  # See: https://github.com/AsahiLinux/linux/issues/430
+  # This will be re-enabled once the Asahi kernel DCP driver is fixed
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore"; # Don't suspend when lid closes
+    HandleLidSwitchDocked = "ignore"; # Don't suspend when docked with lid closed
+    HandleLidSwitchExternalPower = "ignore"; # Don't suspend on AC power
+    HandleSuspendKey = "ignore"; # Ignore suspend key presses
+    HandleHibernateKey = "ignore"; # Ignore hibernate key presses
+  };
+
   boot.loader = {
     systemd-boot = {
       enable = true;
