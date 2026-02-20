@@ -24,12 +24,6 @@ in
   programs.hyprlock = {
     enable = true;
     settings = {
-      general = {
-        no_fade_in = false;
-        grace = 0;
-        disable_loading_bar = false;
-      };
-
       background = lib.mkForce [
         {
           monitor = "";
@@ -132,7 +126,6 @@ in
         {
           monitor = "";
           size = "320, 55";
-          outline_thickness = 0;
           dots_size = 0.2;
           dots_spacing = 0.2;
           dots_center = true;

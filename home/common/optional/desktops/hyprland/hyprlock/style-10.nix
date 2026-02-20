@@ -12,8 +12,6 @@ in
   programs.hyprlock = {
     enable = true;
     settings = {
-      general = { };
-
       background = lib.mkForce [
         {
           monitor = "";

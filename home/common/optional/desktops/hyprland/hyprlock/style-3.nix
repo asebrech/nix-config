@@ -23,12 +23,6 @@ in
   programs.hyprlock = {
     enable = true;
     settings = {
-      general = {
-        no_fade_in = false;
-        grace = 0;
-        disable_loading_bar = false;
-      };
-
       background = lib.mkForce [
         {
           monitor = "";
@@ -84,7 +78,6 @@ in
           monitor = "";
           text = "    $USER";
           color = "rgba(${colors.base05-rgb-r}, ${colors.base05-rgb-g}, ${colors.base05-rgb-b}, 0.80)";
-          outline_thickness = 2;
           font_size = 18;
           font_family = config.stylix.fonts.sansSerif.name;
           position = "0, -130";
