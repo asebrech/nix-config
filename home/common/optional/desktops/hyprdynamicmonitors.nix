@@ -32,10 +32,10 @@ let
     fi
 
     if [ "$EXTERNAL_COUNT" -gt 0 ]; then
-      # Clamshell mode: Only dim and disable internal display (no lock)
-      ${pkgs.util-linux}/bin/logger -t lid-handler "Clamshell mode: disabling internal display only"
+      # Clamshell mode: Only dim backlight (keep display enabled for mirroring)
+      # Do NOT disable eDP-1 - hyprdynamicmonitors needs it active for mirroring profile
+      ${pkgs.util-linux}/bin/logger -t lid-handler "Clamshell mode: dimming backlight only (mirroring active)"
       ${pkgs.brightnessctl}/bin/brightnessctl -d apple-panel-bl set 0% 2>/dev/null || ${pkgs.util-linux}/bin/logger -t lid-handler "WARNING: brightness control failed"
-      ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1,disable" 2>/dev/null || ${pkgs.util-linux}/bin/logger -t lid-handler "WARNING: monitor disable failed"
     else
       # No external monitors: Lock, dim, and turn off display
       ${pkgs.util-linux}/bin/logger -t lid-handler "Single display mode: locking and powering off"
@@ -59,13 +59,8 @@ let
     fi
     ${pkgs.util-linux}/bin/logger -t lid-handler "External monitors detected: $EXTERNAL_COUNT"
 
-    if [ "$EXTERNAL_COUNT" -gt 0 ]; then
-      # Clamshell mode: Re-enable internal display
-      ${pkgs.util-linux}/bin/logger -t lid-handler "Clamshell mode: re-enabling internal display"
-      ${pkgs.hyprland}/bin/hyprctl keyword monitor "eDP-1,${toString primaryMonitor.width}x${toString primaryMonitor.height}@${toString primaryMonitor.refreshRate},0x0,${toString primaryMonitor.scale}" 2>/dev/null || ${pkgs.util-linux}/bin/logger -t lid-handler "WARNING: monitor enable failed"
-    fi
-
-    # Always turn on display first
+    # eDP-1 stays enabled in clamshell mode (needed for mirroring)
+    # Just restore display power and brightness
     ${pkgs.util-linux}/bin/logger -t lid-handler "Restoring display power and brightness"
     ${pkgs.hyprland}/bin/hyprctl dispatch dpms on eDP-1 2>/dev/null || ${pkgs.util-linux}/bin/logger -t lid-handler "WARNING: DPMS on failed"
 
