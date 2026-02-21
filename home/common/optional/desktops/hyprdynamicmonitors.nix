@@ -13,8 +13,15 @@ let
 
   # Lid close script: save brightness, lock, dim, and turn off internal display
   # Uses verbose logging for debugging via journalctl -t lid-handler
+  # Includes validation checks to prevent config errors
   lidCloseScript = pkgs.writeShellScript "lid-close" ''
     ${pkgs.util-linux}/bin/logger -t lid-handler "Lid closed event triggered"
+
+    # Verify Hyprland is running before proceeding
+    if ! ${pkgs.hyprland}/bin/hyprctl version >/dev/null 2>&1; then
+      ${pkgs.util-linux}/bin/logger -t lid-handler "ERROR: Hyprland not responding, aborting lid close handler"
+      exit 1
+    fi
 
     # Check if external monitors are connected
     if ! EXTERNAL_COUNT=$(${pkgs.hyprland}/bin/hyprctl monitors -j 2>/dev/null | ${pkgs.jq}/bin/jq '[.[] | select(.name != "eDP-1")] | length' 2>/dev/null); then
@@ -22,6 +29,12 @@ let
       EXTERNAL_COUNT=0
     fi
     ${pkgs.util-linux}/bin/logger -t lid-handler "External monitors detected: $EXTERNAL_COUNT"
+
+    # Verify eDP-1 exists before attempting operations
+    if ! ${pkgs.hyprland}/bin/hyprctl monitors -j 2>/dev/null | ${pkgs.jq}/bin/jq -e '.[] | select(.name == "eDP-1")' >/dev/null 2>&1; then
+      ${pkgs.util-linux}/bin/logger -t lid-handler "WARNING: eDP-1 not detected, skipping brightness/DPMS operations"
+      exit 0
+    fi
 
     # Save current brightness before dimming
     if CURRENT_BRIGHTNESS=$(${pkgs.brightnessctl}/bin/brightnessctl -d apple-panel-bl get 2>/dev/null); then
@@ -49,8 +62,15 @@ let
 
   # Lid open script: restore brightness and re-enable internal display
   # Preserves user's brightness preference from before lid close
+  # Includes validation checks to prevent errors
   lidOpenScript = pkgs.writeShellScript "lid-open" ''
     ${pkgs.util-linux}/bin/logger -t lid-handler "Lid open event triggered"
+
+    # Verify Hyprland is running before proceeding
+    if ! ${pkgs.hyprland}/bin/hyprctl version >/dev/null 2>&1; then
+      ${pkgs.util-linux}/bin/logger -t lid-handler "ERROR: Hyprland not responding, aborting lid open handler"
+      exit 1
+    fi
 
     # Check if external monitors are connected
     if ! EXTERNAL_COUNT=$(${pkgs.hyprland}/bin/hyprctl monitors -j 2>/dev/null | ${pkgs.jq}/bin/jq '[.[] | select(.name != "eDP-1")] | length' 2>/dev/null); then
@@ -58,6 +78,12 @@ let
       EXTERNAL_COUNT=0
     fi
     ${pkgs.util-linux}/bin/logger -t lid-handler "External monitors detected: $EXTERNAL_COUNT"
+
+    # Verify eDP-1 exists before attempting operations
+    if ! ${pkgs.hyprland}/bin/hyprctl monitors -j 2>/dev/null | ${pkgs.jq}/bin/jq -e '.[] | select(.name == "eDP-1")' >/dev/null 2>&1; then
+      ${pkgs.util-linux}/bin/logger -t lid-handler "WARNING: eDP-1 not detected, skipping restore operations"
+      exit 0
+    fi
 
     # eDP-1 stays enabled in clamshell mode (needed for mirroring)
     # Just restore display power and brightness
@@ -67,12 +93,12 @@ let
     # Restore saved brightness or use default
     if [ -f "${brightnessStateFile}" ]; then
       SAVED_BRIGHTNESS=$(cat "${brightnessStateFile}" 2>/dev/null)
-      if [ -n "$SAVED_BRIGHTNESS" ]; then
+      if [ -n "$SAVED_BRIGHTNESS" ] && [ "$SAVED_BRIGHTNESS" -gt 0 ] 2>/dev/null; then
         ${pkgs.brightnessctl}/bin/brightnessctl -d apple-panel-bl set "$SAVED_BRIGHTNESS" 2>/dev/null || ${pkgs.util-linux}/bin/logger -t lid-handler "WARNING: brightness restore failed"
         ${pkgs.util-linux}/bin/logger -t lid-handler "Restored brightness: $SAVED_BRIGHTNESS"
       else
         ${pkgs.brightnessctl}/bin/brightnessctl -d apple-panel-bl set 50% 2>/dev/null
-        ${pkgs.util-linux}/bin/logger -t lid-handler "Using default brightness: 50%"
+        ${pkgs.util-linux}/bin/logger -t lid-handler "Invalid saved brightness, using default: 50%"
       fi
     else
       ${pkgs.brightnessctl}/bin/brightnessctl -d apple-panel-bl set 50% 2>/dev/null

@@ -17,6 +17,7 @@
       };
 
   wayland.windowManager.hyprland.settings = {
-    source = [ "${config.home.homeDirectory}/.config/hypr/monitors.conf" ];
+    # Use string instead of list for single source file to avoid glob expansion issues
+    source = "${config.home.homeDirectory}/.config/hypr/monitors.conf";
   };
 }
