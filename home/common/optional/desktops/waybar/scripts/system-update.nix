@@ -11,8 +11,8 @@ pkgs.writeShellScript "system-update.sh" ''
     exit 0
   fi
 
-  # Calculate days since last update (macOS/Linux compatible)
-  LOCK_TIME=$(stat -f %m "$LOCK_FILE" 2>/dev/null || stat -c %Y "$LOCK_FILE" 2>/dev/null)
+  # Calculate days since last update
+  LOCK_TIME=$(stat -c %Y "$LOCK_FILE")
   NOW=$(date +%s)
   DAYS_AGO=$(( (NOW - LOCK_TIME) / 86400 ))
 

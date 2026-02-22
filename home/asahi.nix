@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   imports = [
     #
@@ -54,7 +54,7 @@
   # Override hypridle for Asahi: disable suspend, add aggressive power saving
   # HDMI hotplug detection is broken after suspend on Asahi Linux
   # See: https://github.com/AsahiLinux/linux/issues/430
-  services.hypridle.settings.listener = [
+  services.hypridle.settings.listener = lib.mkForce [
     # Dim monitor backlight aggressively to save power
     {
       timeout = 300; # 5min
