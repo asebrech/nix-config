@@ -19,7 +19,7 @@
           "<C-s>" = {
             __raw = ''"actions.select_vsplit"'';
           };
-          "<C-h>" = {
+          "<C-x>" = {
             __raw = ''"actions.select_split"'';
           };
           "<C-t>" = {
@@ -31,7 +31,7 @@
           "<C-c>" = {
             __raw = ''"actions.close"'';
           };
-          "<C-l>" = {
+          "<C-r>" = {
             __raw = ''"actions.refresh"'';
           };
           "-" = {

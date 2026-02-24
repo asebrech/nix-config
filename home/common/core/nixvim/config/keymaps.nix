@@ -57,10 +57,10 @@
         };
       }
 
-      # Move to window using <ctrl> hjkl keys
+      # Move to window using <ctrl> arrow keys
       {
         mode = "n";
-        key = "<C-h>";
+        key = "<C-Left>";
         action = "<C-w>h";
         options = {
           desc = "Go to Left Window";
@@ -69,7 +69,7 @@
       }
       {
         mode = "n";
-        key = "<C-j>";
+        key = "<C-Down>";
         action = "<C-w>j";
         options = {
           desc = "Go to Lower Window";
@@ -78,7 +78,7 @@
       }
       {
         mode = "n";
-        key = "<C-k>";
+        key = "<C-Up>";
         action = "<C-w>k";
         options = {
           desc = "Go to Upper Window";
@@ -87,7 +87,7 @@
       }
       {
         mode = "n";
-        key = "<C-l>";
+        key = "<C-Right>";
         action = "<C-w>l";
         options = {
           desc = "Go to Right Window";
@@ -95,28 +95,28 @@
         };
       }
 
-      # Resize window using <ctrl> arrow keys
+      # Resize window using <alt> arrow keys
       {
         mode = "n";
-        key = "<C-Up>";
+        key = "<A-Up>";
         action = "<cmd>resize +2<cr>";
         options.desc = "Increase Window Height";
       }
       {
         mode = "n";
-        key = "<C-Down>";
+        key = "<A-Down>";
         action = "<cmd>resize -2<cr>";
         options.desc = "Decrease Window Height";
       }
       {
         mode = "n";
-        key = "<C-Left>";
+        key = "<A-Left>";
         action = "<cmd>vertical resize -2<cr>";
         options.desc = "Decrease Window Width";
       }
       {
         mode = "n";
-        key = "<C-Right>";
+        key = "<A-Right>";
         action = "<cmd>vertical resize +2<cr>";
         options.desc = "Increase Window Width";
       }
