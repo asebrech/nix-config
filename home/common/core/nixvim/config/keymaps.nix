@@ -123,38 +123,26 @@
 
       # Move Lines
       {
-        mode = "n";
-        key = "<A-j>";
-        action = "<cmd>execute 'move .+' . v:count1<cr>==";
-        options.desc = "Move Down";
-      }
-      {
-        mode = "n";
-        key = "<A-k>";
-        action = "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==";
-        options.desc = "Move Up";
-      }
-      {
         mode = "i";
-        key = "<A-j>";
+        key = "<A-Down>";
         action = "<esc><cmd>m .+1<cr>==gi";
         options.desc = "Move Down";
       }
       {
         mode = "i";
-        key = "<A-k>";
+        key = "<A-Up>";
         action = "<esc><cmd>m .-2<cr>==gi";
         options.desc = "Move Up";
       }
       {
         mode = "x";
-        key = "<A-j>";
+        key = "<A-Down>";
         action = ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv";
         options.desc = "Move Down";
       }
       {
         mode = "x";
-        key = "<A-k>";
+        key = "<A-Up>";
         action = ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv";
         options.desc = "Move Up";
       }
