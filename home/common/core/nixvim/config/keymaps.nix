@@ -507,16 +507,6 @@
       }
       {
         mode = "n";
-        key = "<leader>ub";
-        action.__raw = ''
-          function()
-            Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):toggle()
-          end
-        '';
-        options.desc = "Toggle Background";
-      }
-      {
-        mode = "n";
         key = "<leader>ug";
         action.__raw = "function() Snacks.toggle.indent():toggle() end";
         options.desc = "Toggle Indent Guides";
