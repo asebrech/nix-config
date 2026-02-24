@@ -1,19 +1,11 @@
 # LazyVim plugins/util.nix - Utility plugins
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 {
   imports = [
     ./opencode.nix
   ];
 
   config = {
-    # Enable opencode by default
-    nixvim-config.plugins.opencode.enable = lib.mkDefault false;
-
     programs.nixvim = {
       plugins = {
         # Plenary - Lua utilities (dependency for many plugins)
