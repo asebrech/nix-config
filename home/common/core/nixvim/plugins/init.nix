@@ -37,6 +37,7 @@
           };
           input.enabled = true;
           scope.enabled = true;
+          terminal.enabled = true;
           zen.enabled = true;
           picker = {
             enabled = true;

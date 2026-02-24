@@ -44,6 +44,7 @@
       curl
       devenv # development environment management
       lazygit # git TUI
+      lsof # list open files (used by opencode.nvim for port detection)
       pciutils
       pfetch # system info
       pre-commit # git hooks
