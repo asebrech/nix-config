@@ -38,15 +38,20 @@
           };
           input.enabled = true;
           scope.enabled = true;
+          picker = {
+            enabled = true;
+            # Use Telescope as the picker backend
+            win.input.keys.i_esc = "<Esc>";
+          };
           dashboard = {
             enabled = true;
             preset = {
               keys.__raw = ''
                 {
-                  { icon = " ", key = "f", desc = "Find File", action = ":Telescope find_files" },
+                  { icon = " ", key = "f", desc = "Find File", action = function() Snacks.dashboard.pick("files") end },
                   { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-                  { icon = " ", key = "g", desc = "Find Text", action = ":Telescope live_grep" },
-                  { icon = " ", key = "r", desc = "Recent Files", action = ":Telescope oldfiles" },
+                  { icon = " ", key = "g", desc = "Find Text", action = function() Snacks.dashboard.pick("live_grep") end },
+                  { icon = " ", key = "r", desc = "Recent Files", action = function() Snacks.dashboard.pick("oldfiles") end },
                   { icon = " ", key = "c", desc = "Config", action = ":e $MYVIMRC" },
                   { icon = " ", key = "s", desc = "Restore Session", action = ":lua require('persistence').load()" },
                   { icon = " ", key = "q", desc = "Quit", action = ":qa" },
@@ -83,11 +88,15 @@
 
       -- Terminal
       vim.keymap.set("n", "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
-      vim.keymap.set("n", "<leader>ft", function() Snacks.terminal(nil, { cwd = vim.fn.getcwd() }) end, { desc = "Terminal (Root Dir)" })
-      vim.keymap.set({"n","t"}, "<c-/>", function() Snacks.terminal(nil, { cwd = vim.fn.getcwd() }) end, { desc = "Terminal (Root Dir)" })
-      vim.keymap.set({"n","t"}, "<c-_>", function() Snacks.terminal(nil, { cwd = vim.fn.getcwd() }) end, { desc = "which_key_ignore" })
+      vim.keymap.set("n", "<leader>ft", function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
+      vim.keymap.set({"n","t"}, "<c-/>", function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
+      vim.keymap.set({"n","t"}, "<c-_>", function() Snacks.terminal() end, { desc = "which_key_ignore" })
 
       -- Git
+      vim.keymap.set("n", "<leader>gL", function() Snacks.picker.git_log() end, { desc = "Git Log (cwd)" })
+      vim.keymap.set("n", "<leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git Blame Line" })
+      vim.keymap.set("n", "<leader>gf", function() Snacks.picker.git_log_file() end, { desc = "Git Current File History" })
+      vim.keymap.set("n", "<leader>gl", function() Snacks.picker.git_log() end, { desc = "Git Log" })
       vim.keymap.set("n", "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse (open)" })
       vim.keymap.set({"n", "x"}, "<leader>gY", function()
         Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) end, notify = false })
@@ -95,16 +104,13 @@
 
       -- Lazygit
       if vim.fn.executable("lazygit") == 1 then
-        vim.keymap.set("n", "<leader>gg", function() Snacks.lazygit({ cwd = vim.fn.getcwd() }) end, { desc = "Lazygit (Root Dir)" })
+        vim.keymap.set("n", "<leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit (Root Dir)" })
         vim.keymap.set("n", "<leader>gG", function() Snacks.lazygit() end, { desc = "Lazygit (cwd)" })
-        vim.keymap.set("n", "<leader>gf", function() Snacks.lazygit.log_file() end, { desc = "Lazygit Current File History" })
-        vim.keymap.set("n", "<leader>gl", function() Snacks.lazygit.log({ cwd = vim.fn.getcwd() }) end, { desc = "Lazygit Log" })
-        vim.keymap.set("n", "<leader>gL", function() Snacks.lazygit.log() end, { desc = "Lazygit Log (cwd)" })
       end
 
       -- Words navigation
-      vim.keymap.set({ "n", "t" }, "]]", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next Reference" })
-      vim.keymap.set({ "n", "t" }, "[[", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
+      vim.keymap.set("n", "]]", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next Reference" })
+      vim.keymap.set("n", "[[", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
 
       -- Rename file
       vim.keymap.set("n", "<leader>cR", function() Snacks.rename.rename_file() end, { desc = "Rename File" })

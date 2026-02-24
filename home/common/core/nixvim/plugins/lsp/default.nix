@@ -168,6 +168,22 @@
       }
       {
         mode = "n";
+        key = "<leader>cA";
+        action.__raw = ''
+          function()
+            vim.lsp.buf.code_action({
+              apply = true,
+              context = {
+                only = { "source" },
+                diagnostics = {},
+              },
+            })
+          end
+        '';
+        options.desc = "Source Action";
+      }
+      {
+        mode = "n";
         key = "<leader>uh";
         action.__raw = ''
           function()

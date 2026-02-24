@@ -16,6 +16,22 @@
 
       # Fix markdown indentation settings
       markdown_recommended_style = 0;
+
+      # LazyVim root dir detection
+      # Each entry can be:
+      # * the name of a detector function like `lsp` or `cwd`
+      # * a pattern or array of patterns like `.git` or `lua`.
+      root_spec = [
+        "lsp"
+        [
+          ".git"
+          "lua"
+        ]
+        "cwd"
+      ];
+
+      # Set LSP servers to be ignored when used for detecting the LSP root
+      root_lsp_ignore = [ "copilot" ];
     };
 
     opts = {
@@ -49,8 +65,10 @@
 
       # Folding
       foldlevel = 99;
+      foldtext = "";
 
-      # Format options - handled by autocmd
+      # Format options
+      formatoptions = "jcroqlnt";
       formatexpr = "v:lua.require'conform'.formatexpr()";
 
       # Grep

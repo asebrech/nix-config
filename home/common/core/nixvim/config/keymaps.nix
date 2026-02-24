@@ -192,8 +192,14 @@
       }
       {
         mode = "n";
+        key = "<leader>`";
+        action = "<cmd>e #<cr>";
+        options.desc = "Switch to Other Buffer";
+      }
+      {
+        mode = "n";
         key = "<leader>bd";
-        action = "<cmd>bdelete<cr>";
+        action.__raw = "function() Snacks.bufdelete() end";
         options.desc = "Delete Buffer";
       }
       {
@@ -208,10 +214,22 @@
         mode = [
           "i"
           "n"
+          "s"
         ];
         key = "<esc>";
-        action = "<cmd>noh<cr><esc>";
-        options.desc = "Escape and Clear hlsearch";
+        action.__raw = ''
+          function()
+            vim.cmd("noh")
+            if vim.snippet then
+              vim.snippet.stop()
+            end
+            return "<esc>"
+          end
+        '';
+        options = {
+          desc = "Escape and Clear hlsearch";
+          expr = true;
+        };
       }
 
       # Clear search, diff update and redraw
@@ -382,7 +400,7 @@
         key = "]d";
         action.__raw = ''
           function()
-            vim.diagnostic.goto_next()
+            vim.diagnostic.jump({ count = 1, float = true })
           end
         '';
         options.desc = "Next Diagnostic";
@@ -392,7 +410,7 @@
         key = "[d";
         action.__raw = ''
           function()
-            vim.diagnostic.goto_prev()
+            vim.diagnostic.jump({ count = -1, float = true })
           end
         '';
         options.desc = "Prev Diagnostic";
@@ -402,7 +420,7 @@
         key = "]e";
         action.__raw = ''
           function()
-            vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+            vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR, float = true })
           end
         '';
         options.desc = "Next Error";
@@ -412,7 +430,7 @@
         key = "[e";
         action.__raw = ''
           function()
-            vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+            vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR, float = true })
           end
         '';
         options.desc = "Prev Error";
@@ -422,7 +440,7 @@
         key = "]w";
         action.__raw = ''
           function()
-            vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
+            vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN, float = true })
           end
         '';
         options.desc = "Next Warning";
@@ -432,7 +450,7 @@
         key = "[w";
         action.__raw = ''
           function()
-            vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
+            vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN, float = true })
           end
         '';
         options.desc = "Prev Warning";
@@ -486,6 +504,28 @@
           end
         '';
         options.desc = "Toggle Conceal Level";
+      }
+      {
+        mode = "n";
+        key = "<leader>ub";
+        action.__raw = ''
+          function()
+            Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):toggle()
+          end
+        '';
+        options.desc = "Toggle Background";
+      }
+      {
+        mode = "n";
+        key = "<leader>ug";
+        action.__raw = "function() Snacks.toggle.indent():toggle() end";
+        options.desc = "Toggle Indent Guides";
+      }
+      {
+        mode = "n";
+        key = "<leader>uT";
+        action.__raw = "function() Snacks.toggle.treesitter():toggle() end";
+        options.desc = "Toggle Treesitter Highlight";
       }
 
       # Quit
