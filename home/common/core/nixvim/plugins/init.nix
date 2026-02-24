@@ -1,5 +1,4 @@
-# LazyVim plugins/init.nix - Core plugin setup
-# Snacks.nvim is the main utility plugin used by LazyVim
+# Snacks.nvim - Core utility plugin setup
 { pkgs, ... }:
 {
   programs.nixvim = {
@@ -38,9 +37,9 @@
           };
           input.enabled = true;
           scope.enabled = true;
+          zen.enabled = true;
           picker = {
             enabled = true;
-            # Use Telescope as the picker backend
             win.input.keys.i_esc = "<Esc>";
           };
           dashboard = {
@@ -70,14 +69,13 @@
       };
     };
 
-    # Extra plugins not directly configured by nixvim
+    # Plugin dependencies
     extraPlugins = with pkgs.vimPlugins; [
       plenary-nvim
       nui-nvim
     ];
 
     extraConfigLua = ''
-      -- Snacks keymaps
       local Snacks = require("snacks")
 
       -- Notifier
@@ -87,8 +85,8 @@
       vim.keymap.set("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffers" })
 
       -- Terminal
-      vim.keymap.set("n", "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
       vim.keymap.set("n", "<leader>ft", function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
+      vim.keymap.set("n", "<leader>fT", function() Snacks.terminal(nil, { cwd = vim.fn.getcwd() }) end, { desc = "Terminal (cwd)" })
       vim.keymap.set({"n","t"}, "<c-/>", function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
       vim.keymap.set({"n","t"}, "<c-_>", function() Snacks.terminal() end, { desc = "which_key_ignore" })
 
@@ -105,7 +103,7 @@
       -- Lazygit
       if vim.fn.executable("lazygit") == 1 then
         vim.keymap.set("n", "<leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit (Root Dir)" })
-        vim.keymap.set("n", "<leader>gG", function() Snacks.lazygit() end, { desc = "Lazygit (cwd)" })
+        vim.keymap.set("n", "<leader>gG", function() Snacks.lazygit({ cwd = vim.fn.getcwd() }) end, { desc = "Lazygit (cwd)" })
       end
 
       -- Words navigation
@@ -114,6 +112,14 @@
 
       -- Rename file
       vim.keymap.set("n", "<leader>cR", function() Snacks.rename.rename_file() end, { desc = "Rename File" })
+
+      -- Toggles
+      vim.keymap.set("n", "<leader>uh", function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end, { desc = "Toggle Inlay Hints" })
+      vim.keymap.set("n", "<leader>uz", function() Snacks.zen() end, { desc = "Toggle Zen Mode" })
+      vim.keymap.set("n", "<leader>uZ", function() Snacks.zen.zoom() end, { desc = "Toggle Zoom" })
+      vim.keymap.set("n", "<leader>wm", function() Snacks.zen.zoom() end, { desc = "Toggle Zoom" })
     '';
   };
 }

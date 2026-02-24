@@ -400,7 +400,7 @@
         key = "]d";
         action.__raw = ''
           function()
-            vim.diagnostic.jump({ count = 1, float = true })
+            vim.diagnostic.jump({ count = vim.v.count1, float = true })
           end
         '';
         options.desc = "Next Diagnostic";
@@ -410,7 +410,7 @@
         key = "[d";
         action.__raw = ''
           function()
-            vim.diagnostic.jump({ count = -1, float = true })
+            vim.diagnostic.jump({ count = -vim.v.count1, float = true })
           end
         '';
         options.desc = "Prev Diagnostic";
@@ -420,7 +420,7 @@
         key = "]e";
         action.__raw = ''
           function()
-            vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR, float = true })
+            vim.diagnostic.jump({ count = vim.v.count1, severity = vim.diagnostic.severity.ERROR, float = true })
           end
         '';
         options.desc = "Next Error";
@@ -430,7 +430,7 @@
         key = "[e";
         action.__raw = ''
           function()
-            vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR, float = true })
+            vim.diagnostic.jump({ count = -vim.v.count1, severity = vim.diagnostic.severity.ERROR, float = true })
           end
         '';
         options.desc = "Prev Error";
@@ -440,7 +440,7 @@
         key = "]w";
         action.__raw = ''
           function()
-            vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN, float = true })
+            vim.diagnostic.jump({ count = vim.v.count1, severity = vim.diagnostic.severity.WARN, float = true })
           end
         '';
         options.desc = "Next Warning";
@@ -450,7 +450,7 @@
         key = "[w";
         action.__raw = ''
           function()
-            vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN, float = true })
+            vim.diagnostic.jump({ count = -vim.v.count1, severity = vim.diagnostic.severity.WARN, float = true })
           end
         '';
         options.desc = "Prev Warning";
