@@ -121,6 +121,21 @@
       vim.keymap.set("n", "<leader>uz", function() Snacks.zen() end, { desc = "Toggle Zen Mode" })
       vim.keymap.set("n", "<leader>uZ", function() Snacks.zen.zoom() end, { desc = "Toggle Zoom" })
       vim.keymap.set("n", "<leader>wm", function() Snacks.zen.zoom() end, { desc = "Toggle Zoom" })
+
+      -- opencode.nvim: Snacks picker integration
+      -- Adds <A-a> inside picker to send selected items to opencode
+      Snacks.config.picker = vim.tbl_deep_extend("force", Snacks.config.picker or {}, {
+        actions = {
+          opencode_send = function(...) return require("opencode").snacks_picker_send(...) end,
+        },
+        win = {
+          input = {
+            keys = {
+              ["<a-a>"] = { "opencode_send", mode = { "n", "i" } },
+            },
+          },
+        },
+      })
     '';
   };
 }
