@@ -1,4 +1,4 @@
-# Language extras
+# lang extras
 { ... }:
 {
   imports = [

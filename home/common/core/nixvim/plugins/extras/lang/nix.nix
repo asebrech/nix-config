@@ -1,9 +1,8 @@
-# Nix language support
+# nix
 { pkgs, ... }:
 {
   programs.nixvim = {
     plugins = {
-      # LSP
       lsp.servers = {
         nil_ls = {
           enable = true;
@@ -20,7 +19,10 @@
         };
       };
 
+      lint.lintersByFt.nix = [ "statix" ];
     };
+
+    extraPackages = with pkgs; [ statix ];
 
     extraPlugins = with pkgs.vimPlugins; [
       vim-nix

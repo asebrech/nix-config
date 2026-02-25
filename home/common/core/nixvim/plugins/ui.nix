@@ -1,9 +1,9 @@
-# LazyVim plugins/ui.nix - UI plugins
+# ui plugins
 { ... }:
 {
   programs.nixvim = {
     plugins = {
-      # Lualine - Statusline
+      # statusline
       lualine = {
         enable = true;
         settings = {
@@ -58,9 +58,7 @@
                     return package.loaded["noice"] and require("noice").api.status.command.has()
                   end
                 '';
-                color = {
-                  fg = "#ff9e64";
-                };
+                color.__raw = ''(function() return { fg = Snacks.util.color("Statement") } end)()'';
               }
               {
                 __unkeyed-1.__raw = ''
@@ -73,9 +71,7 @@
                     return package.loaded["noice"] and require("noice").api.status.mode.has()
                   end
                 '';
-                color = {
-                  fg = "#ff9e64";
-                };
+                color.__raw = ''(function() return { fg = Snacks.util.color("Constant") } end)()'';
               }
               {
                 __unkeyed-1.__raw = ''
@@ -88,9 +84,7 @@
                     return package.loaded["dap"] and require("dap").status() ~= ""
                   end
                 '';
-                color = {
-                  fg = "#ff9e64";
-                };
+                color.__raw = ''(function() return { fg = Snacks.util.color("Debug") } end)()'';
               }
               {
                 __unkeyed-1 = "diff";
@@ -143,17 +137,18 @@
           extensions = [
             "neo-tree"
             "lazy"
+            "fzf"
           ];
         };
       };
 
-      # Bufferline - Buffer tabs
+      # buffer line
       bufferline = {
         enable = true;
         settings = {
           options = {
-            close_command.__raw = ''function(n) Snacks.bufdelete(n) end'';
-            right_mouse_command.__raw = ''function(n) Snacks.bufdelete(n) end'';
+            close_command.__raw = "function(n) Snacks.bufdelete(n) end";
+            right_mouse_command.__raw = "function(n) Snacks.bufdelete(n) end";
             diagnostics = "nvim_lsp";
             always_show_bufferline = false;
             diagnostics_indicator.__raw = ''
@@ -171,10 +166,13 @@
                 highlight = "Directory";
                 text_align = "left";
               }
+              {
+                filetype = "snacks_layout_box";
+              }
             ];
             get_element_icon.__raw = ''
               function(elem)
-                local icon, hl = require("nvim-web-devicons").get_icon_by_filetype(elem.filetype, { default = false })
+                local icon, hl = require("mini.icons").get("filetype", elem.filetype)
                 return icon, hl
               end
             '';
@@ -182,7 +180,7 @@
         };
       };
 
-      # Noice - Better UI for messages, cmdline, popupmenu
+      # better ui for messages, cmdline, and the popupmenu
       noice = {
         enable = true;
         settings = {
@@ -210,12 +208,11 @@
             bottom_search = true;
             command_palette = true;
             long_message_to_split = true;
-            lsp_doc_border = true;
           };
         };
       };
 
-      # Mini.icons
+      # icons
       mini = {
         enable = true;
         mockDevIcons = true;
@@ -224,43 +221,7 @@
         };
       };
 
-      # Dressing - Better UI for inputs and selects
-      dressing = {
-        enable = true;
-        settings = { };
-      };
-
-      # Indent blankline - Indentation guides
-      indent-blankline = {
-        enable = true;
-        settings = {
-          indent = {
-            char = "│";
-            tab_char = "│";
-          };
-          scope = {
-            show_start = false;
-            show_end = false;
-          };
-          exclude = {
-            filetypes = [
-              "help"
-              "alpha"
-              "dashboard"
-              "neo-tree"
-              "Trouble"
-              "trouble"
-              "lazy"
-              "mason"
-              "notify"
-              "toggleterm"
-              "lazyterm"
-            ];
-          };
-        };
-      };
-
-      # Navic - Breadcrumbs
+      # breadcrumbs
       navic = {
         enable = true;
         settings = {
@@ -307,7 +268,31 @@
     };
 
     keymaps = [
-      # Bufferline
+      # bufferline keymaps
+      {
+        mode = "n";
+        key = "<S-h>";
+        action = "<cmd>BufferLineCyclePrev<cr>";
+        options.desc = "Prev Buffer";
+      }
+      {
+        mode = "n";
+        key = "<S-l>";
+        action = "<cmd>BufferLineCycleNext<cr>";
+        options.desc = "Next Buffer";
+      }
+      {
+        mode = "n";
+        key = "[b";
+        action = "<cmd>BufferLineCyclePrev<cr>";
+        options.desc = "Prev Buffer";
+      }
+      {
+        mode = "n";
+        key = "]b";
+        action = "<cmd>BufferLineCycleNext<cr>";
+        options.desc = "Next Buffer";
+      }
       {
         mode = "n";
         key = "<leader>bp";
@@ -344,7 +329,7 @@
         action = "<cmd>BufferLineMoveNext<cr>";
         options.desc = "Move Buffer Right";
       }
-      # Noice
+      # noice keymaps
       {
         mode = "n";
         key = "<leader>sn";
@@ -394,26 +379,32 @@
       {
         mode = "n";
         key = "<leader>snl";
-        action.__raw = ''function() require("noice").cmd("last") end'';
+        action = "<cmd>Noice last<cr>";
         options.desc = "Noice Last Message";
       }
       {
         mode = "n";
         key = "<leader>snh";
-        action.__raw = ''function() require("noice").cmd("history") end'';
+        action = "<cmd>Noice history<cr>";
         options.desc = "Noice History";
       }
       {
         mode = "n";
         key = "<leader>sna";
-        action.__raw = ''function() require("noice").cmd("all") end'';
+        action = "<cmd>Noice all<cr>";
         options.desc = "Noice All";
       }
       {
         mode = "n";
         key = "<leader>snd";
-        action.__raw = ''function() require("noice").cmd("dismiss") end'';
+        action = "<cmd>Noice dismiss<cr>";
         options.desc = "Dismiss All";
+      }
+      {
+        mode = "n";
+        key = "<leader>snt";
+        action.__raw = ''function() require("noice").cmd("pick") end'';
+        options.desc = "Noice Picker (Telescope/FzfLua)";
       }
       {
         mode = "c";

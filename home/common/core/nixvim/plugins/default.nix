@@ -1,8 +1,7 @@
-# LazyVim plugins module - combines all plugin files
+# plugins
 { ... }:
 {
   imports = [
-    # Core plugins (always loaded)
     ./init.nix
     ./coding.nix
     ./colorscheme.nix
@@ -13,8 +12,6 @@
     ./treesitter.nix
     ./ui.nix
     ./util.nix
-
-    # Extras (optional, comment out what you don't need)
     ./extras
   ];
 }

@@ -1,4 +1,4 @@
-# Editor extras
+# editor extras
 { ... }:
 {
   imports = [

@@ -1,9 +1,10 @@
-# LazyVim plugins/editor.nix - Editor enhancement plugins
+# editor plugins
 { pkgs, ... }:
 {
   programs.nixvim = {
     plugins = {
-      # Flash.nvim - Jump anywhere
+      # flash enhances the built-in search functionality by showing labels
+      # at the end of each match, letting you quickly jump to a specific location
       flash = {
         enable = true;
         settings = {
@@ -49,7 +50,8 @@
         };
       };
 
-      # Which-key - Key bindings helper
+      # which-key helps you remember key bindings by showing a popup
+      # with the active keybindings of the command you started typing
       which-key = {
         enable = true;
         settings = {
@@ -71,10 +73,19 @@
             {
               __unkeyed-1 = "<leader>b";
               group = "buffer";
+              expand.__raw = ''function() return require("which-key.extras").expand.buf() end'';
             }
             {
               __unkeyed-1 = "<leader>c";
               group = "code";
+            }
+            {
+              __unkeyed-1 = "<leader>d";
+              group = "debug";
+            }
+            {
+              __unkeyed-1 = "<leader>dp";
+              group = "profiler";
             }
             {
               __unkeyed-1 = "<leader>f";
@@ -103,6 +114,8 @@
             {
               __unkeyed-1 = "<leader>w";
               group = "windows";
+              proxy = "<c-w>";
+              expand.__raw = ''function() return require("which-key.extras").expand.win() end'';
             }
             {
               __unkeyed-1 = "<leader>x";
@@ -125,14 +138,181 @@
               group = "surround";
             }
             {
+              __unkeyed-1 = "gx";
+              desc = "Open with system app";
+            }
+            {
               __unkeyed-1 = "z";
               group = "fold";
+            }
+            # mini.ai textobjects
+            {
+              __unkeyed-1 = "a=";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Assignment Statement";
+            }
+            {
+              __unkeyed-1 = "i=";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Assignment Statement";
+            }
+            {
+              __unkeyed-1 = "ac";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Class";
+            }
+            {
+              __unkeyed-1 = "ic";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Class";
+            }
+            {
+              __unkeyed-1 = "ad";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Digit(s)";
+            }
+            {
+              __unkeyed-1 = "id";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Digit(s)";
+            }
+            {
+              __unkeyed-1 = "ae";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Word Segment";
+            }
+            {
+              __unkeyed-1 = "ie";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Word Segment";
+            }
+            {
+              __unkeyed-1 = "af";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Function";
+            }
+            {
+              __unkeyed-1 = "if";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Function";
+            }
+            {
+              __unkeyed-1 = "ag";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Buffer";
+            }
+            {
+              __unkeyed-1 = "ig";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Buffer";
+            }
+            {
+              __unkeyed-1 = "ao";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Block/Conditional/Loop";
+            }
+            {
+              __unkeyed-1 = "io";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Block/Conditional/Loop";
+            }
+            {
+              __unkeyed-1 = "at";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Tag";
+            }
+            {
+              __unkeyed-1 = "it";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Tag";
+            }
+            {
+              __unkeyed-1 = "au";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Function Call";
+            }
+            {
+              __unkeyed-1 = "iu";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Function Call";
+            }
+            {
+              __unkeyed-1 = "aU";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Around Function Call (Strict)";
+            }
+            {
+              __unkeyed-1 = "iU";
+              mode = [
+                "o"
+                "x"
+              ];
+              desc = "Inside Function Call (Strict)";
             }
           ];
         };
       };
 
-      # Gitsigns - Git integration
+      # git signs highlights text that has changed since the list
+      # git commit, and also lets you interactively stage & unstage
+      # hunks in a commit
       gitsigns = {
         enable = true;
         settings = {
@@ -176,10 +356,10 @@
           on_attach = {
             __raw = ''
               function(buffer)
-                local gs = require("gitsigns")
+                local gs = package.loaded.gitsigns
 
                 local function map(mode, l, r, desc)
-                  vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
+                  vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
                 end
 
                 map("n", "]h", function()
@@ -198,8 +378,8 @@
                 end, "Prev Hunk")
                 map("n", "]H", function() gs.nav_hunk("last") end, "Last Hunk")
                 map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
-                map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-                map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+                map({ "n", "x" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
+                map({ "n", "x" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
                 map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
                 map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
                 map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
@@ -215,7 +395,7 @@
         };
       };
 
-      # Trouble.nvim - Better diagnostics list
+      # better diagnostics list and others
       trouble = {
         enable = true;
         settings = {
@@ -229,7 +409,7 @@
         };
       };
 
-      # Telescope - Fuzzy finder
+      # fuzzy finder
       telescope = {
         enable = true;
         settings = {
@@ -280,7 +460,7 @@
           ui-select.enable = true;
         };
         keymaps = {
-          # Find
+          # find
           "<leader><space>" = {
             action = "find_files";
             options.desc = "Find Files (Root Dir)";
@@ -321,7 +501,7 @@
             action = "oldfiles";
             options.desc = "Recent";
           };
-          # Git
+          # git
           "<leader>gc" = {
             action = "git_commits";
             options.desc = "Commits";
@@ -330,7 +510,7 @@
             action = "git_status";
             options.desc = "Status";
           };
-          # Search
+          # search
           "<leader>s\"" = {
             action = "registers";
             options.desc = "Registers";
@@ -419,7 +599,7 @@
             action = "colorscheme";
             options.desc = "Colorscheme with Preview";
           };
-          # LSP
+          # lsp
           "<leader>ss" = {
             action = "lsp_document_symbols";
             options.desc = "Goto Symbol";
@@ -431,21 +611,21 @@
         };
       };
 
-      # Spectre - Find and replace
-      spectre = {
+      # search/replace in multiple files
+      grug-far = {
         enable = true;
         settings = {
-          open_cmd = "noswapfile vnew";
+          headerMaxWidth = 80;
         };
       };
 
-      # Persistence - Session management
+      # session management
       persistence = {
         enable = true;
         settings = { };
       };
 
-      # Neo-tree - File explorer
+      # file explorer
       neo-tree = {
         enable = true;
         settings = {
@@ -485,7 +665,7 @@
               O = {
                 __raw = ''
                   function(state)
-                    require("lazy.util").open(state.tree:get_node().path, { system = true })
+                    vim.ui.open(state.tree:get_node().path)
                   end
                 '';
               };
@@ -515,7 +695,7 @@
       };
     };
 
-    # Flash keymaps
+    # flash keymaps
     keymaps = [
       {
         mode = [
@@ -558,7 +738,26 @@
         action.__raw = ''function() require("flash").toggle() end'';
         options.desc = "Toggle Flash Search";
       }
-      # Trouble keymaps
+      {
+        mode = [
+          "n"
+          "o"
+          "x"
+        ];
+        key = "<c-space>";
+        action.__raw = ''
+          function()
+            require("flash").treesitter({
+              actions = {
+                ["<c-space>"] = "next",
+                ["<BS>"] = "prev",
+              },
+            })
+          end
+        '';
+        options.desc = "Treesitter Incremental Selection";
+      }
+      # trouble keymaps
       {
         mode = "n";
         key = "<leader>xx";
@@ -595,7 +794,41 @@
         action = "<cmd>Trouble qflist toggle<cr>";
         options.desc = "Quickfix List (Trouble)";
       }
-      # Neo-tree keymaps
+      {
+        mode = "n";
+        key = "[q";
+        action.__raw = ''
+          function()
+            if require("trouble").is_open() then
+              require("trouble").prev({ skip_groups = true, jump = true })
+            else
+              local ok, err = pcall(vim.cmd.cprev)
+              if not ok then
+                vim.notify(err, vim.log.levels.ERROR)
+              end
+            end
+          end
+        '';
+        options.desc = "Previous Trouble/Quickfix Item";
+      }
+      {
+        mode = "n";
+        key = "]q";
+        action.__raw = ''
+          function()
+            if require("trouble").is_open() then
+              require("trouble").next({ skip_groups = true, jump = true })
+            else
+              local ok, err = pcall(vim.cmd.cnext)
+              if not ok then
+                vim.notify(err, vim.log.levels.ERROR)
+              end
+            end
+          end
+        '';
+        options.desc = "Next Trouble/Quickfix Item";
+      }
+      # neo-tree keymaps
       {
         mode = "n";
         key = "<leader>e";
@@ -638,14 +871,28 @@
         action = "<cmd>Neotree buffers<cr>";
         options.desc = "Buffer Explorer";
       }
-      # Spectre keymaps
+      # grug-far keymaps
       {
-        mode = "n";
+        mode = [
+          "n"
+          "x"
+        ];
         key = "<leader>sr";
-        action.__raw = ''function() require("spectre").open() end'';
-        options.desc = "Replace in Files (Spectre)";
+        action.__raw = ''
+          function()
+            local grug = require("grug-far")
+            local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+            grug.open({
+              transient = true,
+              prefills = {
+                filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+              },
+            })
+          end
+        '';
+        options.desc = "Search and Replace";
       }
-      # Session keymaps
+      # session keymaps
       {
         mode = "n";
         key = "<leader>qs";
@@ -675,5 +922,14 @@
     extraPlugins = with pkgs.vimPlugins; [
       nvim-web-devicons
     ];
+
+    # gitsigns toggle
+    extraConfigLua = ''
+      Snacks.toggle({
+        name = "Git Signs",
+        get = function() return require("gitsigns.config").config.signcolumn end,
+        set = function(state) require("gitsigns").toggle_signs(state) end,
+      }):map("<leader>uG")
+    '';
   };
 }

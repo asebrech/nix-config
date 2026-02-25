@@ -1,9 +1,9 @@
-# LazyVim plugins/formatting.nix - Code formatting
+# formatting
 { ... }:
 {
   programs.nixvim = {
     plugins = {
-      # Conform.nvim - Formatting
+      # conform.nvim formats on save and provides a manual format command
       conform-nvim = {
         enable = true;
         settings = {
@@ -44,8 +44,14 @@
               "prettier"
             ];
             markdown = [
-              "prettierd"
               "prettier"
+              "markdownlint-cli2"
+              "markdown-toc"
+            ];
+            "markdown.mdx" = [
+              "prettier"
+              "markdownlint-cli2"
+              "markdown-toc"
             ];
             html = [
               "prettierd"
@@ -56,10 +62,11 @@
               "prettier"
             ];
             rust = [ "rustfmt" ];
-            go = [ "gofmt" ];
-            # Use the "_" filetype to run formatters on filetypes that don't
-            # have other formatters configured.
-            "_" = [ "trim_whitespace" ];
+            go = [
+              "goimports"
+              "gofumpt"
+            ];
+            "_" = [ "trim_whitespace" ]; # fallback for unconfigured filetypes
           };
           formatters = {
             shfmt = {
@@ -68,12 +75,29 @@
                 "2"
               ];
             };
+            "markdown-toc" = {
+              condition.__raw = ''
+                function(self, ctx)
+                  for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
+                    if line:find("<!%-%- toc %-%->") then return true end
+                  end
+                end
+              '';
+            };
+            "markdownlint-cli2" = {
+              condition.__raw = ''
+                function(self, ctx)
+                  local diag = vim.tbl_filter(function(d) return d.source == "markdownlint" end, vim.diagnostic.get(ctx.buf))
+                  return #diag > 0
+                end
+              '';
+            };
           };
           format_on_save = {
             __raw = ''
               function(bufnr)
-                -- Disable with a global or buffer-local variable
-                if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                -- Disable when vim.g.autoformat or vim.b.autoformat is explicitly false
+                if vim.g.autoformat == false or vim.b[bufnr].autoformat == false then
                   return
                 end
                 return { timeout_ms = 3000, lsp_format = "fallback" }
@@ -99,7 +123,10 @@
         options.desc = "Format";
       }
       {
-        mode = "n";
+        mode = [
+          "n"
+          "x"
+        ];
         key = "<leader>cF";
         action.__raw = ''
           function()
@@ -108,37 +135,20 @@
         '';
         options.desc = "Format Injected Langs";
       }
-      # Toggle autoformat
-      {
-        mode = "n";
-        key = "<leader>uf";
-        action.__raw = ''
-          function()
-            vim.b.disable_autoformat = not vim.b.disable_autoformat
-            if vim.b.disable_autoformat then
-              vim.notify("Autoformat disabled for buffer", vim.log.levels.INFO)
-            else
-              vim.notify("Autoformat enabled for buffer", vim.log.levels.INFO)
-            end
-          end
-        '';
-        options.desc = "Toggle Autoformat (Buffer)";
-      }
-      {
-        mode = "n";
-        key = "<leader>uF";
-        action.__raw = ''
-          function()
-            vim.g.disable_autoformat = not vim.g.disable_autoformat
-            if vim.g.disable_autoformat then
-              vim.notify("Autoformat disabled globally", vim.log.levels.INFO)
-            else
-              vim.notify("Autoformat enabled globally", vim.log.levels.INFO)
-            end
-          end
-        '';
-        options.desc = "Toggle Autoformat (Global)";
-      }
     ];
+
+    extraConfigLua = ''
+      -- toggle options
+      Snacks.toggle({
+        name = "Auto Format (Buffer)",
+        get = function() return vim.b.autoformat ~= false end,
+        set = function(state) vim.b.autoformat = state end,
+      }):map("<leader>uf")
+      Snacks.toggle({
+        name = "Auto Format (Global)",
+        get = function() return vim.g.autoformat ~= false end,
+        set = function(state) vim.g.autoformat = state end,
+      }):map("<leader>uF")
+    '';
   };
 }

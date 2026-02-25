@@ -1,13 +1,12 @@
-# LazyVim plugins/treesitter.nix - Treesitter configuration
+# treesitter
 { pkgs, ... }:
 {
   programs.nixvim = {
     plugins = {
-      # Treesitter
+      # treesitter provides syntax highlighting, indentation, and text objects
       treesitter = {
         enable = true;
 
-        # Use pre-compiled grammars from nixpkgs (no C compiler needed)
         nixGrammars = true;
         grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;
 
@@ -20,16 +19,6 @@
           indent = {
             enable = true;
           };
-
-          incremental_selection = {
-            enable = true;
-            keymaps = {
-              init_selection = "<C-space>";
-              node_incremental = "<C-space>";
-              scope_incremental = false;
-              node_decremental = "<bs>";
-            };
-          };
         };
 
         folding = true;
@@ -37,22 +26,10 @@
         nixvimInjections = true;
       };
 
-      # Treesitter textobjects
+      # treesitter-textobjects adds move/select motions for functions, classes, params
       treesitter-textobjects = {
         enable = true;
         settings = {
-          select = {
-            enable = true;
-            lookahead = true;
-            keymaps = {
-              "af" = "@function.outer";
-              "if" = "@function.inner";
-              "ac" = "@class.outer";
-              "ic" = "@class.inner";
-              "aa" = "@parameter.outer";
-              "ia" = "@parameter.inner";
-            };
-          };
           move = {
             enable = true;
             set_jumps = true;
@@ -77,19 +54,10 @@
               "[A" = "@parameter.inner";
             };
           };
-          swap = {
-            enable = true;
-            swap_next = {
-              "<leader>a" = "@parameter.inner";
-            };
-            swap_previous = {
-              "<leader>A" = "@parameter.inner";
-            };
-          };
         };
       };
 
-      # Treesitter context - Shows context at the top
+      # treesitter-context pins the current scope at the top of the window
       treesitter-context = {
         enable = true;
         settings = {
@@ -99,12 +67,12 @@
         };
       };
 
-      # ts-autotag - Auto close and rename HTML tags
+      # ts-autotag auto closes and renames HTML tags
       ts-autotag = {
         enable = true;
       };
 
-      # ts-context-commentstring - Context aware commenting
+      # ts-context-commentstring makes comments context-aware (e.g. JSX)
       ts-context-commentstring = {
         enable = true;
         settings = {
@@ -112,33 +80,13 @@
         };
       };
 
-      # Illuminate - Highlight word under cursor
-      illuminate = {
-        enable = true;
-        settings = {
-          under_cursor = false;
-          delay = 200;
-          large_file_overrides = {
-            providers = [ "lsp" ];
-          };
-          filetypes_denylist = [
-            "dirbuf"
-            "dirvish"
-            "fugitive"
-            "neo-tree"
-            "TelescopePrompt"
-          ];
-        };
-      };
-
-      # Rainbow delimiters
+      # rainbow-delimiters colors nested brackets for readability
       rainbow-delimiters = {
         enable = true;
       };
     };
 
     keymaps = [
-      # Toggle treesitter context
       {
         mode = "n";
         key = "<leader>ut";

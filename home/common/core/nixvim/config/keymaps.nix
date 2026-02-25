@@ -1,9 +1,9 @@
-# LazyVim-style keymaps for nixvim
+# keymaps
 { ... }:
 {
   programs.nixvim = {
     keymaps = [
-      # Better up/down
+      # better up/down
       {
         mode = [
           "n"
@@ -57,7 +57,7 @@
         };
       }
 
-      # Move to window using <ctrl> arrow keys
+      # move to window using <ctrl> arrow keys
       {
         mode = "n";
         key = "<C-Left>";
@@ -95,7 +95,7 @@
         };
       }
 
-      # Resize window using <alt> arrow keys
+      # resize window using <alt> arrow keys
       {
         mode = "n";
         key = "<A-Up>";
@@ -121,7 +121,59 @@
         options.desc = "Increase Window Width";
       }
 
-      # Move Lines
+      # move lines
+      {
+        mode = "n";
+        key = "<A-j>";
+        action.__raw = ''
+          function()
+            vim.cmd("execute 'move .+" .. vim.v.count1 .. "'")
+            vim.cmd("normal! ==")
+          end
+        '';
+        options = {
+          desc = "Move Down";
+          silent = true;
+        };
+      }
+      {
+        mode = "n";
+        key = "<A-k>";
+        action.__raw = ''
+          function()
+            vim.cmd("execute 'move .-" .. (vim.v.count1 + 1) .. "'")
+            vim.cmd("normal! ==")
+          end
+        '';
+        options = {
+          desc = "Move Up";
+          silent = true;
+        };
+      }
+      {
+        mode = "i";
+        key = "<A-j>";
+        action = "<esc><cmd>m .+1<cr>==gi";
+        options.desc = "Move Down";
+      }
+      {
+        mode = "i";
+        key = "<A-k>";
+        action = "<esc><cmd>m .-2<cr>==gi";
+        options.desc = "Move Up";
+      }
+      {
+        mode = "v";
+        key = "<A-j>";
+        action = ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv";
+        options.desc = "Move Down";
+      }
+      {
+        mode = "v";
+        key = "<A-k>";
+        action = ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv";
+        options.desc = "Move Up";
+      }
       {
         mode = "i";
         key = "<A-Down>";
@@ -147,31 +199,7 @@
         options.desc = "Move Up";
       }
 
-      # Buffers
-      {
-        mode = "n";
-        key = "<S-h>";
-        action = "<cmd>bprevious<cr>";
-        options.desc = "Prev Buffer";
-      }
-      {
-        mode = "n";
-        key = "<S-l>";
-        action = "<cmd>bnext<cr>";
-        options.desc = "Next Buffer";
-      }
-      {
-        mode = "n";
-        key = "[b";
-        action = "<cmd>bprevious<cr>";
-        options.desc = "Prev Buffer";
-      }
-      {
-        mode = "n";
-        key = "]b";
-        action = "<cmd>bnext<cr>";
-        options.desc = "Next Buffer";
-      }
+      # buffers
       {
         mode = "n";
         key = "<leader>bb";
@@ -187,7 +215,7 @@
       {
         mode = "n";
         key = "<leader>bd";
-        action.__raw = "function() Snacks.bufdelete() end";
+        action = "<cmd>lua Snacks.bufdelete()<cr>";
         options.desc = "Delete Buffer";
       }
       {
@@ -196,8 +224,14 @@
         action = "<cmd>:bd<cr>";
         options.desc = "Delete Buffer and Window";
       }
+      {
+        mode = "n";
+        key = "<leader>bo";
+        action = "<cmd>lua Snacks.bufdelete.other()<cr>";
+        options.desc = "Delete Other Buffers";
+      }
 
-      # Clear search with <esc>
+      # clear search with <esc>
       {
         mode = [
           "i"
@@ -220,7 +254,7 @@
         };
       }
 
-      # Clear search, diff update and redraw
+      # clear search, diff update and redraw
       {
         mode = "n";
         key = "<leader>ur";
@@ -228,6 +262,7 @@
         options.desc = "Redraw / Clear hlsearch / Diff Update";
       }
 
+      # saner behavior of n and N
       # https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
       {
         mode = "n";
@@ -284,7 +319,7 @@
         };
       }
 
-      # Add undo break-points
+      # add undo break-points
       {
         mode = "i";
         key = ",";
@@ -301,7 +336,7 @@
         action = ";<c-g>u";
       }
 
-      # Save file
+      # save file
       {
         mode = [
           "i"
@@ -314,7 +349,7 @@
         options.desc = "Save File";
       }
 
-      # Keywordprg
+      # keywordprg
       {
         mode = "n";
         key = "<leader>K";
@@ -322,7 +357,7 @@
         options.desc = "Keywordprg";
       }
 
-      # Better indenting
+      # better indenting
       {
         mode = "x";
         key = "<";
@@ -334,7 +369,7 @@
         action = ">gv";
       }
 
-      # Commenting
+      # commenting
       {
         mode = "n";
         key = "gco";
@@ -348,7 +383,7 @@
         options.desc = "Add Comment Above";
       }
 
-      # New file
+      # new file
       {
         mode = "n";
         key = "<leader>fn";
@@ -356,17 +391,31 @@
         options.desc = "New File";
       }
 
-      # Location and quickfix list
+      # location and quickfix list
       {
         mode = "n";
         key = "<leader>xl";
-        action = "<cmd>lopen<cr>";
+        action.__raw = ''
+          function()
+            local ok, err = pcall(
+              vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen
+            )
+            if not ok and err then vim.notify(err, vim.log.levels.ERROR) end
+          end
+        '';
         options.desc = "Location List";
       }
       {
         mode = "n";
         key = "<leader>xq";
-        action = "<cmd>copen<cr>";
+        action.__raw = ''
+          function()
+            local ok, err = pcall(
+              vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen
+            )
+            if not ok and err then vim.notify(err, vim.log.levels.ERROR) end
+          end
+        '';
         options.desc = "Quickfix List";
       }
       {
@@ -382,7 +431,7 @@
         options.desc = "Next Quickfix";
       }
 
-      # Diagnostic navigation
+      # diagnostic
       {
         mode = "n";
         key = "]d";
@@ -444,69 +493,9 @@
         options.desc = "Prev Warning";
       }
 
-      # Toggle options
-      {
-        mode = "n";
-        key = "<leader>us";
-        action = "<cmd>set spell!<cr>";
-        options.desc = "Toggle Spelling";
-      }
-      {
-        mode = "n";
-        key = "<leader>uw";
-        action = "<cmd>set wrap!<cr>";
-        options.desc = "Toggle Wrap";
-      }
-      {
-        mode = "n";
-        key = "<leader>uL";
-        action = "<cmd>set relativenumber!<cr>";
-        options.desc = "Toggle Relative Number";
-      }
-      {
-        mode = "n";
-        key = "<leader>ul";
-        action = "<cmd>set number!<cr>";
-        options.desc = "Toggle Line Numbers";
-      }
-      {
-        mode = "n";
-        key = "<leader>ud";
-        action.__raw = ''
-          function()
-            vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-          end
-        '';
-        options.desc = "Toggle Diagnostics";
-      }
-      {
-        mode = "n";
-        key = "<leader>uc";
-        action.__raw = ''
-          function()
-            if vim.o.conceallevel > 0 then
-              vim.o.conceallevel = 0
-            else
-              vim.o.conceallevel = 2
-            end
-          end
-        '';
-        options.desc = "Toggle Conceal Level";
-      }
-      {
-        mode = "n";
-        key = "<leader>ug";
-        action.__raw = "function() Snacks.toggle.indent():toggle() end";
-        options.desc = "Toggle Indent Guides";
-      }
-      {
-        mode = "n";
-        key = "<leader>uT";
-        action.__raw = "function() Snacks.toggle.treesitter():toggle() end";
-        options.desc = "Toggle Treesitter Highlight";
-      }
+      # toggle options (via Snacks.toggle in init.nix)
 
-      # Quit
+      # quit
       {
         mode = "n";
         key = "<leader>qq";
@@ -514,11 +503,11 @@
         options.desc = "Quit All";
       }
 
-      # Highlights under cursor
+      # highlights under cursor
       {
         mode = "n";
         key = "<leader>ui";
-        action.__raw = "vim.show_pos";
+        action = "<cmd>lua vim.show_pos()<cr>";
         options.desc = "Inspect Pos";
       }
       {
@@ -533,7 +522,19 @@
         options.desc = "Inspect Tree";
       }
 
-      # Windows
+      # windows
+      {
+        mode = "n";
+        key = "<leader>?";
+        action.__raw = ''function() require("which-key").show({ global = false }) end'';
+        options.desc = "Buffer Keymaps (which-key)";
+      }
+      {
+        mode = "n";
+        key = "<c-w><space>";
+        action.__raw = ''function() require("which-key").show({ keys = "<c-w>", loop = true }) end'';
+        options.desc = "Window Hydra Mode (which-key)";
+      }
       {
         mode = "n";
         key = "<leader>-";
@@ -562,7 +563,7 @@
         };
       }
 
-      # Tabs
+      # tabs
       {
         mode = "n";
         key = "<leader><tab>l";

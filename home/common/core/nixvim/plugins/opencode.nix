@@ -1,4 +1,4 @@
-# AI coding assistant integration
+# opencode
 # https://github.com/NickvanDyke/opencode.nvim
 { pkgs, ... }:
 {
@@ -13,7 +13,7 @@
         -- server defaults: uses built-in opencode.terminal (singleton, no duplicate-instance bug)
       }
 
-      -- Required for opts.events.reload (checktime needs autoread to actually reload buffers)
+      -- required for opts.events.reload (checktime needs autoread to actually reload buffers)
       vim.o.autoread = true
     '';
 
@@ -63,7 +63,7 @@
           desc = "Toggle opencode";
         };
       }
-      # operator() supports ranges and dot-repeat (replaces prompt("@this"))
+      # operator() supports ranges and dot-repeat
       {
         mode = [
           "n"
@@ -93,7 +93,7 @@
           expr = true;
         };
       }
-      # Scroll opencode from any buffer
+      # scroll opencode from any buffer
       {
         mode = [ "n" ];
         key = "<S-C-u>";
@@ -118,7 +118,7 @@
           desc = "Scroll opencode down";
         };
       }
-      # Remap increment/decrement since we use <C-a> and <C-x>
+      # remap increment/decrement since we use <C-a> and <C-x>
       {
         mode = [ "n" ];
         key = "+";

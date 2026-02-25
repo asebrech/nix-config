@@ -1,9 +1,8 @@
-# Go language support
+# go
 { ... }:
 {
   programs.nixvim = {
     plugins = {
-      # LSP
       lsp.servers = {
         gopls = {
           enable = true;
@@ -30,7 +29,6 @@
                 rangeVariableTypes = true;
               };
               analyses = {
-                fieldalignment = true;
                 nilness = true;
                 unusedparams = true;
                 unusedwrite = true;
@@ -52,23 +50,9 @@
         };
       };
 
-      # Linting
       lint.lintersByFt = {
         go = [ "golangcilint" ];
       };
     };
-
-    keymaps = [
-      {
-        mode = "n";
-        key = "<leader>td";
-        action.__raw = ''
-          function()
-            require("dap-go").debug_test()
-          end
-        '';
-        options.desc = "Debug Nearest (Go)";
-      }
-    ];
   };
 }

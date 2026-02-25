@@ -1,5 +1,5 @@
-# LazyVim-style configuration for nixvim
-# Theming is handled by stylix
+# nixvim
+# ported from lazyvim commit c64a61734fc9d45470a72603395c02137802bc6f (v15.13.0)
 { inputs, ... }:
 {
   imports = [

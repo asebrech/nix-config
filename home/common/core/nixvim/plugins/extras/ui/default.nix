@@ -1,4 +1,4 @@
-# UI extras
+# ui extras
 { ... }:
 {
   imports = [

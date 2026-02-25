@@ -1,4 +1,4 @@
-# Mini.files - File explorer as a buffer
+# mini-files
 { ... }:
 {
   programs.nixvim = {

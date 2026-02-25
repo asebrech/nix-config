@@ -1,4 +1,4 @@
-# Smear cursor - Animated cursor effect
+# smear-cursor
 { pkgs, ... }:
 {
   programs.nixvim = {
@@ -15,8 +15,6 @@
     ];
 
     extraConfigLua = ''
-      -- Smear cursor configuration
-      -- Note: You may need to update the hash above
       local ok, smear = pcall(require, "smear_cursor")
       if ok then
         smear.setup({
@@ -31,7 +29,7 @@
     keymaps = [
       {
         mode = "n";
-        key = "<leader>uS";
+        key = "<leader>uM";
         action.__raw = ''
           function()
             local ok, smear = pcall(require, "smear_cursor")

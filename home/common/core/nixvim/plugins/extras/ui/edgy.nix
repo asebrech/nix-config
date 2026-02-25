@@ -1,4 +1,4 @@
-# Edgy.nvim - Manage window layouts
+# edgy
 { ... }:
 {
   programs.nixvim = {
@@ -66,21 +66,13 @@
       {
         mode = "n";
         key = "<leader>ue";
-        action.__raw = ''
-          function()
-            require("edgy").toggle()
-          end
-        '';
+        action = "<cmd>lua require('edgy').toggle()<cr>";
         options.desc = "Toggle Edgy";
       }
       {
         mode = "n";
         key = "<leader>uE";
-        action.__raw = ''
-          function()
-            require("edgy").select()
-          end
-        '';
+        action = "<cmd>lua require('edgy').select()<cr>";
         options.desc = "Edgy Select Window";
       }
     ];

@@ -1,13 +1,12 @@
-# LazyVim plugins/lsp/default.nix - LSP configuration
+# lsp
 { ... }:
 {
   programs.nixvim = {
     plugins = {
-      # LSP Config
+      # nvim-lspconfig wires up language servers with keymaps and diagnostics
       lsp = {
         enable = true;
 
-        # Keymaps applied when LSP attaches to a buffer
         keymaps = {
           silent = true;
           diagnostic = {
@@ -51,6 +50,10 @@
               desc = "Signature Help";
             };
             "<leader>ca" = {
+              mode = [
+                "n"
+                "x"
+              ];
               action = "code_action";
               desc = "Code Action";
             };
@@ -61,12 +64,9 @@
           };
         };
 
-        # Inlay hints (Neovim 0.10+)
         inlayHints = true;
 
-        # Servers
         servers = {
-          # Lua
           lua_ls = {
             enable = true;
             settings = {
@@ -95,51 +95,25 @@
             };
           };
 
-          # Nix
-          nil_ls = {
-            enable = true;
-            settings = {
-              formatting = {
-                command = [ "nixfmt" ];
-              };
-            };
-          };
-
-          # JSON
           jsonls = {
             enable = true;
           };
 
-          # YAML
           yamlls = {
             enable = true;
           };
 
-          # Bash
           bashls = {
             enable = true;
           };
 
-          # Markdown
           marksman = {
             enable = true;
           };
         };
       };
 
-      # Fidget.nvim - LSP progress
-      fidget = {
-        enable = true;
-        settings = {
-          notification = {
-            window = {
-              winblend = 0;
-            };
-          };
-        };
-      };
-
-      # lsp_signature.nvim - Signature help
+      # lsp-signature shows function signatures in insert mode
       lsp-signature = {
         enable = true;
         settings = {
@@ -150,7 +124,7 @@
         };
       };
 
-      # Schemastore for JSON/YAML schemas
+      # schemastore provides JSON/YAML schemas for jsonls and yamlls
       schemastore = {
         enable = true;
         json.enable = true;
@@ -158,12 +132,11 @@
       };
     };
 
-    # Additional LSP-related keymaps
     keymaps = [
       {
         mode = "n";
         key = "<leader>cl";
-        action = "<cmd>LspInfo<cr>";
+        action = "<cmd>lua Snacks.picker.lsp_config()<cr>";
         options.desc = "Lsp Info";
       }
       {
@@ -183,31 +156,36 @@
         options.desc = "Source Action";
       }
       {
-        mode = "n";
-        key = "<leader>uh";
-        action.__raw = ''
-          function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-          end
-        '';
-        options.desc = "Toggle Inlay Hints";
-      }
-      {
-        mode = "n";
+        mode = [
+          "n"
+          "x"
+        ];
         key = "<leader>cc";
-        action.__raw = "vim.lsp.codelens.run";
+        action = "<cmd>lua vim.lsp.codelens.run()<cr>";
         options.desc = "Run Codelens";
       }
       {
         mode = "n";
         key = "<leader>cC";
-        action.__raw = "vim.lsp.codelens.refresh";
+        action = "<cmd>lua vim.lsp.codelens.refresh()<cr>";
         options.desc = "Refresh & Display Codelens";
+      }
+      {
+        mode = "n";
+        key = "<a-n>";
+        action.__raw = "function() Snacks.words.jump(vim.v.count1, true) end";
+        options.desc = "Next Reference";
+      }
+      {
+        mode = "n";
+        key = "<a-p>";
+        action.__raw = "function() Snacks.words.jump(-vim.v.count1, true) end";
+        options.desc = "Prev Reference";
       }
     ];
 
     extraConfigLua = ''
-      -- Diagnostic configuration
+      -- diagnostic
       vim.diagnostic.config({
         underline = true,
         update_in_insert = false,

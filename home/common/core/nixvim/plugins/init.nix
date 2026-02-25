@@ -1,9 +1,9 @@
-# Snacks.nvim - Core utility plugin setup
+# snacks.nvim
 { pkgs, ... }:
 {
   programs.nixvim = {
     plugins = {
-      # Snacks.nvim - Collection of small QoL plugins
+      # a collection of small QoL plugins
       snacks = {
         enable = true;
         settings = {
@@ -15,7 +15,7 @@
           quickfile.enabled = true;
           words.enabled = true;
           statuscolumn.enabled = true;
-          toggle.map = null; # We use our own keymaps
+          toggle = { };
           scroll = {
             enabled = true;
             animate = {
@@ -70,7 +70,6 @@
       };
     };
 
-    # Plugin dependencies
     extraPlugins = with pkgs.vimPlugins; [
       plenary-nvim
       nui-nvim
@@ -79,51 +78,73 @@
     extraConfigLua = ''
       local Snacks = require("snacks")
 
-      -- Notifier
+      -- notifier
       vim.keymap.set("n", "<leader>un", function() Snacks.notifier.hide() end, { desc = "Dismiss All Notifications" })
+      vim.keymap.set("n", "<leader>n", function()
+        if Snacks.config.picker and Snacks.config.picker.enabled then
+          Snacks.picker.notifications()
+        else
+          Snacks.notifier.show_history()
+        end
+      end, { desc = "Notification History" })
 
-      -- Buffer delete
-      vim.keymap.set("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffers" })
+      -- floating terminal
+      vim.keymap.set("n", "<leader>ft", function() Snacks.terminal(nil, { cwd = Snacks.git.get_root() }) end, { desc = "Terminal (Root Dir)" })
+      vim.keymap.set("n", "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
+      vim.keymap.set({"n","t"}, "<c-/>", function() Snacks.terminal(nil, { cwd = Snacks.git.get_root() }) end, { desc = "Terminal (Root Dir)" })
+      vim.keymap.set({"n","t"}, "<c-_>", function() Snacks.terminal(nil, { cwd = Snacks.git.get_root() }) end, { desc = "which_key_ignore" })
 
-      -- Terminal
-      vim.keymap.set("n", "<leader>ft", function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
-      vim.keymap.set("n", "<leader>fT", function() Snacks.terminal(nil, { cwd = vim.fn.getcwd() }) end, { desc = "Terminal (cwd)" })
-      vim.keymap.set({"n","t"}, "<c-/>", function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
-      vim.keymap.set({"n","t"}, "<c-_>", function() Snacks.terminal() end, { desc = "which_key_ignore" })
-
-      -- Git
+      -- git
       vim.keymap.set("n", "<leader>gL", function() Snacks.picker.git_log() end, { desc = "Git Log (cwd)" })
       vim.keymap.set("n", "<leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git Blame Line" })
       vim.keymap.set("n", "<leader>gf", function() Snacks.picker.git_log_file() end, { desc = "Git Current File History" })
-      vim.keymap.set("n", "<leader>gl", function() Snacks.picker.git_log() end, { desc = "Git Log" })
-      vim.keymap.set("n", "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse (open)" })
+      vim.keymap.set("n", "<leader>gl", function() Snacks.picker.git_log({ cwd = Snacks.git.get_root() }) end, { desc = "Git Log" })
+      vim.keymap.set({"n", "x"}, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse (open)" })
       vim.keymap.set({"n", "x"}, "<leader>gY", function()
         Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) end, notify = false })
       end, { desc = "Git Browse (copy)" })
 
-      -- Lazygit
+      -- lazygit
       if vim.fn.executable("lazygit") == 1 then
-        vim.keymap.set("n", "<leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit (Root Dir)" })
-        vim.keymap.set("n", "<leader>gG", function() Snacks.lazygit({ cwd = vim.fn.getcwd() }) end, { desc = "Lazygit (cwd)" })
+        vim.keymap.set("n", "<leader>gg", function() Snacks.lazygit({ cwd = Snacks.git.get_root() }) end, { desc = "Lazygit (Root Dir)" })
+        vim.keymap.set("n", "<leader>gG", function() Snacks.lazygit() end, { desc = "Lazygit (cwd)" })
       end
 
-      -- Words navigation
+      -- words navigation
       vim.keymap.set("n", "]]", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next Reference" })
       vim.keymap.set("n", "[[", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
 
-      -- Rename file
+      -- rename file
       vim.keymap.set("n", "<leader>cR", function() Snacks.rename.rename_file() end, { desc = "Rename File" })
 
-      -- Toggles
-      vim.keymap.set("n", "<leader>uh", function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-      end, { desc = "Toggle Inlay Hints" })
-      vim.keymap.set("n", "<leader>uz", function() Snacks.zen() end, { desc = "Toggle Zen Mode" })
-      vim.keymap.set("n", "<leader>uZ", function() Snacks.zen.zoom() end, { desc = "Toggle Zoom" })
-      vim.keymap.set("n", "<leader>wm", function() Snacks.zen.zoom() end, { desc = "Toggle Zoom" })
+      -- toggle options
+      Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+      Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+      Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+      Snacks.toggle.line_number():map("<leader>ul")
+      Snacks.toggle.diagnostics():map("<leader>ud")
+      Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = "Conceal Level" }):map("<leader>uc")
+      Snacks.toggle.option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" }):map("<leader>uA")
+      Snacks.toggle.treesitter():map("<leader>uT")
+      Snacks.toggle.inlay_hints():map("<leader>uh")
+      Snacks.toggle.indent():map("<leader>ug")
+      Snacks.toggle.dim():map("<leader>uD")
+      Snacks.toggle.animate():map("<leader>ua")
+      Snacks.toggle.scroll():map("<leader>uS")
+      Snacks.toggle.zoom():map("<leader>uZ"):map("<leader>wm")
+      Snacks.toggle.zen():map("<leader>uz")
+      Snacks.toggle.profiler():map("<leader>dpp")
+      Snacks.toggle.profiler_highlights():map("<leader>dph")
 
-      -- opencode.nvim: Snacks picker integration
-      -- Adds <A-a> inside picker to send selected items to opencode
+      -- lua
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "lua",
+        callback = function(ev)
+          vim.keymap.set({"n", "x"}, "<localleader>r", function() Snacks.debug.run() end, { buffer = ev.buf, desc = "Run Lua" })
+        end,
+      })
+
+      -- opencode.nvim snacks picker integration
       Snacks.config.picker = vim.tbl_deep_extend("force", Snacks.config.picker or {}, {
         actions = {
           opencode_send = function(...) return require("opencode").snacks_picker_send(...) end,

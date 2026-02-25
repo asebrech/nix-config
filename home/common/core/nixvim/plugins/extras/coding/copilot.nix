@@ -1,14 +1,14 @@
-# GitHub Copilot support
+# copilot
 { ... }:
 {
   programs.nixvim = {
     plugins = {
-      # Copilot.lua - Native Copilot integration
+      # copilot-lua integrates GitHub Copilot; suggestions handled via blink.cmp
       copilot-lua = {
         enable = true;
         settings = {
           suggestion = {
-            enabled = false; # Using blink.cmp instead
+            enabled = false; # blink.cmp handles suggestions
           };
           panel = {
             enabled = false;
@@ -19,9 +19,6 @@
           };
         };
       };
-
-      # Blink.cmp source for Copilot (already configured in coding.nix)
-      # The blink-cmp source is enabled when copilot-lua is active
     };
 
     keymaps = [

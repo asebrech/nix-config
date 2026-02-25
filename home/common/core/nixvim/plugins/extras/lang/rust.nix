@@ -1,16 +1,15 @@
-# Rust language support
+# rust
 { ... }:
 {
   programs.nixvim = {
     plugins = {
-      # Rustaceanvim - Better Rust support
+      # rustaceanvim provides enhanced rust-analyzer integration and debuggables
       rustaceanvim = {
         enable = true;
         settings = {
           server = {
             on_attach.__raw = ''
               function(client, bufnr)
-                -- Rust-specific keymaps
                 vim.keymap.set("n", "<leader>cR", function()
                   vim.cmd.RustLsp("codeAction")
                 end, { desc = "Code Action", buffer = bufnr })
@@ -27,14 +26,26 @@
                   buildScripts.enable = true;
                 };
                 checkOnSave = true;
+                diagnostics = {
+                  enable = true;
+                };
                 procMacro = {
                   enable = true;
-                  ignored = {
-                    leptos_macro = [
-                      "component"
-                      "server"
-                    ];
-                  };
+                };
+                files = {
+                  exclude = [
+                    ".direnv"
+                    ".git"
+                    ".jj"
+                    ".github"
+                    ".gitlab"
+                    "bin"
+                    "node_modules"
+                    "target"
+                    "venv"
+                    ".venv"
+                  ];
+                  watcher = "client";
                 };
               };
             };
@@ -42,11 +53,10 @@
         };
       };
 
-      # Crates.nvim - Cargo.toml management
+      # crates.nvim manages Cargo.toml dependencies with inline version info
       crates = {
         enable = true;
         settings = {
-          # Uses in-process language server instead of deprecated nvim-cmp source
           lsp = {
             enabled = true;
             actions = true;
@@ -55,7 +65,6 @@
           };
         };
       };
-
     };
 
     keymaps = [

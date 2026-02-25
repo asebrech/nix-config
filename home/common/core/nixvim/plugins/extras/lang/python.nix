@@ -1,9 +1,8 @@
-# Python language support
+# python
 { ... }:
 {
   programs.nixvim = {
     plugins = {
-      # LSP
       lsp.servers = {
         pyright = {
           enable = true;
@@ -32,7 +31,6 @@
         };
       };
 
-      # Linting
       lint.lintersByFt = {
         python = [ "ruff" ];
       };

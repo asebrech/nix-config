@@ -1,41 +1,30 @@
-# Yanky.nvim - Better yank/paste
+# yanky
+# divergence: <leader>sy instead of lazyvim's <leader>p
 { ... }:
 {
   programs.nixvim = {
     plugins.yanky = {
       enable = true;
       settings = {
-        ring = {
-          history_length = 100;
-          storage = "shada";
-          sync_with_numbered_registers = true;
-          cancel_event = "update";
-          ignore_registers = [ "_" ];
-        };
-        picker = {
-          select = {
-            action = null; # nil = default put action
-          };
-          telescope = {
-            use_default_mappings = true;
-            mappings = null; # nil = default mappings
-          };
-        };
         system_clipboard = {
-          sync_with_ring = true;
-        };
-        preserve_cursor_position = {
-          enabled = true;
+          sync_with_ring.__raw = "not vim.env.SSH_CONNECTION";
         };
         highlight = {
-          on_put = true;
-          on_yank = true;
-          timer = 500;
+          timer = 150;
         };
       };
     };
 
     keymaps = [
+      {
+        mode = [
+          "n"
+          "x"
+        ];
+        key = "y";
+        action = "<Plug>(YankyYank)";
+        options.desc = "Yank Text";
+      }
       {
         mode = [
           "n"
@@ -74,15 +63,15 @@
       }
       {
         mode = "n";
-        key = "<c-p>";
-        action = "<Plug>(YankyPreviousEntry)";
-        options.desc = "Select Previous Entry";
+        key = "[y";
+        action = "<Plug>(YankyCycleForward)";
+        options.desc = "Cycle Forward Through Yank History";
       }
       {
         mode = "n";
-        key = "<c-n>";
-        action = "<Plug>(YankyNextEntry)";
-        options.desc = "Select Next Entry";
+        key = "]y";
+        action = "<Plug>(YankyCycleBackward)";
+        options.desc = "Cycle Backward Through Yank History";
       }
       {
         mode = "n";
@@ -110,12 +99,47 @@
       }
       {
         mode = "n";
+        key = ">p";
+        action = "<Plug>(YankyPutIndentAfterShiftRight)";
+        options.desc = "Put and Indent Right";
+      }
+      {
+        mode = "n";
+        key = "<p";
+        action = "<Plug>(YankyPutIndentAfterShiftLeft)";
+        options.desc = "Put and Indent Left";
+      }
+      {
+        mode = "n";
+        key = ">P";
+        action = "<Plug>(YankyPutIndentBeforeShiftRight)";
+        options.desc = "Put Before and Indent Right";
+      }
+      {
+        mode = "n";
+        key = "<P";
+        action = "<Plug>(YankyPutIndentBeforeShiftLeft)";
+        options.desc = "Put Before and Indent Left";
+      }
+      {
+        mode = "n";
+        key = "=p";
+        action = "<Plug>(YankyPutAfterFilter)";
+        options.desc = "Put After Applying a Filter";
+      }
+      {
+        mode = "n";
+        key = "=P";
+        action = "<Plug>(YankyPutBeforeFilter)";
+        options.desc = "Put Before Applying a Filter";
+      }
+      {
+        mode = [
+          "n"
+          "x"
+        ];
         key = "<leader>sy";
-        action.__raw = ''
-          function()
-            require("telescope").extensions.yank_history.yank_history({})
-          end
-        '';
+        action = "<cmd>lua require('telescope').extensions.yank_history.yank_history({})<cr>";
         options.desc = "Open Yank History";
       }
     ];

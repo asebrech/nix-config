@@ -1,19 +1,17 @@
-# Markdown language support
+# markdown
 { pkgs, ... }:
 {
   programs.nixvim = {
     plugins = {
-      # LSP
       lsp.servers = {
         marksman.enable = true;
       };
 
-      # Linting
       lint.lintersByFt = {
-        markdown = [ "markdownlint" ];
+        markdown = [ "markdownlint-cli2" ];
       };
 
-      # Render markdown
+      # render-markdown renders markdown in-buffer with virtual text
       render-markdown = {
         enable = true;
         settings = {
@@ -44,16 +42,18 @@
         action = "<cmd>MarkdownPreviewToggle<cr>";
         options.desc = "Markdown Preview";
       }
-      {
-        mode = "n";
-        key = "<leader>um";
-        action.__raw = ''
-          function()
-            require("render-markdown").toggle()
-          end
-        '';
-        options.desc = "Toggle Render Markdown";
-      }
     ];
+
+    extraConfigLua = ''
+      -- mdx filetype
+      vim.filetype.add({ extension = { mdx = "markdown.mdx" } })
+
+      -- toggle options
+      Snacks.toggle({
+        name = "Render Markdown",
+        get = require("render-markdown").get,
+        set = require("render-markdown").set,
+      }):map("<leader>um")
+    '';
   };
 }

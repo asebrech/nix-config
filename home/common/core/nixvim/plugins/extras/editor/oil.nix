@@ -1,4 +1,4 @@
-# Oil.nvim - File explorer that lets you edit filesystem like a buffer
+# oil
 { ... }:
 {
   programs.nixvim = {
@@ -45,11 +45,7 @@
           };
           "~" = {
             __raw = ''
-              {
-                __raw = "actions.cd",
-                opts = { scope = "tab" },
-                mode = "n"
-              }
+              { "actions.cd", opts = { scope = "tab" }, mode = "n" }
             '';
           };
           "gs" = {

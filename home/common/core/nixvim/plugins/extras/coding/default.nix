@@ -1,4 +1,4 @@
-# Coding extras
+# coding extras
 { ... }:
 {
   imports = [

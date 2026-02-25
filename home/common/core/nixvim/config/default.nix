@@ -1,4 +1,4 @@
-# LazyVim config module - combines all config files
+# config
 { ... }:
 {
   imports = [

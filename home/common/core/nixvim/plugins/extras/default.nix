@@ -1,5 +1,4 @@
-# LazyVim extras module
-# Add extra configurations that can be optionally enabled
+# extras
 { ... }:
 {
   imports = [

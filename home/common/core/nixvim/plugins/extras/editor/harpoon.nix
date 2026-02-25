@@ -1,4 +1,4 @@
-# Harpoon - Quick file navigation
+# harpoon
 { ... }:
 {
   programs.nixvim = {
@@ -11,11 +11,7 @@
       {
         mode = "n";
         key = "<leader>H";
-        action.__raw = ''
-          function()
-            require("harpoon"):list():add()
-          end
-        '';
+        action = "<cmd>lua require('harpoon'):list():add()<cr>";
         options.desc = "Harpoon File";
       }
       {
@@ -32,52 +28,56 @@
       {
         mode = "n";
         key = "<leader>1";
-        action.__raw = ''
-          function()
-            require("harpoon"):list():select(1)
-          end
-        '';
+        action = "<cmd>lua require('harpoon'):list():select(1)<cr>";
         options.desc = "Harpoon to File 1";
       }
       {
         mode = "n";
         key = "<leader>2";
-        action.__raw = ''
-          function()
-            require("harpoon"):list():select(2)
-          end
-        '';
+        action = "<cmd>lua require('harpoon'):list():select(2)<cr>";
         options.desc = "Harpoon to File 2";
       }
       {
         mode = "n";
         key = "<leader>3";
-        action.__raw = ''
-          function()
-            require("harpoon"):list():select(3)
-          end
-        '';
+        action = "<cmd>lua require('harpoon'):list():select(3)<cr>";
         options.desc = "Harpoon to File 3";
       }
       {
         mode = "n";
         key = "<leader>4";
-        action.__raw = ''
-          function()
-            require("harpoon"):list():select(4)
-          end
-        '';
+        action = "<cmd>lua require('harpoon'):list():select(4)<cr>";
         options.desc = "Harpoon to File 4";
       }
       {
         mode = "n";
         key = "<leader>5";
-        action.__raw = ''
-          function()
-            require("harpoon"):list():select(5)
-          end
-        '';
+        action = "<cmd>lua require('harpoon'):list():select(5)<cr>";
         options.desc = "Harpoon to File 5";
+      }
+      {
+        mode = "n";
+        key = "<leader>6";
+        action = "<cmd>lua require('harpoon'):list():select(6)<cr>";
+        options.desc = "Harpoon to File 6";
+      }
+      {
+        mode = "n";
+        key = "<leader>7";
+        action = "<cmd>lua require('harpoon'):list():select(7)<cr>";
+        options.desc = "Harpoon to File 7";
+      }
+      {
+        mode = "n";
+        key = "<leader>8";
+        action = "<cmd>lua require('harpoon'):list():select(8)<cr>";
+        options.desc = "Harpoon to File 8";
+      }
+      {
+        mode = "n";
+        key = "<leader>9";
+        action = "<cmd>lua require('harpoon'):list():select(9)<cr>";
+        options.desc = "Harpoon to File 9";
       }
     ];
   };

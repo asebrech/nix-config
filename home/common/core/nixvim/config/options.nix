@@ -1,26 +1,15 @@
-# LazyVim-style options for nixvim
-# Theming is handled by stylix
+# options
 { ... }:
 {
   programs.nixvim = {
-    # Leader keys
     globals = {
       mapleader = " ";
       maplocalleader = "\\";
-
-      # LazyVim auto format
       autoformat = true;
-
-      # Snacks animations
       snacks_animate = true;
-
-      # Fix markdown indentation settings
       markdown_recommended_style = 0;
-
-      # LazyVim root dir detection
-      # Each entry can be:
-      # * the name of a detector function like `lsp` or `cwd`
-      # * a pattern or array of patterns like `.git` or `lua`.
+      deprecation_warnings = false;
+      trouble_lualine = true;
       root_spec = [
         "lsp"
         [
@@ -29,89 +18,38 @@
         ]
         "cwd"
       ];
-
-      # Set LSP servers to be ignored when used for detecting the LSP root
       root_lsp_ignore = [ "copilot" ];
     };
 
     opts = {
-      # General
-      autowrite = true; # Enable auto write
-
-      # Clipboard - sync with system clipboard
-      clipboard = "unnamedplus";
-
-      # Completion
-      completeopt = "menu,menuone,noselect";
-
-      # Concealing
-      conceallevel = 2;
-
-      # Confirmation
-      confirm = true; # Confirm to save changes before exiting modified buffer
-
-      # Cursor
-      cursorline = true; # Enable highlighting of the current line
-
-      # Diff
-      fillchars = {
-        foldopen = "";
-        foldclose = "";
-        fold = " ";
-        foldsep = " ";
-        diff = "╱";
-        eob = " ";
-      };
-
-      # Folding
-      foldlevel = 99;
-      foldtext = "";
-
-      # Format options
-      formatoptions = "jcroqlnt";
+      autowrite = true; # enable auto write
+      clipboard.__raw = ''vim.env.SSH_CONNECTION and "" or "unnamedplus"''; # sync with system clipboard
+      completeopt = "menu,menuone,noselect"; # completion options
+      conceallevel = 2; # hide * markup for bold and italic, but not markers with substitutions
+      confirm = true; # confirm to save changes before exiting modified buffer
+      cursorline = true; # enable highlighting of the current line
+      expandtab = true; # use spaces instead of tabs
+      # fillchars set via extraConfigLua to avoid glyph encoding issues
+      foldlevel = 99; # using ufo provider need a large value
+      foldmethod = "indent"; # overridden per-buffer by treesitter folding
+      foldtext = ""; # use treesitter foldtext
       formatexpr = "v:lua.require'conform'.formatexpr()";
-
-      # Grep
+      formatoptions = "jcroqlnt"; # default format options
       grepformat = "%f:%l:%c:%m";
       grepprg = "rg --vimgrep";
-
-      # Search
-      ignorecase = true; # Ignore case
-      smartcase = true; # Don't ignore case with capitals
-      inccommand = "nosplit"; # Preview incremental substitute
-
-      # Jumps
-      jumpoptions = "view";
-
-      # Status line
-      laststatus = 3; # Global statusline
-
-      # Line breaks
-      linebreak = true; # Wrap lines at convenient points
-
-      # List characters
-      list = true; # Show some invisible characters
-
-      # Mouse
-      mouse = "a"; # Enable mouse mode
-
-      # Line numbers
-      number = true; # Print line number
-      relativenumber = true; # Relative line numbers
-
-      # Popup menu
-      pumblend = 10; # Popup blend
-      pumheight = 10; # Maximum number of entries in a popup
-
-      # Ruler
-      ruler = false; # Disable the default ruler
-
-      # Scroll
-      scrolloff = 4; # Lines of context
-      sidescrolloff = 8; # Columns of context
-      smoothscroll = true;
-
-      # Session options
+      ignorecase = true; # ignore case
+      inccommand = "nosplit"; # preview incremental substitute
+      jumpoptions = "view"; # restore view on jump
+      laststatus = 3; # global statusline
+      linebreak = true; # wrap lines at convenient points
+      list = true; # show some invisible characters
+      mouse = "a"; # enable mouse mode
+      number = true; # print line number
+      pumblend = 10; # popup blend
+      pumheight = 10; # maximum number of entries in a popup
+      relativenumber = true; # relative line numbers
+      ruler = false; # disable the default ruler
+      scrolloff = 4; # lines of context
       sessionoptions = [
         "buffers"
         "curdir"
@@ -122,53 +60,41 @@
         "skiprtp"
         "folds"
       ];
-
-      # Indentation
-      shiftround = true; # Round indent
-      shiftwidth = 2; # Size of an indent
-      tabstop = 2; # Number of spaces tabs count for
-      expandtab = true; # Use spaces instead of tabs
-      smartindent = true; # Insert indents automatically
-
-      # Short messages
-      shortmess = "filnxtToOFWIcC";
-
-      # Mode display
-      showmode = false; # Don't show mode since we have a statusline
-
-      # Sign column
-      signcolumn = "yes"; # Always show the signcolumn
-
-      # Spelling
+      shiftround = true; # round indent
+      shiftwidth = 2; # size of an indent
+      shortmess = "filnxtToOFWIcC"; # suppress various messages
+      showmode = false; # dont show mode since we have a statusline
+      sidescrolloff = 8; # columns of context
+      signcolumn = "yes"; # always show the signcolumn
+      smartcase = true; # don't ignore case with capitals
+      smartindent = true; # insert indents automatically
+      smoothscroll = true; # smooth scrolling for <C-d>/<C-u>
       spelllang = [ "en" ];
-
-      # Splits
-      splitbelow = true; # Put new windows below current
-      splitkeep = "screen";
-      splitright = true; # Put new windows right of current
-
-      # Terminal colors
-      termguicolors = true; # True color support
-
-      # Timeout
-      timeoutlen = 300; # Lower than default (1000) to quickly trigger which-key
-
-      # Undo
-      undofile = true;
+      splitbelow = true; # put new windows below current
+      splitkeep = "screen"; # reduce scroll during split resize
+      splitright = true; # put new windows right of current
+      tabstop = 2; # number of spaces tabs count for
+      termguicolors = true; # true color support
+      timeoutlen = 300; # lower than default (1000) to quickly trigger which-key
+      undofile = true; # persistent undo
       undolevels = 10000;
-
-      # Update time
-      updatetime = 200; # Save swap file and trigger CursorHold
-
-      # Virtual edit
-      virtualedit = "block"; # Allow cursor to move where there is no text in visual block mode
-
-      # Wild mode
-      wildmode = "longest:full,full"; # Command-line completion mode
-
-      # Window
-      winminwidth = 5; # Minimum window width
-      wrap = false; # Disable line wrap
+      updatetime = 200; # save swap file and trigger CursorHold
+      virtualedit = "block"; # allow cursor to move where there is no text in visual block mode
+      wildmode = "longest:full,full"; # command-line completion mode
+      winminwidth = 5; # minimum window width
+      wrap = false; # disable line wrap
     };
+
+    extraConfigLua = ''
+      -- fillchars
+      vim.opt.fillchars = {
+        foldopen  = "",
+        foldclose = "",
+        fold      = " ",
+        foldsep   = " ",
+        diff      = "╱",
+        eob       = " ",
+      }
+    '';
   };
 }

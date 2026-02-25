@@ -1,4 +1,4 @@
-# LazyVim-style autocmds for nixvim
+# autocmds
 { ... }:
 {
   programs.nixvim = {
@@ -33,7 +33,7 @@
     };
 
     autoCmd = [
-      # Check if we need to reload the file when it changed
+      # check if we need to reload the file when it changed
       {
         event = [
           "FocusGained"
@@ -50,7 +50,7 @@
         '';
       }
 
-      # Highlight on yank
+      # highlight on yank
       {
         event = "TextYankPost";
         group = "lazyvim_highlight_yank";
@@ -61,7 +61,7 @@
         '';
       }
 
-      # Resize splits if window got resized
+      # resize splits if window got resized
       {
         event = "VimResized";
         group = "lazyvim_resize_splits";
@@ -74,7 +74,7 @@
         '';
       }
 
-      # Close some filetypes with <q>
+      # close some filetypes with <q>
       {
         event = "FileType";
         group = "lazyvim_close_with_q";
@@ -112,7 +112,7 @@
         '';
       }
 
-      # Make it easier to close man-files when opened inline
+      # make it easier to close man-files when opened inline
       {
         event = "FileType";
         group = "lazyvim_man_unlisted";
@@ -124,7 +124,7 @@
         '';
       }
 
-      # Wrap and check for spell in text filetypes
+      # wrap and check for spell in text filetypes
       {
         event = "FileType";
         group = "lazyvim_wrap_spell";
@@ -143,7 +143,7 @@
         '';
       }
 
-      # Fix conceallevel for json files
+      # fix conceallevel for json files
       {
         event = "FileType";
         group = "lazyvim_json_conceal";
@@ -159,7 +159,7 @@
         '';
       }
 
-      # Auto create dir when saving a file, in case some intermediate directory does not exist
+      # auto create dir when saving a file
       {
         event = "BufWritePre";
         group = "lazyvim_auto_create_dir";
@@ -174,7 +174,7 @@
         '';
       }
 
-      # Go to last loc when opening a buffer
+      # go to last loc when opening a buffer
       {
         event = "BufReadPost";
         group = "lazyvim_last_loc";
