@@ -10,10 +10,10 @@
     extraConfigLua = ''
       ---@type opencode.Opts
       vim.g.opencode_opts = {
-        -- Your configuration, if any — see `lua/opencode/config.lua`
+        -- server defaults: uses built-in opencode.terminal (singleton, no duplicate-instance bug)
       }
 
-      -- Required for `opts.events.reload`
+      -- Required for opts.events.reload (checktime needs autoread to actually reload buffers)
       vim.o.autoread = true
     '';
 
@@ -63,6 +63,7 @@
           desc = "Toggle opencode";
         };
       }
+      # operator() supports ranges and dot-repeat (replaces prompt("@this"))
       {
         mode = [
           "n"
@@ -92,6 +93,7 @@
           expr = true;
         };
       }
+      # Scroll opencode from any buffer
       {
         mode = [ "n" ];
         key = "<S-C-u>";

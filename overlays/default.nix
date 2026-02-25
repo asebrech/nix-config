@@ -22,6 +22,21 @@ let
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
     # ...
     # });
+
+    # Pin opencode.nvim ahead of nixpkgs — fixes multiple-instance bug and
+    # migrates to the new `server` API (replaces broken `provider` system).
+    vimPlugins = prev.vimPlugins // {
+      opencode-nvim = prev.vimUtils.buildVimPlugin {
+        pname = "opencode.nvim";
+        version = "2026-02-24";
+        src = prev.fetchFromGitHub {
+          owner = "NickvanDyke";
+          repo = "opencode.nvim";
+          rev = "8992d0c6168ad28f91b03f7dcdb98b5ebb675c32";
+          sha256 = "0hp0skxx53ynjnyqfld480ai2922a3716k8fnnz9f0wrk8qmw8w2";
+        };
+      };
+    };
   };
 
   stable-packages = final: _prev: {
