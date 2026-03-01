@@ -37,7 +37,10 @@
           };
           input.enabled = true;
           scope.enabled = true;
-          terminal.enabled = true;
+          terminal = {
+            enabled = true;
+            win.position = "float";
+          };
           zen.enabled = true;
           picker = {
             enabled = true;
@@ -89,10 +92,10 @@
       end, { desc = "Notification History" })
 
       -- floating terminal
-      vim.keymap.set("n", "<leader>ft", function() Snacks.terminal(nil, { cwd = Snacks.git.get_root() }) end, { desc = "Terminal (Root Dir)" })
+      vim.keymap.set("n", "<leader>ft", function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
       vim.keymap.set("n", "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
-      vim.keymap.set({"n","t"}, "<c-/>", function() Snacks.terminal(nil, { cwd = Snacks.git.get_root() }) end, { desc = "Terminal (Root Dir)" })
-      vim.keymap.set({"n","t"}, "<c-_>", function() Snacks.terminal(nil, { cwd = Snacks.git.get_root() }) end, { desc = "which_key_ignore" })
+      vim.keymap.set({"n","t"}, "<c-/>", function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
+      vim.keymap.set({"n","t"}, "<c-_>", function() Snacks.terminal() end, { desc = "which_key_ignore" })
 
       -- git
       vim.keymap.set("n", "<leader>gL", function() Snacks.picker.git_log() end, { desc = "Git Log (cwd)" })
