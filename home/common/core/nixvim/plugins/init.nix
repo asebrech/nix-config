@@ -40,6 +40,7 @@
           terminal = {
             enabled = true;
             win.position = "float";
+            shell = "zsh -l";
           };
           zen.enabled = true;
           picker = {
