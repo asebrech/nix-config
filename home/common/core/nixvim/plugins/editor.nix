@@ -923,6 +923,12 @@
       nvim-web-devicons
     ];
 
+    autoGroups = {
+      persistence_restore = {
+        clear = true;
+      };
+    };
+
     autoCmd = [
       # auto-restore persistence session when nvim is opened with no arguments
       {
