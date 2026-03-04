@@ -923,27 +923,6 @@
       nvim-web-devicons
     ];
 
-    autoGroups = {
-      persistence_restore = {
-        clear = true;
-      };
-    };
-
-    autoCmd = [
-      # auto-restore persistence session when nvim is opened with no arguments
-      {
-        event = [ "VimEnter" ];
-        group = "persistence_restore";
-        callback.__raw = ''
-          function()
-            if vim.fn.argc(-1) == 0 and not vim.o.diff then
-              require("persistence").load()
-            end
-          end
-        '';
-      }
-    ];
-
     # gitsigns toggle
     extraConfigLua = ''
       Snacks.toggle({
