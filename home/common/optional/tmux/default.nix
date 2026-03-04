@@ -218,6 +218,8 @@ in
       # Display
       # ===========================================================================
 
+      set -g extended-keys on        # pass through special keys like C-. to inner panes
+
       setw -g automatic-rename on   # rename window to reflect current program
       set  -g renumber-windows on   # renumber windows when one is closed
       set  -g set-titles on         # set terminal title
