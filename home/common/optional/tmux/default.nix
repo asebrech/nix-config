@@ -219,7 +219,6 @@ in
       # ===========================================================================
 
       set -s extended-keys always                        # always forward extended keys (C-., C-;, etc.)
-      set -s extended-keys-format csi-u                 # use CSI u encoding (kitty keyboard protocol)
       set -as terminal-features "alacritty:extkeys"     # mark alacritty as supporting extended keys
       set -as terminal-overrides "alacritty:Eneks=\\E[>1u:Dseks=\\E[<u" # use kitty protocol (not modifyOtherKeys)
 
