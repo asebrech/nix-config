@@ -57,44 +57,6 @@
         };
       }
 
-      # move to window using <ctrl> arrow keys
-      {
-        mode = "n";
-        key = "<C-Left>";
-        action = "<C-w>h";
-        options = {
-          desc = "Go to Left Window";
-          remap = true;
-        };
-      }
-      {
-        mode = "n";
-        key = "<C-Down>";
-        action = "<C-w>j";
-        options = {
-          desc = "Go to Lower Window";
-          remap = true;
-        };
-      }
-      {
-        mode = "n";
-        key = "<C-Up>";
-        action = "<C-w>k";
-        options = {
-          desc = "Go to Upper Window";
-          remap = true;
-        };
-      }
-      {
-        mode = "n";
-        key = "<C-Right>";
-        action = "<C-w>l";
-        options = {
-          desc = "Go to Right Window";
-          remap = true;
-        };
-      }
-
       # resize window using <alt> arrow keys
       {
         mode = "n";

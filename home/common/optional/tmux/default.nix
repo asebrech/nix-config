@@ -29,32 +29,32 @@ let
             command: "split-window -h -c #{pane_current_path}"
           - separator: true
           - name: Navigate left
-            key: h
+            key: Left
             command: select-pane -L
           - name: Navigate down
-            key: j
+            key: Down
             command: select-pane -D
           - name: Navigate up
-            key: k
+            key: Up
             command: select-pane -U
           - name: Navigate right
-            key: l
+            key: Right
             command: select-pane -R
           - separator: true
           - name: Resize left
-            key: H
+            key: S-Left
             command: resize-pane -L 2
             transient: true
           - name: Resize down
-            key: J
+            key: S-Down
             command: resize-pane -D 2
             transient: true
           - name: Resize up
-            key: K
+            key: S-Up
             command: resize-pane -U 2
             transient: true
           - name: Resize right
-            key: L
+            key: S-Right
             command: resize-pane -R 2
             transient: true
           - separator: true
@@ -79,12 +79,6 @@ let
           - name: Last window
             key: tab
             command: last-window
-          - name: Prev window
-            key: h
-            command: previous-window
-          - name: Next window
-            key: l
-            command: next-window
           - separator: true
           - name: Rename window
             key: r
@@ -95,14 +89,8 @@ let
       - name: +Sessions
         key: s
         menu:
-          - name: New session
-            key: n
-            command: new-session
-          - name: Find session
-            key: f
-            command: "command-prompt -p find-session \"switch-client -t %%\""
           - name: Last session
-            key: tab
+            key: BTab
             command: switch-client -l
           - name: Rename session
             key: r
@@ -115,16 +103,16 @@ let
         key: y
         menu:
           - name: Enter copy mode
-            key: c
+            key: Enter
             command: copy-mode
           - name: Paste buffer
             key: p
             command: paste-buffer -p
           - name: Choose buffer
-            key: b
+            key: P
             command: choose-buffer
           - name: List buffers
-            key: l
+            key: b
             command: list-buffers
       - separator: true
       - name: Reload config
@@ -289,9 +277,9 @@ in
       # Window navigation
       unbind n
       unbind p
-      bind -r C-h previous-window  # prev window
-      bind -r C-l next-window       # next window
-      bind Tab last-window          # last active window
+      bind -r C-S-Left  previous-window  # prev window
+      bind -r C-S-Right next-window      # next window
+      bind Tab last-window               # last active window
 
       # Maximize current pane (built-in zoom)
       bind + resize-pane -Z
