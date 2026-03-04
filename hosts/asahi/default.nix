@@ -39,6 +39,7 @@
           "services/bluetooth.nix" # bluetooth support
           "services/openssh.nix" # allow remote SSH access
           "services/greetd.nix" # display manager with tuigreet greeter
+          "services/gnome-keyring.nix" # libsecret keyring daemon, unlocked via greetd PAM
           "services/logrotate.nix" # hyprland log rotation
           "services/x11.nix" # X11 DPI settings for xwayland apps
           "services/upower.nix" # power management and lid detection
