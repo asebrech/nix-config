@@ -15,7 +15,7 @@
     common/optional/media
     common/optional/reverse-engineering.nix
     common/optional/tools
-    common/optional/zellij
+    common/optional/tmux
     common/optional/opencode.nix
 
     common/optional/sops.nix
