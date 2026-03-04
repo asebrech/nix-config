@@ -16,7 +16,7 @@
 
     ./direnv.nix
     ./git.nix
-    ./alacritty.nix
+    ./ghostty.nix
     ./nixvim
     ./ssh.nix
     ./starship.nix

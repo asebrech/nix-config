@@ -219,8 +219,6 @@ in
       # ===========================================================================
 
       set -s extended-keys always                        # always forward extended keys (C-., C-;, etc.)
-      set -as terminal-features "alacritty:extkeys"     # mark alacritty as supporting extended keys
-      set -as terminal-overrides "alacritty:Eneks=\\E[>1u:Dseks=\\E[<u" # use kitty protocol (not modifyOtherKeys)
 
       setw -g automatic-rename on   # rename window to reflect current program
       set  -g renumber-windows on   # renumber windows when one is closed

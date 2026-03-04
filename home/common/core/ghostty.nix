@@ -1,5 +1,5 @@
 {
-  programs.alacritty = {
+  programs.ghostty = {
     enable = true;
   };
 }

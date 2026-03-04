@@ -22,8 +22,8 @@
     sessionVariables = {
       FLAKE = "$HOME/nix-config";
       SHELL = "zsh";
-      TERM = "alacritty";
-      TERMINAL = "alacritty";
+      TERM = "xterm-ghostty";
+      TERMINAL = "ghostty";
       VISUAL = "nvim";
       EDITOR = "nvim";
     };

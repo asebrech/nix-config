@@ -6,7 +6,7 @@
     rewrite = {
       "" = "Desktop";
       "foot" = "Terminal";
-      "alacritty" = "Terminal";
+      "com.mitchellh.ghostty" = "Terminal";
       "kitty" = "Terminal";
       "zsh" = "Terminal";
       "~" = "Terminal";
