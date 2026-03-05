@@ -57,28 +57,28 @@
         };
       }
 
-      # resize window using <alt> arrow keys
+      # resize window using <alt+ctrl> arrow keys
       {
         mode = "n";
-        key = "<A-Up>";
+        key = "<A-C-Up>";
         action = "<cmd>resize +2<cr>";
         options.desc = "Increase Window Height";
       }
       {
         mode = "n";
-        key = "<A-Down>";
+        key = "<A-C-Down>";
         action = "<cmd>resize -2<cr>";
         options.desc = "Decrease Window Height";
       }
       {
         mode = "n";
-        key = "<A-Left>";
+        key = "<A-C-Left>";
         action = "<cmd>vertical resize -2<cr>";
         options.desc = "Decrease Window Width";
       }
       {
         mode = "n";
-        key = "<A-Right>";
+        key = "<A-C-Right>";
         action = "<cmd>vertical resize +2<cr>";
         options.desc = "Increase Window Width";
       }

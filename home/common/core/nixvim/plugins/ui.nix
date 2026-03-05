@@ -271,13 +271,13 @@
       # bufferline keymaps
       {
         mode = "n";
-        key = "<S-h>";
+        key = "<A-Left>";
         action = "<cmd>BufferLineCyclePrev<cr>";
         options.desc = "Prev Buffer";
       }
       {
         mode = "n";
-        key = "<S-l>";
+        key = "<A-Right>";
         action = "<cmd>BufferLineCycleNext<cr>";
         options.desc = "Next Buffer";
       }
