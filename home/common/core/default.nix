@@ -3,7 +3,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   hostSpec,
   ...
 }:
@@ -37,28 +36,25 @@
     ];
   };
 
-  home.packages =
-    builtins.attrValues {
-      inherit (pkgs)
+  home.packages = builtins.attrValues {
+    inherit (pkgs)
 
-        # Packages that don't have custom configs go here
-        btop # system monitor
-        curl
-        lazygit # git TUI
-        lsof # list open files (used by opencode.nvim for server discovery)
-        pciutils
-        pfetch # system info
-        pre-commit # git hooks
-        p7zip # compression & encryption
-        ripgrep # better grep
-        usbutils
-        unzip # zip extraction
-        unrar # rar extraction
-        ;
-    }
-    ++ [
-      inputs.devenv.packages.${pkgs.system}.devenv # development environment management (latest)
-    ];
+      # Packages that don't have custom configs go here
+      btop # system monitor
+      curl
+      devenv # development environment management
+      lazygit # git TUI
+      lsof # list open files (used by opencode.nvim for server discovery)
+      pciutils
+      pfetch # system info
+      pre-commit # git hooks
+      p7zip # compression & encryption
+      ripgrep # better grep
+      usbutils
+      unzip # zip extraction
+      unrar # rar extraction
+      ;
+  };
 
   nix = {
     package = lib.mkDefault pkgs.nix;
