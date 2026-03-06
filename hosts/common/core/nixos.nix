@@ -21,6 +21,9 @@
     Defaults timestamp_timeout=120 # only ask for password every 2h
     # Keep SSH_AUTH_SOCK so that pam_ssh_agent_auth.so can do its magic.
     Defaults env_keep+=SSH_AUTH_SOCK
+    # Allow passwordless sudo for NixOS rebuild activation (nh os switch).
+    # The store path hash changes on every build, so a wildcard is required.
+    ${config.hostSpec.username} ALL=(ALL) NOPASSWD: /nix/store/*/bin/switch-to-configuration, /run/current-system/sw/bin/nix-env, /nix/var/nix/profiles/system/sw/bin/nixos-rebuild
   '';
 
   #
