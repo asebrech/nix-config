@@ -125,6 +125,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    devenv = {
+      url = "github:cachix/devenv/v2.0.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Secrets management. See ./docs/secretsmgmt.md
     sops-nix = {
       url = "github:mic92/sops-nix";
