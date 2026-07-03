@@ -17,6 +17,7 @@
     common/optional/tools
     common/optional/tmux
     common/optional/opencode.nix
+    common/optional/claude-code.nix
 
     common/optional/sops.nix
 

@@ -8,8 +8,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "sphamba";
           repo = "smear-cursor.nvim";
-          rev = "main";
-          sha256 = "1fsd7wz7bls623a60ia0j1ssw6wi4vrf9xzq41zl3m6540bgsgjk";
+          rev = "9e9378d6ee34bb3782e0e8c63d9ec8ca618b479b";
+          hash = "sha256-hL0lXzkFxR7qiXzStrmY+gR+ql/A6PR8eCV310gEaGs=";
         };
       })
     ];
