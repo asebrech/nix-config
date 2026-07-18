@@ -15,6 +15,7 @@
         #
         (map (f: "home/common/optional/${f}") [
           "browsers"
+          "cosmic.nix"
           "media"
           "zellij.nix"
           "claude-code.nix"
