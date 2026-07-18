@@ -144,7 +144,7 @@ imports = lib.flatten [
   (map lib.custom.relativeToRoot (
     [ "hosts/common/core" ]
     ++ (map (f: "hosts/common/optional/${f}") [
-      "services/bluetooth.nix"
+      "services/openssh.nix"
       "cosmic.nix"
     ])
   ))
@@ -275,10 +275,10 @@ staging/editing and wait for the user to say "commit" (or equivalent).
 Use a concise imperative summary line (≤72 chars), optionally followed by a blank line and body:
 
 ```
-add bluetooth support for asahi host
+add docker support for asahi host
 
-Enables the bluetooth service and pairs it with the blueman applet
-so devices can be managed from the desktop.
+Enables the docker service and adds the primary user to the docker
+group so containers can be managed without sudo.
 ```
 
 - Start with a lowercase verb: `add`, `fix`, `update`, `remove`, `refactor`

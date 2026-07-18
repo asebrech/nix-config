@@ -5,9 +5,6 @@
 { inputs, ... }:
 
 let
-  # Apple Silicon support overlay (for Asahi Linux)
-  asahi-overlay = import ../hosts/asahi/apple-silicon-support/packages/overlay.nix;
-
   # Add in custom packages from this config
   additions =
     final: prev:
@@ -15,8 +12,6 @@ let
       callPackage = prev.lib.callPackageWith final;
       directory = ../pkgs/common;
     });
-
-  linuxModifications = final: prev: prev.lib.mkIf final.stdenv.isLinux { };
 
   modifications = final: prev: {
     # example = prev.example.overrideAttrs (oldAttrs: let ... in {
@@ -47,10 +42,8 @@ in
   default =
     final: prev:
 
-    (asahi-overlay final prev)
-    // (additions final prev)
+    (additions final prev)
     // (modifications final prev)
-    // (linuxModifications final prev)
     // (stable-packages final prev)
     // (unstable-packages final prev);
 }

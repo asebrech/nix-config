@@ -12,18 +12,7 @@
         ;
     };
 
-    # Reload font cache on rebuild to avoid font issues
-    activation.reloadFontCache = lib.hm.dag.entryAfter [ "linkActivation" ] ''
-      if [ -x "${pkgs.fontconfig}/bin/fc-cache" ]; then
-        ${pkgs.fontconfig}/bin/fc-cache -f
-      fi
-    '';
-
     sessionVariables = {
-      FLAKE = "$HOME/nix-config";
-      SHELL = "zsh";
-      TERM = "xterm-ghostty";
-      TERMINAL = "ghostty";
       VISUAL = "nvim";
       EDITOR = "nvim";
     };

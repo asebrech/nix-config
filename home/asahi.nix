@@ -11,7 +11,6 @@
     #
     common/optional/browsers
     common/optional/comms
-    common/optional/desktops
     common/optional/media
     common/optional/reverse-engineering.nix
     common/optional/tmux

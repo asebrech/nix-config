@@ -237,21 +237,6 @@
         "type": "github"
       }
     },
-    "hardware": {
-      "locked": {
-        "lastModified": 1773533765,
-        "narHash": "sha256-qonGfS2lzCgCl59Zl63jF6dIRRpvW3AJooBGMaXjHiY=",
-        "owner": "nixos",
-        "repo": "nixos-hardware",
-        "rev": "f8e82243fd601afb9f59ad230958bd073795cbfe",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixos-hardware",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -362,11 +347,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1784282293,
-        "narHash": "sha256-Qvf5DoKIqxiqvqHqp2BAXrwrA3ic5nMNA5DNagQB96I=",
-        "rev": "a47c123a609287a012dfc44d281de2dd4ed13394",
+        "lastModified": 1784347607,
+        "narHash": "sha256-oJoPGsmXO7Xm5YagCr0La+dSTu5Lpfx35WN8vNG18BU=",
+        "rev": "31cd72fdba8fa052e437ce7e6879c4fe62def10f",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1036407.a47c123a6092/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1036759.31cd72fdba8f/nixexprs.tar.xz"
       },
       "original": {
         "id": "nixpkgs",
@@ -448,7 +433,6 @@
         "claude-code": "claude-code",
         "devenv": "devenv",
         "disko": "disko",
-        "hardware": "hardware",
         "home-manager": "home-manager",
         "nix-secrets": "nix-secrets",
         "nixpkgs": "nixpkgs_2",

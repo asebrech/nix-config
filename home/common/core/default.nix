@@ -9,10 +9,7 @@
 }:
 {
   imports = lib.flatten [
-    (map lib.custom.relativeToRoot [
-      "modules/common/host-spec.nix"
-      "modules/home"
-    ])
+    (lib.custom.relativeToRoot "modules/common/host-spec.nix")
     ./nixos.nix
 
     ./direnv.nix
@@ -51,6 +48,7 @@
         usbutils
         unzip # zip extraction
         unrar # rar extraction
+        wl-clipboard # wayland clipboard CLI (nvim/tmux clipboard provider)
         ;
     }
     ++ [

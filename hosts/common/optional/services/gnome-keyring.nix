@@ -1,7 +1,6 @@
 {
-  # GNOME Keyring provides a libsecret-compatible daemon for storing
-  # credentials, tokens, and secrets used by desktop applications.
-  services.gnome.gnome-keyring.enable = true;
+  # GNOME Keyring itself is enabled by the COSMIC module. This file only
+  # adjusts it: disable the conflicting ssh agent and unlock via PAM.
 
   # gnome-keyring pulls in gcr-ssh-agent by default, which conflicts with
   # programs.ssh.startAgent defined in core/ssh.nix. Disable it explicitly

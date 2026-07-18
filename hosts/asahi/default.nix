@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, ... }:
 {
   imports = lib.flatten [
     #
@@ -34,28 +30,20 @@
         #
         (map (f: "hosts/common/optional/${f}") [
           # Services
-          "services/bluetooth.nix" # bluetooth support
           "services/openssh.nix" # allow remote SSH access
           "services/gnome-keyring.nix" # libsecret keyring daemon, unlocked via cosmic-greeter PAM
-          "services/upower.nix" # power management and lid detection
           "services/protonvpn.nix" # Proton VPN
           "services/docker.nix" # Docker container runtime
 
           # Desktop Environment
           "cosmic.nix" # COSMIC desktop with cosmic-greeter
           #"plymouth.nix" # boot splash screen
-
-          # System
-          "audio.nix" # pipewire and cli controls
-          "thunar.nix" # thunar file manager with plugins
         ])
     ))
   ];
 
   hardware.asahi.enable = true;
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
-  # Explicitly set pkgs for asahi modules (workaround for overlay timing issue)
-  hardware.asahi.pkgs = lib.mkForce pkgs;
 
   # Binary cache for the Asahi kernel (built by nixos-apple-silicon CI)
   nix.settings = {
@@ -77,22 +65,6 @@
     # NOTE: theming, wallpaper, and display scaling are managed in COSMIC Settings
   };
 
-  networking = {
-    networkmanager.enable = true;
-    enableIPv6 = false;
-  };
-
-  # Disable suspend - HDMI hotplug detection broken after suspend on Asahi Linux
-  # See: https://github.com/AsahiLinux/linux/issues/430
-  # This will be re-enabled once the Asahi kernel DCP driver is fixed
-  services.logind.settings.Login = {
-    HandleLidSwitch = "ignore"; # Don't suspend when lid closes
-    HandleLidSwitchDocked = "ignore"; # Don't suspend when docked with lid closed
-    HandleLidSwitchExternalPower = "ignore"; # Don't suspend on AC power
-    HandleSuspendKey = "ignore"; # Ignore suspend key presses
-    HandleHibernateKey = "ignore"; # Ignore hibernate key presses
-  };
-
   boot.loader = {
     systemd-boot = {
       enable = true;
@@ -105,10 +77,6 @@
 
   boot.initrd = {
     systemd.enable = true;
-  };
-
-  hardware.graphics = {
-    enable = true;
   };
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion

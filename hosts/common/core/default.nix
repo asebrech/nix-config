@@ -17,7 +17,6 @@
 
     (map lib.custom.relativeToRoot [
       "modules/common"
-      "modules/hosts"
       "hosts/common/core/nixos.nix"
       "hosts/common/core/sops.nix" # Core because it's used for backups, mail
       "hosts/common/core/ssh.nix"
@@ -36,13 +35,8 @@
     username = "neo";
     handle = "asebrech";
     # Modify the attribute sets hostSpec will inherit from your nix-secrets.
-    # If you're not using nix-secrets then remove the following six lines below.
-    inherit (inputs.nix-secrets)
-      domain
-      email
-      userFullName
-      networking
-      ;
+    # If you're not using nix-secrets then remove the line below.
+    inherit (inputs.nix-secrets) email;
   };
 
   networking.hostName = config.hostSpec.hostName;
