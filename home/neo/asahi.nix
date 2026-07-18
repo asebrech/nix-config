@@ -17,6 +17,7 @@
           "browsers"
           "cosmic.nix"
           "media"
+          "office.nix"
           "zed.nix"
           "zellij.nix"
           "claude-code.nix"

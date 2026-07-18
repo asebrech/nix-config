@@ -34,7 +34,9 @@
     antidote = {
       enable = true;
       plugins = [
+        "Aloxaf/fzf-tab" # fuzzy menu for tab completion
         "zsh-users/zsh-history-substring-search"
+        "MichaelAquilina/zsh-you-should-use" # reminds you of existing aliases
       ];
     };
 

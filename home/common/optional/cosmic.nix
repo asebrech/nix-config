@@ -28,5 +28,19 @@
         variant = "PerWorkspace";
       };
     };
+
+    # System shortcuts open our tools (Super+T -> ghostty instead of cosmic-term)
+    systemActions = {
+      __type = "map";
+      value = [
+        {
+          key = {
+            __type = "enum";
+            variant = "Terminal";
+          };
+          value = "ghostty";
+        }
+      ];
+    };
   };
 }

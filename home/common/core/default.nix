@@ -38,16 +38,18 @@
         hyperfine # command benchmarking
         jq # json processor
         lazygit # git TUI
+        lazydocker # docker TUI
+        lazyjournal # journalctl/logs TUI
+        lazysql # sql client TUI
         helix # editor, stock config
+        nix-tree # explore the nix store / closure sizes interactively
+        ouch # universal (de)compressor: zip, rar, 7z, tar...
         pciutils
         procs # better ps
-        p7zip # compression & encryption
         ripgrep # better grep
         sd # simpler sed for interactive use
         tlrc # tldr pages
         usbutils
-        unzip # zip extraction
-        unrar # rar extraction
         watchexec # rerun a command on file changes
         wl-clipboard # wayland clipboard CLI (helix/zellij clipboard provider)
         yazi # terminal file manager
