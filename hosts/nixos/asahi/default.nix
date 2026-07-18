@@ -4,8 +4,11 @@
     #
     # ========== Hardware ==========
     #
+    # NOTE: hardware imports are explicit (no scanPaths) because ./firmware
+    # is a data directory, not a nix module
     ./hardware-configuration.nix
     ./apple-silicon-support
+    ./host-spec.nix
 
     (map lib.custom.relativeToRoot (
       #
@@ -13,16 +16,6 @@
       #
       [
         "hosts/common/core"
-
-        #
-        # ========== Non-Primary Users to Create ==========
-        #
-        # The primary user, defined in `nix-config/hosts/common/users`, is added by default, via
-        # `hosts/common/core` above.
-        # To create additional users, specify the path to their config file, as shown in the commented line below, and create/modify
-        # the specified file as required. See `nix-config/hosts/common/users/exampleSecondUser` for more info.
-
-        #"hosts/common/users/exampleSecondUser"
       ]
       ++
         #
@@ -53,26 +46,17 @@
     ];
   };
 
-  #
-  # ========== Host Specification ==========
-  #
-
-  # Declare any host-specific hostSpec options. Note that hostSpec options pertaining to
-  # more than one host can be declared in `nix-config/hosts/common/core/` see the default.nix file there
-  # for examples.
-  hostSpec = {
-    hostName = "asahi";
-    # NOTE: theming, wallpaper, and display scaling are managed in COSMIC Settings
-  };
-
   boot.loader = {
     systemd-boot = {
       enable = true;
-      # When using plymouth, initrd can expand by a lot each time, so limit how many we keep around
-      #configurationLimit = lib.mkDefault 10;
+      # EFI variables are read-only on Apple Silicon; let bootctl treat
+      # those write failures as non-fatal (needed since systemd 260)
+      graceful = true;
+      # The Asahi ESP is small (~500MB) and each generation stores its
+      # kernel+initrd there; cap entries so the ESP can't fill up again
+      configurationLimit = 5;
     };
     efi.canTouchEfiVariables = false;
-    #timeout = 3;
   };
 
   boot.initrd = {

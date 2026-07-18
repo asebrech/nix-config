@@ -2,48 +2,39 @@
 # This file defines overlays/custom modifications to upstream packages
 #
 
-{ inputs, ... }:
+{ inputs, lib, ... }:
 
 let
-  # Add in custom packages from this config
-  additions =
-    final: prev:
-    (prev.lib.packagesFromDirectoryRecursive {
-      callPackage = prev.lib.callPackageWith final;
-      directory = ../pkgs/common;
-    });
+  overlays = {
+    # Adds my custom packages
+    additions =
+      final: prev:
+      (prev.lib.packagesFromDirectoryRecursive {
+        callPackage = prev.lib.callPackageWith final;
+        directory = ../pkgs;
+      });
 
-  modifications = final: prev: {
-    # example = prev.example.overrideAttrs (oldAttrs: let ... in {
-    # ...
-    # });
-  };
+    linuxModifications = _final: prev: lib.optionalAttrs prev.stdenv.isLinux { };
 
-  stable-packages = final: _prev: {
-    stable = import inputs.nixpkgs-stable {
-      system = final.stdenv.hostPlatform.system;
-      config.allowUnfree = true;
-      #overlays = [
-      #];
+    modifications = _final: _prev: {
+      # example = prev.example.overrideAttrs (previousAttrs: let ... in {
+      # ...
+      # });
+    };
+
+    unstable-packages = final: _prev: {
+      unstable = import inputs.nixpkgs-unstable {
+        inherit (final.stdenv.hostPlatform) system;
+        config.allowUnfree = true;
+      };
     };
   };
-
-  unstable-packages = final: _prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      system = final.stdenv.hostPlatform.system;
-      config.allowUnfree = true;
-      #overlays = [
-      #];
-    };
-  };
-
 in
 {
   default =
     final: prev:
-
-    (additions final prev)
-    // (modifications final prev)
-    // (stable-packages final prev)
-    // (unstable-packages final prev);
+    lib.attrNames overlays
+    |> map (name: (overlays.${name} final prev))
+    # nixfmt hack
+    |> lib.mergeAttrsList;
 }

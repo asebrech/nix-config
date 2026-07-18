@@ -37,11 +37,11 @@
                 _module.args = {
                   inherit disk;
                   withSwap = swapSize > 0;
-                  swapSize = builtins.toString swapSize;
+                  swapSize = toString swapSize;
                 };
               }
               ./minimal-configuration.nix
-              ../hosts/${name}/hardware-configuration.nix
+              ../hosts/nixos/${name}/hardware-configuration.nix
 
               { networking.hostName = name; }
             ];

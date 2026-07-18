@@ -1,6 +1,5 @@
 # Core home-manager configuration for all NixOS hosts
 {
-  config,
   lib,
   pkgs,
   inputs,
@@ -9,15 +8,8 @@
 }:
 {
   imports = lib.flatten [
-    (lib.custom.relativeToRoot "modules/common/host-spec.nix")
-    ./nixos.nix
-
-    ./direnv.nix
-    ./git.nix
-    ./ghostty.nix
-    ./ssh.nix
-    ./starship.nix
-    ./zsh
+    (lib.custom.relativeToRoot "modules/hosts/common/host-spec.nix")
+    (lib.custom.scanPaths ./.)
   ];
 
   inherit hostSpec;
@@ -25,16 +17,13 @@
   services.ssh-agent.enable = true;
 
   home = {
-    username = lib.mkDefault config.hostSpec.username;
-    homeDirectory = lib.mkDefault config.hostSpec.home;
-    stateVersion = lib.mkDefault "25.11";
     sessionPath = [
       "$HOME/.local/bin"
     ];
   };
 
   home.packages =
-    builtins.attrValues {
+    lib.attrValues {
       inherit (pkgs)
         btop # system monitor
         curl
@@ -61,6 +50,7 @@
       experimental-features = [
         "nix-command"
         "flakes"
+        "pipe-operators"
       ];
       warn-dirty = false;
     };

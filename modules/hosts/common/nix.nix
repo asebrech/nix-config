@@ -27,6 +27,15 @@
       allow-import-from-derivation = true;
 
       trusted-users = [ "@wheel" ];
+      builders-use-substitutes = true;
+      fallback = true; # Don't hard fail if a binary cache isn't available, since some systems roam
+      substituters = [
+        "https://cache.nixos.org" # Official global cache
+        "https://nix-community.cachix.org" # Community packages
+      ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
     };
 
     # This will add each flake input as a registry
@@ -35,6 +44,9 @@
 
     # This will add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    nixPath =
+      config.nix.registry
+      # nixfmt hack
+      |> lib.mapAttrsToList (key: value: "${key}=${value.to.path}");
   };
 }

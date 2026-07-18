@@ -1,134 +1,136 @@
 {
-  description = "EmergentMind's Nix-Config Starter";
+  description = "asebrech's Nix-Config";
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      flake-parts,
+      nix-secrets,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
       inherit (nixpkgs) lib;
+      namespace = "asebrech"; # namespace for our custom modules. Snowfall lib style
 
-      #
-      # ========= Architectures =========
-      #
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "aarch64-linux"
-        #"x86_64-linux"
-      ];
+      customLib = nixpkgs.lib.extend (
+        _self: _super: {
+          custom = import ./lib { inherit (nixpkgs) lib; };
+        }
+      );
 
-      #
-      # ========= Host Config Functions =========
-      #
-      # Create a NixOS host configuration
+      secrets = nix-secrets.mkSecrets nixpkgs customLib;
+
       mkHost = host: {
-        ${host} = lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs;
-            # ========== Extend lib with lib.custom ==========
-            # This approach allows lib.custom to propagate into hm
-            # see: https://github.com/nix-community/home-manager/pull/3454
-            lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
+        ${host} =
+          # Propagate lib.custom into hm
+          # see: https://github.com/nix-community/home-manager/pull/3454
+          lib.nixosSystem {
+            specialArgs = {
+              inherit
+                inputs
+                outputs
+                namespace
+                secrets
+                ;
+              lib = customLib;
+            };
+            modules = [
+              ./hosts/nixos/${host}
+            ];
           };
-          modules = [ ./hosts/${host} ];
-        };
       };
-      # Invoke mkHost for each NixOS host config
+
       mkHostConfigs = hosts: lib.foldl (acc: set: acc // set) { } (lib.map mkHost hosts);
-      # Return the hosts declared in the hosts directory (excluding 'common')
-      readHosts = lib.filter (name: name != "common") (lib.attrNames (builtins.readDir ./hosts));
+      readHosts = folder: lib.attrNames (lib.readDir ./hosts/${folder});
+
     in
-    {
-      #
-      # ========= Overlays =========
-      #
-      # Custom modifications/overrides to upstream packages.
-      overlays = import ./overlays { inherit inputs; };
-
-      #
-      # ========= Host Configurations =========
-      #
-      # Building configurations is available through `just rebuild` or `nixos-rebuild --flake .#hostname`
-      nixosConfigurations = mkHostConfigs readHosts;
-
-      #
-      # ========= Packages =========
-      #
-      # Add custom packages to be shared or upstreamed.
-      packages = forAllSystems (
-        system:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      flake = {
+        # Custom modifications/overrides to upstream packages
+        overlays = import ./overlays {
+          inherit inputs lib secrets;
+        };
+        # Build host configs
+        nixosConfigurations = mkHostConfigs (readHosts "nixos");
+      };
+      systems = [
+        "aarch64-linux"
+      ];
+      perSystem =
+        { system, ... }:
         let
           pkgs = import nixpkgs {
             inherit system;
             overlays = [ self.overlays.default ];
+            config.allowUnfree = true;
           };
+          formatter = pkgs.nixfmt-rfc-style;
         in
-        lib.packagesFromDirectoryRecursive {
-          callPackage = lib.callPackageWith pkgs;
-          directory = ./pkgs/common;
-        }
-      );
-
-      #
-      # ========= Formatting =========
-      #
-      # Nix formatter available through 'nix fmt' https://nix-community.github.io/nixpkgs-fmt
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
-      # Pre-commit checks
-      checks = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        import ./checks.nix { inherit inputs system pkgs; }
-      );
-
-      #
-      # ========= DevShell =========
-      #
-      # Custom shell for bootstrapping on new hosts, modifying nix-config, and secrets management
-      devShells = forAllSystems (
-        system:
-        import ./shell.nix {
-          pkgs = nixpkgs.legacyPackages.${system};
-          checks = self.checks.${system};
-        }
-      );
+        rec {
+          # Expose custom packages
+          _module.args.pkgs = pkgs;
+          packages = lib.packagesFromDirectoryRecursive {
+            callPackage = lib.callPackageWith pkgs;
+            directory = ./pkgs;
+          };
+          checks = import ./checks {
+            inherit
+              inputs
+              pkgs
+              system
+              lib
+              formatter
+              ;
+          };
+          # Nix formatter available through 'nix fmt' https://github.com/NixOS/nixfmt
+          inherit formatter;
+          # Custom shell for bootstrapping, nix-config dev, and secrets management
+          devShells = import ./shell.nix {
+            inherit
+              checks
+              inputs
+              system
+              pkgs
+              lib
+              ;
+          };
+        };
     };
 
   inputs = {
     #
-    # ========= Official NixOS and Home Manager Package Sources =========
+    # ========= Official NixOS and HM Package Sources =========
     #
-    # Update the NixOS and HM version numbers below when new releases are available.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    # The next two inputs are for pinning nixpkgs to stable vs unstable regardless of what the above is set to.
-    # This is particularly useful when an upcoming stable release is in beta because you can effectively
-    # keep 'nixpkgs-stable' set to stable for critical packages while setting 'nixpkgs' to the beta branch to
-    # get a jump start on deprecation changes.
-    # See also 'stable-packages' and 'unstable-packages' overlays at 'overlays/default.nix"
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     #
     # ========= Utilities =========
     #
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     devenv = {
-      url = "github:cachix/devenv/v2.0.3";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # NOTE: devenv pins its own nix build; don't override its nixpkgs
+      # so the devenv.cachix binary cache can be used
+      url = "github:cachix/devenv/v2.1.2";
     };
-    # Secrets management. See ./docs/secretsmgmt.md
+
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Pre-commit
+
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";

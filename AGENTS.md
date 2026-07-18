@@ -16,7 +16,7 @@ just rebuild                # Standard rebuild (nh os switch or nixos-rebuild)
 just rebuild-trace          # Rebuild with --show-trace
 just rebuild-full           # Rebuild + flake check
 just update                 # Update all flake inputs
-just rebuild-update         # Update inputs + rebuild
+just upgrade                # Update inputs + rebuild
 just check                  # Run full flake check (config + nixos-installer)
 just diff                   # Git diff excluding flake.lock
 just iso                    # Build and symlink an ISO image
@@ -62,7 +62,7 @@ scripts/system-install.sh [HOSTNAME]         # Local nixos-rebuild install
 
 ## Linting & Formatting
 
-All linting is enforced via `checks.nix` using `git-hooks.nix` (pre-commit). Hooks run automatically
+All linting is enforced via `checks/` using `git-hooks.nix` (pre-commit); the hook set is defined in `lib/default.nix` (`lib.custom.checks.mkPreCommitHooks`). Hooks run automatically
 on commit and can be run manually via `nix flake check --impure`.
 
 | Tool                    | Targets        | Notes                                     |
@@ -130,7 +130,7 @@ Use the appropriate import pattern for context:
 # Cross-directory paths from repo root — preferred for host/module files
 imports = lib.flatten [
   (map lib.custom.relativeToRoot [
-    "modules/common"
+    "modules/hosts/common"
     "hosts/common/core/nixos.nix"
   ])
 ];
@@ -192,10 +192,10 @@ When there are no options, omit `config = { ... }` and declare attributes direct
 
 ### Package lists
 
-Use the idiomatic `builtins.attrValues { inherit (pkgs) ...; }` pattern for package lists:
+Use the idiomatic `lib.attrValues { inherit (pkgs) ...; }` pattern for package lists:
 
 ```nix
-home.packages = builtins.attrValues {
+home.packages = lib.attrValues {
   inherit (pkgs) ripgrep fd bat eza;
 };
 ```
@@ -211,7 +211,7 @@ lib.optionalAttrs condition { ... } # Conditional attribute set merge
 
 ### Custom options — `hostSpec`
 
-All host-level custom options live in `modules/common/host-spec.nix` under `config.hostSpec`.
+All host-level custom options live in `modules/hosts/common/host-spec.nix` under `config.hostSpec`.
 Use `lib.types.submodule` with `freeformType = with lib.types; attrsOf str` to allow extra string
 fields alongside typed options.
 
@@ -283,12 +283,12 @@ group so containers can be managed without sudo.
 
 - Start with a lowercase verb: `add`, `fix`, `update`, `remove`, `refactor`
 - Do not end the summary line with a period
-- Reference the affected module or file when helpful: `fix hosts/asahi: remove stale overlay`
+- Reference the affected module or file when helpful: `fix hosts/nixos/asahi: remove stale overlay`
 
 ### Other rules
 
 - **`flake.lock`**: treat as auto-generated. Only commit changes to it when `just update` or
-  `just rebuild-update` was explicitly requested by the user.
+  `just upgrade` was explicitly requested by the user.
 - **Never commit secrets**: `detect-private-keys` runs on every commit, but don't rely on it —
   verify manually that no sops keys, age keys, or `.env` files are staged.
 - **Pre-commit hooks run automatically** on `git commit`. If a hook fails (e.g. `nixfmt` reformats

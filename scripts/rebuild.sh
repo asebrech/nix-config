@@ -25,6 +25,11 @@ function yellow() {
 	fi
 }
 
+# The flake uses the pipe-operators experimental feature; make sure it is
+# enabled even if the user-level nix.conf overrides experimental-features
+# (extra- prefix appends instead of replacing)
+export NIX_CONFIG="extra-experimental-features = nix-command flakes pipe-operators"
+
 switch_args="--show-trace --impure --flake "
 if [[ -n $1 && $1 == "trace" ]]; then
 	switch_args="$switch_args --show-trace "

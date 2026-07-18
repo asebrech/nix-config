@@ -5,18 +5,18 @@
 {
   programs.ssh = {
     enable = true;
-    enableDefaultConfig = false; # Manually configure defaults in matchBlocks
+    enableDefaultConfig = false; # Manually configure defaults in settings
 
     # Global defaults for all hosts
-    matchBlocks."*" = {
-      controlMaster = "auto";
-      controlPath = "${config.home.homeDirectory}/.ssh/sockets/S.%r@%h:%p";
-      controlPersist = "20m";
+    settings."*" = {
+      ControlMaster = "auto";
+      ControlPath = "${config.home.homeDirectory}/.ssh/sockets/S.%r@%h:%p";
+      ControlPersist = "20m";
       # Avoids infinite hang if control socket connection interrupted. ex: vpn goes down/up
-      serverAliveCountMax = 3;
-      serverAliveInterval = 5; # 3 * 5s
-      hashKnownHosts = true;
-      addKeysToAgent = "yes";
+      ServerAliveCountMax = 3;
+      ServerAliveInterval = 5; # 3 * 5s
+      HashKnownHosts = true;
+      AddKeysToAgent = "yes";
     };
   };
   home.file = {

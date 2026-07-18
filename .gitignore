@@ -1,5 +1,11 @@
-.pre-commit-config.yaml
 .direnv
 tmp
+
+# From build command testing
 result
-latest.iso
+*.iso
+
+/.pre-commit-config.yaml
+
+# Backup files for temporary changes
+*.bk
