@@ -27,17 +27,16 @@
       inherit (pkgs)
         btop # system monitor
         curl
+        fastfetch # system info
         lazygit # git TUI
         neovim # editor, stock config
         pciutils
-        pfetch # system info
-        pre-commit # git hooks
         p7zip # compression & encryption
         ripgrep # better grep
         usbutils
         unzip # zip extraction
         unrar # rar extraction
-        wl-clipboard # wayland clipboard CLI (nvim/tmux clipboard provider)
+        wl-clipboard # wayland clipboard CLI (nvim/zellij clipboard provider)
         ;
     }
     ++ [

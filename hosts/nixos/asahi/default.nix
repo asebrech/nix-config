@@ -61,6 +61,18 @@
 
   boot.initrd = {
     systemd.enable = true;
+    # Load the Apple display stack in the initrd so the LUKS passphrase
+    # prompt shows up on external displays (HDMI) too, not only on the
+    # internal panel. The DCP firmware is already running (loaded by
+    # iBoot/m1n1), so no extra firmware is needed in the initrd.
+    # mux_apple_display_crossbar and phy_apple_atc are runtime (device-tree)
+    # dependencies of the DCP that modprobe cannot infer; without them the
+    # DCP probe defers with "Failed to get dp-xbar: -517" until stage 2.
+    kernelModules = [
+      "appledrm"
+      "mux_apple_display_crossbar"
+      "phy_apple_atc"
+    ];
   };
 
   # https://wiki.nixos.org/wiki/FAQ/When_do_I_update_stateVersion

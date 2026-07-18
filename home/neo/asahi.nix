@@ -15,11 +15,8 @@
         #
         (map (f: "home/common/optional/${f}") [
           "browsers"
-          "comms"
           "media"
-          "reverse-engineering.nix"
-          "tmux"
-          "opencode.nix"
+          "zellij.nix"
           "claude-code.nix"
 
           "sops.nix"
