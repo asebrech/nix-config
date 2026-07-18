@@ -29,14 +29,14 @@
         curl
         fastfetch # system info
         lazygit # git TUI
-        neovim # editor, stock config
+        helix # editor, stock config
         pciutils
         p7zip # compression & encryption
         ripgrep # better grep
         usbutils
         unzip # zip extraction
         unrar # rar extraction
-        wl-clipboard # wayland clipboard CLI (nvim/zellij clipboard provider)
+        wl-clipboard # wayland clipboard CLI (helix/zellij clipboard provider)
         ;
     }
     ++ [

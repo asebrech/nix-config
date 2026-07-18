@@ -13,8 +13,8 @@
     };
 
     sessionVariables = {
-      VISUAL = "nvim";
-      EDITOR = "nvim";
+      VISUAL = "hx";
+      EDITOR = "hx";
     };
   };
 }

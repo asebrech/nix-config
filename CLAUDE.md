@@ -7,7 +7,7 @@ This repository is a **NixOS + Home Manager flake-based system configuration** (
 ## Configuration approach
 
 - Most desktop settings live in the COSMIC Settings app; `home/common/optional/cosmic.nix` (cosmic-manager) declares a small subset (theme mode, clock, tiling) so it survives reinstalls. Extend it when the user asks for a setting to be pinned.
-- Most tools currently run with stock configuration (neovim, zellij, ghostty). Add configuration when it serves a real need, not preemptively.
+- Most tools currently run with stock configuration (helix, zellij, ghostty). Add configuration when it serves a real need, not preemptively.
 
 ## Build / Lint / Test Commands
 
