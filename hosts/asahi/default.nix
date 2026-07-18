@@ -58,9 +58,18 @@
     ))
   ];
 
+  hardware.asahi.enable = true;
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
   # Explicitly set pkgs for asahi modules (workaround for overlay timing issue)
   hardware.asahi.pkgs = lib.mkForce pkgs;
+
+  # Binary cache for the Asahi kernel (built by nixos-apple-silicon CI)
+  nix.settings = {
+    extra-substituters = [ "https://nixos-apple-silicon.cachix.org" ];
+    extra-trusted-public-keys = [
+      "nixos-apple-silicon.cachix.org-1:8psDu5SA5dAD7qA0zMy5UT292TxeEPzIz8VVEr2Js20="
+    ];
+  };
 
   #
   # ========== Host Specification ==========

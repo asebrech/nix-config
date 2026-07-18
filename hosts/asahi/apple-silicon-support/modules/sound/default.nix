@@ -1,5 +1,6 @@
 {
   config,
+  options,
   pkgs,
   lib,
   ...
@@ -49,6 +50,10 @@
           systemd.user.services.pipewire.environment.ALSA_CONFIG_UCM2 =
             config.environment.variables.ALSA_CONFIG_UCM2;
           systemd.user.services.wireplumber.environment.ALSA_CONFIG_UCM2 =
+            config.environment.variables.ALSA_CONFIG_UCM2;
+          systemd.services.pipewire.environment.ALSA_CONFIG_UCM2 =
+            config.environment.variables.ALSA_CONFIG_UCM2;
+          systemd.services.wireplumber.environment.ALSA_CONFIG_UCM2 =
             config.environment.variables.ALSA_CONFIG_UCM2;
 
           # enable speakersafetyd to protect speakers

@@ -27,8 +27,7 @@
         excludes = [
           "\\.png"
           "\\.jpg"
-          "hosts/asahi/firmware/kernelcache\\.release\\.mac13j"
-          "hosts/asahi/firmware/all_firmware\\.tar\\.gz"
+          "hosts/asahi/firmware/firmware\\.cpio"
         ];
       };
       check-case-conflicts.enable = true;
@@ -62,6 +61,8 @@
       nixfmt-rfc-style.enable = true;
       deadnix = {
         enable = true;
+        # Vendored upstream code (synced verbatim from nixos-apple-silicon)
+        excludes = [ "hosts/asahi/apple-silicon-support/" ];
         settings = {
           noLambdaArg = true;
         };
