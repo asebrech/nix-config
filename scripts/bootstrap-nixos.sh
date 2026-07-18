@@ -175,7 +175,7 @@ function nixos_anywhere() {
 		green "Generating hardware-configuration.nix on $target_hostname and adding it to the local nix-config."
 		$ssh_root_cmd "nixos-generate-config --no-filesystems --root /mnt"
 		$scp_cmd root@"$target_destination":/mnt/etc/nixos/hardware-configuration.nix \
-			"${git_root}"/hosts/"$target_hostname"/hardware-configuration.nix
+			"${git_root}"/hosts/nixos/"$target_hostname"/hardware-configuration.nix
 		generated_hardware_config=1
 	fi
 
@@ -302,7 +302,7 @@ fi
 if [[ $generated_hardware_config == 1 ]]; then
 	if yes_or_no "Do you want to commit and push the generated hardware-configuration.nix for $target_hostname to nix-config?"; then
 		(pre-commit run --all-files 2>/dev/null || true) &&
-			git add "$git_root/hosts/$target_hostname/hardware-configuration.nix" &&
+			git add "$git_root/hosts/nixos/$target_hostname/hardware-configuration.nix" &&
 			(git commit -m "feat: hardware-configuration.nix for $target_hostname" || true) &&
 			git push
 	fi

@@ -19,7 +19,7 @@
     isMinimal = lib.mkForce true;
     hostName = "installer";
     # Add your primary username or whatever user you want to use for installation
-    username = "neo";
+    primaryUsername = "neo";
   };
 
   fileSystems."/boot".options = [ "umask=0077" ]; # Removes permissions and security warnings.

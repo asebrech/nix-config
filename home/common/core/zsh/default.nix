@@ -19,11 +19,11 @@
     history.size = 10000;
     history.share = true;
 
+    # NOTE: syntax highlighting and autosuggestions are enabled natively
+    # above; only load plugins here that HM has no option for
     antidote = {
       enable = true;
       plugins = [
-        "zsh-users/zsh-syntax-highlighting"
-        "zsh-users/zsh-autosuggestions"
         "zsh-users/zsh-history-substring-search"
       ];
     };

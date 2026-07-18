@@ -1,4 +1,3 @@
-SOPS_FILE := "../nix-secrets/.sops.yaml"
 
 # Define path to helpers
 export HELPERS_PATH := justfile_directory() + "/scripts/helpers.sh"
@@ -94,7 +93,7 @@ disko DRIVE PASSWORD:
     echo "{{ PASSWORD }}" > /tmp/disko-password
     sudo nix --experimental-features "nix-command flakes pipe-operators" run github:nix-community/disko -- \
       --mode disko \
-      disks/btrfs-luks-impermanence-disko.nix \
+      hosts/common/disks/btrfs-disk.nix \
       --arg disk '"{{ DRIVE }}"' \
       --arg password '"{{ PASSWORD }}"'
     rm /tmp/disko-password

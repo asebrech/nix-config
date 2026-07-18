@@ -143,7 +143,7 @@
     # Authenticates via ssh and use shallow clone
     nix-secrets = {
       url = "git+ssh://git@github.com/asebrech/nix-secrets.git?ref=main&shallow=1";
-      inputs = { };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     #

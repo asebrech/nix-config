@@ -24,8 +24,10 @@
 
   hostSpec = {
     hostName = "iso";
-    # The username below will be available in additional the the standard `root` and `nixos` users from the nixos installation image.
-    # Inheriting from common core hostSpec settings
+    # The username below will be available in addition to the standard `root` and `nixos` users from the nixos installation image.
+    primaryUsername = "neo";
+    # The iso has no sops; this skips password/age-key secrets and per-user home imports
+    isMinimal = lib.mkForce true;
 
     # Add your github username and github-noreply email address
     email.gitHub = "foo@users.noreply.github.com";
@@ -59,7 +61,9 @@
   isoImage.squashfsCompression = "zstd -Xcompression-level 3";
 
   nixpkgs = {
-    hostPlatform = lib.mkDefault "x86_64-linux";
+    # aarch64 so the iso can be built natively on the Apple Silicon host
+    # (usable for VMs or rescue of aarch64 machines)
+    hostPlatform = lib.mkDefault "aarch64-linux";
     config.allowUnfree = true;
   };
 
