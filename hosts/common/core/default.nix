@@ -12,6 +12,10 @@
   imports = lib.flatten [
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
+    inputs.nix-index-database.nixosModules.nix-index
+    # `, foo` runs any program without installing it
+    # NOTE: don't enable in hm as well because it will barf eventually
+    { programs.nix-index-database.comma.enable = true; }
 
     (map lib.custom.relativeToRoot [
       "modules/hosts/common"

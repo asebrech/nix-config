@@ -31,6 +31,12 @@
 
   };
 
+  # Syntax-highlighted side-by-side git diffs
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+  };
+
   programs.gh = {
     enable = true;
     settings = {

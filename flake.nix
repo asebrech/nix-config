@@ -120,6 +120,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     devenv = {
       # NOTE: devenv pins its own nix build; don't override its nixpkgs
       # so the devenv.cachix binary cache can be used
