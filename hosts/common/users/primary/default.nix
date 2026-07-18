@@ -35,10 +35,6 @@ in
       inherit pkgs inputs;
       hostSpec = config.hostSpec;
     };
-    # Import hyprdynamicmonitors Home Manager module
-    sharedModules = [
-      inputs.hyprdynamicmonitors.homeManagerModules.default
-    ];
     users.${hostSpec.username}.imports = lib.flatten (
       lib.optional (!hostSpec.isMinimal) [
         (

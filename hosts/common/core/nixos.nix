@@ -2,17 +2,21 @@
 {
   config,
   lib,
-  inputs,
+  pkgs,
   ...
 }:
 {
-  # Import vicinae home-manager module (Linux/Wayland only)
-  home-manager.sharedModules = [ inputs.vicinae.homeManagerModules.default ];
-
   # Database for aiding terminal-based programs
   environment.enableAllTerminfo = true;
   # Enable firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
+
+  # Nerd Font used by ghostty, starship, and nixvim icons
+  # (was previously installed by stylix)
+  fonts.packages = [
+    pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.symbols-only
+  ];
 
   # This should be handled by config.security.pam.sshAgentAuth.enable
   security.sudo.extraConfig = ''
@@ -30,17 +34,6 @@
     ${config.hostSpec.username} ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/env * /nix/store/*/bin/switch-to-configuration *, /nix/store/*/bin/env * /nix/store/*/bin/switch-to-configuration *
     ${config.hostSpec.username} ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/env * nix build --no-link --profile /nix/var/nix/profiles/system *, /nix/store/*/bin/env * nix build --no-link --profile /nix/var/nix/profiles/system *
   '';
-
-  #
-  # ========== Nix Configuration (NixOS-specific) ==========
-  #
-  nix = {
-    # Cachix cache for vicinae (use extra- prefix to append to defaults)
-    settings = {
-      extra-substituters = [ "https://vicinae.cachix.org" ];
-      extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
-    };
-  };
 
   #
   # ========== Nix Helper ==========

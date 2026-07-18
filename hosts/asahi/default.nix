@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   ...
@@ -11,7 +10,6 @@
     #
     ./hardware-configuration.nix
     ./apple-silicon-support
-    ./monitors.nix
 
     (map lib.custom.relativeToRoot (
       #
@@ -38,17 +36,13 @@
           # Services
           "services/bluetooth.nix" # bluetooth support
           "services/openssh.nix" # allow remote SSH access
-          "services/greetd.nix" # display manager with tuigreet greeter
-          "services/gnome-keyring.nix" # libsecret keyring daemon, unlocked via greetd PAM
-          "services/logrotate.nix" # hyprland log rotation
-          "services/x11.nix" # X11 DPI settings for xwayland apps
+          "services/gnome-keyring.nix" # libsecret keyring daemon, unlocked via cosmic-greeter PAM
           "services/upower.nix" # power management and lid detection
           "services/protonvpn.nix" # Proton VPN
           "services/docker.nix" # Docker container runtime
 
-          # Desktop and Window Manager
-          "hyprland.nix" # hyprland window manager
-          "wayland.nix" # wayland packages
+          # Desktop Environment
+          "cosmic.nix" # COSMIC desktop with cosmic-greeter
           #"plymouth.nix" # boot splash screen
 
           # System
@@ -80,17 +74,7 @@
   # for examples.
   hostSpec = {
     hostName = "asahi";
-    useWayland = true;
-    isAutoStyled = true; # Enable Stylix theming
-    theme = "catppuccin-mocha"; # Base16 Tokyo Night theme
-    wallpaper = ../../assets/wallpapers/tokyo-night.jpg;
-    scaling = "1.5"; # 150% scaling for better readability on HiDPI display
-  };
-
-  # Enable auto-login for the primary user with greetd
-  autoLogin = {
-    enable = false; # Disabled to see Plymouth boot splash
-    username = config.hostSpec.username;
+    # NOTE: theming, wallpaper, and display scaling are managed in COSMIC Settings
   };
 
   networking = {

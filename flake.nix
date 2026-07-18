@@ -141,28 +141,6 @@
     };
 
     #
-    # ========= Theming =========
-    #
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      # Don't fetch gnome-shell - we don't use GNOME and gitlab.gnome.org can be unreliable
-      inputs.gnome-shell.follows = "";
-    };
-
-    #
-    # ========= Launcher =========
-    #
-    vicinae = {
-      url = "github:vicinaehq/vicinae";
-      # Don't follow nixpkgs to use Cachix cache
-    };
-    vicinae-extensions = {
-      url = "github:vicinaehq/extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    #
     # ========= Personal Repositories =========
     #
     # Private secrets repo.  See ./docs/secretsmgmt.md
@@ -170,14 +148,6 @@
     nix-secrets = {
       url = "git+ssh://git@github.com/asebrech/nix-secrets.git?ref=main&shallow=1";
       inputs = { };
-    };
-
-    #
-    # ========= Display Management =========
-    #
-    hyprdynamicmonitors = {
-      url = "github:fiffeek/hyprdynamicmonitors";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     #

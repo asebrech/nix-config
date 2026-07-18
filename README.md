@@ -78,20 +78,9 @@ REMINDER: Start small and take your time configuring the packages and services y
 After you've set up your variation of nix-config yourself and taken some time to declare the packages and options you want for them, you may want to enable useful features like a windows manager, Yubikeys, LUKS encryption, themes/rice, etc. Below you will find some references that show where to find more information about various features. The list isn't exhaustive and I can't guarantee you'll find what you're looking for but I hope that it at least points you in the direction to find what you want.
 
 ### Where to find how I implemented various features and tools:
-- Windows manager
-    - Very simple XFCE implementation:
-        - https://github.com/EmergentMind/nix-config/blob/dev/hosts/common/optional/xfce.nix
-    - Hyprland implementation:
-
-        Hosts-level files
-        - https://github.com/EmergentMind/nix-config/blob/dev/hosts/common/optional/hyprland.nix
-        - https://github.com/EmergentMind/nix-config/blob/dev/hosts/common/optional/wayland.nix
-
-        Home-level files
-        - https://github.com/EmergentMind/nix-config/tree/dev/home/common/optional/desktops
-- Themes and Styling
-    - [Stylix](https://github.com/nix-community/stylix) is the fastest way to get host or user-wide styling
-    - https://github.com/EmergentMind/nix-config/blob/dev/hosts/common/optional/stylix.nix
+- Desktop environment
+    - This config uses [COSMIC](https://system76.com/cosmic), enabled in `hosts/common/optional/cosmic.nix`.
+      Tiling, launcher, theming, wallpaper, and display settings are all managed in the COSMIC Settings app.
 - Adding Yubikeys
     - See my article and video on how to set up Yubikeys [https://unmovedcentre.com/posts/improving-qol-on-nixos-with-yubikey/](https://unmovedcentre.com/posts/improving-qol-on-nixos-with-yubikey/)
 - LUKS encryption

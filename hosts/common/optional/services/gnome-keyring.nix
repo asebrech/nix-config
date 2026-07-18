@@ -8,7 +8,8 @@
   # so the existing openssh agent is used for SSH key management instead.
   services.gnome.gcr-ssh-agent.enable = false;
 
-  # Unlock the keyring automatically when greetd authenticates the user.
-  # Targeting greetd (not login) since that is the active display manager.
-  security.pam.services.greetd.enableGnomeKeyring = true;
+  # Unlock the keyring automatically when cosmic-greeter authenticates the
+  # user. Targeting cosmic-greeter (not login) since that is the active
+  # display manager.
+  security.pam.services.cosmic-greeter.enableGnomeKeyring = true;
 }

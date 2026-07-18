@@ -1,5 +1,4 @@
-# colorscheme
-# stylix owns all theming — no colorscheme set here
+# colorscheme — using the neovim default
 { ... }:
 {
   programs.nixvim = { };

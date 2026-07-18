@@ -1,7 +1,7 @@
 # AGENTS.md — Coding Agent Guide for nix-config
 
 This repository is a **NixOS + Home Manager flake-based system configuration** for an Apple Silicon
-(Asahi Linux) host. It uses Hyprland, Stylix theming, sops-nix for secrets, disko for disk layout,
+(Asahi Linux) host. It uses the COSMIC desktop, sops-nix for secrets, disko for disk layout,
 and nixvim. A companion private `nix-secrets` repo holds encrypted secrets.
 
 ---
@@ -145,7 +145,7 @@ imports = lib.flatten [
     [ "hosts/common/core" ]
     ++ (map (f: "hosts/common/optional/${f}") [
       "services/bluetooth.nix"
-      "hyprland.nix"
+      "cosmic.nix"
     ])
   ))
 ];
@@ -275,10 +275,10 @@ staging/editing and wait for the user to say "commit" (or equivalent).
 Use a concise imperative summary line (≤72 chars), optionally followed by a blank line and body:
 
 ```
-add hyprland idle inhibitor for fullscreen apps
+add bluetooth support for asahi host
 
-Prevents hypridle from locking the screen when a window is fullscreen,
-using the `fullscreen-while-active` special workspace trick.
+Enables the bluetooth service and pairs it with the blueman applet
+so devices can be managed from the desktop.
 ```
 
 - Start with a lowercase verb: `add`, `fix`, `update`, `remove`, `refactor`
