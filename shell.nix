@@ -1,45 +1,40 @@
 # Shell for bootstrapping flake-enabled nix and other tooling
 {
-  pkgs ?
-    # If pkgs is not defined, instantiate nixpkgs from locked commit
-    let
-      lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
-      nixpkgs = fetchTarball {
-        url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";
-        sha256 = lock.narHash;
-      };
-    in
-    import nixpkgs { overlays = [ ]; },
+  pkgs,
   checks,
+  lib,
   ...
 }:
 {
   default = pkgs.mkShell {
-    NIX_CONFIG = "extra-experimental-features = nix-command flakes";
+    # Nix utility settings
+    NIX_CONFIG = "extra-experimental-features = nix-command flakes pipe-operators";
+
+    # Bootstrap script settings
     BOOTSTRAP_USER = "neo";
     BOOTSTRAP_SSH_PORT = "22";
     BOOTSTRAP_SSH_KEY = "~/.ssh/id_manu";
+    NIX_SECRETS_DIR = "/home/neo/nix-secrets";
 
-    inherit (checks.pre-commit-check) shellHook;
     buildInputs = checks.pre-commit-check.enabledPackages;
-
-    nativeBuildInputs = builtins.attrValues {
+    nativeBuildInputs = lib.attrValues {
       inherit (pkgs)
-
-        # These will be installed regardless of what was installed specific for the host or home configs
         nix
         home-manager
         nh
         git
         just
         pre-commit
-        deadnix
         sops
+        statix
+
         yq-go # jq for yaml, used for build scripts
         bats # for bash testing
-        age # for bootstrap script
-        ssh-to-age # for bootstrap script
+        age # bootstrap script
+        ssh-to-age # bootstrap script
+        gum # shell script ricing
         ;
     };
+    inherit (checks.pre-commit-check) shellHook;
   };
 }

@@ -30,9 +30,9 @@
     # nh 4.x wraps every elevated command as `sudo env VAR=... <cmd>`, so sudo
     # matches against `env` (resolved from the caller's PATH, which under
     # direnv is a store path) — hence the env-wrapped rule variants below.
-    ${config.hostSpec.username} ALL=(ALL) NOPASSWD: /nix/store/*/bin/switch-to-configuration, /run/current-system/sw/bin/nix-env, /nix/var/nix/profiles/system/sw/bin/nixos-rebuild
-    ${config.hostSpec.username} ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/env * /nix/store/*/bin/switch-to-configuration *, /nix/store/*/bin/env * /nix/store/*/bin/switch-to-configuration *
-    ${config.hostSpec.username} ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/env * nix build --no-link --profile /nix/var/nix/profiles/system *, /nix/store/*/bin/env * nix build --no-link --profile /nix/var/nix/profiles/system *
+    ${config.hostSpec.primaryUsername} ALL=(ALL) NOPASSWD: /nix/store/*/bin/switch-to-configuration, /run/current-system/sw/bin/nix-env, /nix/var/nix/profiles/system/sw/bin/nixos-rebuild
+    ${config.hostSpec.primaryUsername} ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/env * /nix/store/*/bin/switch-to-configuration *, /nix/store/*/bin/env * /nix/store/*/bin/switch-to-configuration *
+    ${config.hostSpec.primaryUsername} ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/env * nix build --no-link --profile /nix/var/nix/profiles/system *, /nix/store/*/bin/env * nix build --no-link --profile /nix/var/nix/profiles/system *
   '';
 
   #
@@ -59,5 +59,5 @@
   # ========== Localization ==========
   #
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
-  time.timeZone = lib.mkDefault "Europe/Paris";
+  time.timeZone = config.hostSpec.timeZone;
 }
