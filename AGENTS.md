@@ -1,8 +1,8 @@
 # AGENTS.md — Coding Agent Guide for nix-config
 
 This repository is a **NixOS + Home Manager flake-based system configuration** for an Apple Silicon
-(Asahi Linux) host. It uses the COSMIC desktop, sops-nix for secrets, disko for disk layout,
-and nixvim. A companion private `nix-secrets` repo holds encrypted secrets.
+(Asahi Linux) host. It uses the COSMIC desktop, sops-nix for secrets, and disko for disk
+layout. A companion private `nix-secrets` repo holds encrypted secrets.
 
 ---
 

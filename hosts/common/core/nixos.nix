@@ -11,7 +11,7 @@
   # Enable firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
 
-  # Nerd Font used by ghostty, starship, and nixvim icons
+  # Nerd Font used by ghostty and starship icons
   # (was previously installed by stylix)
   fonts.packages = [
     pkgs.nerd-fonts.jetbrains-mono

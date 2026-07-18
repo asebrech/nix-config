@@ -18,7 +18,6 @@
     ./direnv.nix
     ./git.nix
     ./ghostty.nix
-    ./nixvim
     ./ssh.nix
     ./starship.nix
     ./zsh
@@ -43,7 +42,7 @@
         btop # system monitor
         curl
         lazygit # git TUI
-        lsof # list open files (used by opencode.nvim for server discovery)
+        neovim # editor, stock config
         pciutils
         pfetch # system info
         pre-commit # git hooks

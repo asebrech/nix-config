@@ -101,11 +101,6 @@
           default = true;
           description = "Used to indicate a host that uses LAN atticd for caching";
         };
-        defaultEditor = lib.mkOption {
-          type = lib.types.str;
-          default = "nvim";
-          description = "The default editor command to use on the host";
-        };
         primaryUsername = lib.mkOption {
           type = lib.types.str;
           default = config.hostSpec.username;
