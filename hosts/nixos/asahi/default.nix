@@ -38,6 +38,12 @@
   hardware.asahi.enable = true;
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
 
+  # Docked usage: when the external monitor deep-sleeps it drops HPD, logind
+  # then sees "lid closed, no dock" and suspends — after which the display
+  # won't come back until the lid is opened (Asahi DCP resume issue). On AC
+  # a closed lid should therefore never suspend; battery keeps the default.
+  services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
+
   # Binary cache for the Asahi kernel (built by nixos-apple-silicon CI)
   nix.settings = {
     extra-substituters = [ "https://nixos-apple-silicon.cachix.org" ];
