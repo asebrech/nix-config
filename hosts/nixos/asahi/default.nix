@@ -49,6 +49,12 @@
   boot.loader = {
     systemd-boot = {
       enable = true;
+      # EFI variables are read-only on Apple Silicon; let bootctl treat
+      # those write failures as non-fatal (needed since systemd 260)
+      graceful = true;
+      # The Asahi ESP is small (~500MB) and each generation stores its
+      # kernel+initrd there; cap entries so the ESP can't fill up again
+      configurationLimit = 5;
     };
     efi.canTouchEfiVariables = false;
   };
