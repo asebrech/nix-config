@@ -4,10 +4,11 @@
     inherit (pkgs)
       obs-studio
       vlc
+      loupe # GNOME image viewer (GTK4)
       ;
   };
 
-  # VLC as the default player for music and video
+  # VLC for audio/video, loupe for images
   xdg.mimeApps.defaultApplications =
     let
       audio = [
@@ -29,6 +30,16 @@
         "video/x-msvideo"
         "video/ogg"
       ];
+      image = [
+        "image/png"
+        "image/jpeg"
+        "image/gif"
+        "image/webp"
+        "image/bmp"
+        "image/tiff"
+        "image/svg+xml"
+      ];
     in
-    lib.genAttrs (audio ++ video) (_: [ "vlc.desktop" ]);
+    lib.genAttrs (audio ++ video) (_: [ "vlc.desktop" ])
+    // lib.genAttrs image (_: [ "org.gnome.Loupe.desktop" ]);
 }
