@@ -47,6 +47,8 @@
       nixfmt-rfc-style = {
         enable = true;
         package = formatter;
+        # Vendored upstream code (synced verbatim from nixos-apple-silicon)
+        excludes = [ "hosts/nixos/asahi/apple-silicon-support/" ];
       };
       deadnix = {
         enable = true;

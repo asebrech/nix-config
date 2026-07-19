@@ -109,9 +109,11 @@ dev:
     @just rebuild-pre
     direnv reload
 
+# Format all tracked nix files (bare `nix fmt` no longer passes a path,
+# and the vendored apple-silicon-support dir must stay untouched)
 [group("dev")]
 fmt:
-    nix fmt
+    git ls-files '*.nix' | grep -v 'apple-silicon-support/' | xargs nixfmt
 
 #
 # ========== Nix-Secrets manipulation recipes ==========
