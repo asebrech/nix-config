@@ -27,9 +27,11 @@
     )
   );
 
-  # Only auto-suspend on battery on this host: suspending while docked
-  # breaks the external display until the lid is opened (Asahi DCP resume
-  # issue, https://github.com/AsahiLinux/linux/issues/430).
-  programs.noctalia-shell.settings.idle.suspendCommand =
-    "sh -c 'grep -q 1 /sys/class/power_supply/*/online 2>/dev/null || systemctl suspend'";
+  # No idle auto-suspend on this host: waking from suspend breaks the
+  # displays until the lid is opened (Asahi DCP resume issue,
+  # https://github.com/AsahiLinux/linux/issues/430). Closing the lid on
+  # battery still suspends via logind; idle keeps screen-off and lock.
+  # NOTE: idle.suspendCommand is not a replacement hook — noctalia runs
+  # it *in addition to* its own unconditional systemctl suspend.
+  programs.noctalia-shell.settings.idle.suspendTimeout = 0;
 }
