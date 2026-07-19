@@ -21,20 +21,19 @@
     settings = {
       settingsVersion = 59;
 
-      # Launcher opens terminal apps in ghostty
-      appLauncher.terminalCommand = "ghostty -e";
+      # Launcher opens terminal apps in ghostty; clipboard history is off
+      # by default and needs cliphist (installed in ./default.nix)
+      appLauncher = {
+        terminalCommand = "ghostty -e";
+        enableClipboardHistory = true;
+      };
 
       # Weather/calendar location
-      location.name = "Paris";
+      location.name = "Nice";
 
-      # Screen off after 10min, lock after 11min, suspend after 30min
-      # (the built-in noctalia lock screen handles locking)
-      idle = {
-        enabled = true;
-        screenOffTimeout = 600;
-        lockTimeout = 660;
-        suspendTimeout = 1800;
-      };
+      # Idle management is off by default; enabling it uses the stock
+      # timeouts (screen off 10min, built-in lock 11min, suspend 30min)
+      idle.enabled = true;
     };
   };
 }

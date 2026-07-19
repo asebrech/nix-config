@@ -6,7 +6,7 @@ This repository is a **NixOS + Home Manager flake-based system configuration** (
 
 ## Configuration approach
 
-- **Stock configs + necessary deltas only.** The niri config is the upstream default `config.kdl` with a handful of `// ADAPTED` lines (ghostty terminal, noctalia launcher/shell startup) plus a per-host startup fragment; noctalia declares only the necessary settings (terminal, location, idle timeouts) and defaults everything else. Outputs/scale are auto-detected by niri — don't pin them unless asked.
+- **Stock configs + necessary deltas only.** The niri config is the upstream default `config.kdl` with a handful of `// ADAPTED` lines (ghostty terminal, noctalia launcher/shell/lock, screenshot binds); noctalia declares only the necessary settings (terminal, clipboard history, location, idle enable) and defaults everything else. Outputs/scale are auto-detected by niri — don't pin them unless asked. XDG autostart runs under niri on NixOS (`runXdgAutostartIfNone`), so session apps use autostart entries, not `spawn-at-startup`.
 - The noctalia settings file is declarative, so its in-app Settings panel is read-only: preview changes there, persist them in `home/common/optional/desktops/noctalia.nix`.
 - Theming is stylix (catppuccin-mocha) via `modules/hosts/common/auto-styling.nix`, gated on `hostSpec.isAutoStyled`; noctalia colors come from stylix's built-in target.
 - Most tools run with stock configuration (helix, zellij, ghostty). Add configuration when it serves a real need, not preemptively.
@@ -25,7 +25,7 @@ just check                  # Full flake check (config + nixos-installer)
 just check-sops             # Verify sops-nix activated (journal)
 just diff                   # Git diff excluding flake.lock
 just iso                    # Build the aarch64 recovery ISO
-just fmt                    # nix fmt (nixfmt-rfc-style)
+just fmt                    # nixfmt (rfc-style) on all tracked .nix files
 ```
 
 ### Verification workflow used in this repo
@@ -112,7 +112,7 @@ All linting is enforced via `checks/` using `git-hooks.nix`; the hook set is def
 | `check-added-large-files` | all | Excludes images and the asahi firmware blob |
 | misc hygiene | all | merge conflicts, private keys, EOF/whitespace/line endings |
 
-**Always run `nix fmt` before committing any `.nix` file.** `.pre-commit-config.yaml` is auto-generated — never edit it.
+**Always run `just fmt` before committing any `.nix` file** (bare `nix fmt` is broken: nix no longer passes a path to the formatter). `.pre-commit-config.yaml` is auto-generated — never edit it.
 
 ---
 
@@ -170,7 +170,7 @@ group so containers can be managed without sudo.
 
 - **`lib.custom`**: `relativeToRoot`, `scanPaths`, `checks.mkPreCommitHooks` — all in `lib/default.nix`.
 - **Secrets**: sops-nix; host key at `/etc/ssh/ssh_host_ed25519_key` decrypts; per-user age keys are bootstrapped automatically. Run `just check-sops` after rebuilds. The `nix-secrets` repo must be pushed for the flake to see changes (or use `--override-input nix-secrets path:/home/neo/nix-secrets` while testing).
-- **Desktop stack**: `hosts/common/optional/niri.nix` (compositor + session + desktop services), `services/greetd.nix` (auto-login), `home/common/optional/desktops/` (niri config.kdl assembly + noctalia). Asahi-specific workarounds (idle suspend policy, logind lid rules, initrd display modules) live only in the asahi host/home files, never in shared modules.
+- **Desktop stack**: `hosts/common/optional/niri.nix` (compositor + session + desktop services), `services/greetd.nix` (auto-login), `home/common/optional/desktops/` (niri config.kdl + noctalia). Asahi-specific workarounds (idle suspend policy, logind lid rules, initrd display modules) live only in the asahi host/home files, never in shared modules.
 - **`nixos-installer/`** is a standalone sub-flake (own lock); `just check` covers it.
 - **Cleanup discipline**: when removing a tool, also remove its flake input, its imports, stale comments, *and* its runtime leftovers in `$HOME` (`~/.config`, `~/.cache`, `~/.local/share`) — deep cleanups are expected.
 - After structural changes, sweep for stale path references (`hosts/asahi`, `users/primary`, old module names…) across `*.nix`, `*.md`, `justfile`, and `scripts/`.

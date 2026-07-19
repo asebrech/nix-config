@@ -364,8 +364,8 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; } // ADAPTED
-    Mod+D hotkey-overlay-title="Run an Application" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; } // ADAPTED
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Mod+Space hotkey-overlay-title="Run an Application" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; } // ADAPTED
+    Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; } // ADAPTED
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -613,9 +613,10 @@ binds {
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
     // ADAPTED: screenshot binds for keyboards without a Print key
+    // (Ctrl/Alt mirror the Print variants; plain Super+Alt+S is taken by orca above)
     Super+Shift+S { screenshot; }
-    Super+Ctrl+S { screenshot-screen; }
-    Super+Alt+S { screenshot-window; }
+    Super+Shift+Ctrl+S { screenshot-screen; }
+    Super+Shift+Alt+S { screenshot-window; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here

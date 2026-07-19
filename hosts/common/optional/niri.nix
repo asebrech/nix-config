@@ -12,11 +12,9 @@
   # see services/greetd.nix)
   programs.niri.enable = true;
 
-  # GUI privilege prompts; the agent itself runs as a user service bound
-  # to the niri session (see home desktops module)
-  security.polkit.enable = true;
-
   # Desktop services consumed by noctalia's bar and control center
+  # (polkit and the portals are already wired by programs.niri; the GUI
+  # polkit agent runs as a user service, see the home desktops module)
   networking.networkmanager.enable = true;
   hardware.bluetooth.enable = true;
   services.upower.enable = true;

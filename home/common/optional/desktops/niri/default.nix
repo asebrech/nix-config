@@ -1,10 +1,9 @@
 # niri configuration: the stock default config.kdl (search for "ADAPTED"
-# to see the few necessary changes: ghostty terminal, noctalia launcher
-# and shell startup), preceded by per-host output/startup fragments.
+# to see the few necessary changes: ghostty terminal, noctalia launcher,
+# shell startup, lock and screenshot binds).
 {
   lib,
   pkgs,
-  osConfig,
   ...
 }:
 {
@@ -14,22 +13,7 @@
         xwayland-satellite # xwayland support, auto-spawned by niri when on PATH
         ;
     };
-    file =
-      let
-        hostPath = "hosts/nixos/${osConfig.hostSpec.hostName}/niri";
-        finalConfig =
-          lib.flatten [
-            # order matters
-            (map lib.custom.relativeToRoot [
-              "${hostPath}/startup.kdl"
-            ])
-            ./config.kdl
-          ]
-          |> lib.concatMapStringsSep "\n" lib.readFile;
-      in
-      {
-        ".config/niri/config.kdl".text = finalConfig;
-      };
+    file.".config/niri/config.kdl".source = ./config.kdl;
   };
 
   # GUI polkit agent for the niri session
