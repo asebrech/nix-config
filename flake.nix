@@ -141,12 +141,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    cosmic-manager = {
-      url = "github:HeitorAugustoLN/cosmic-manager";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
+    #
+    # ========= Desktop (niri + noctalia) =========
+    #
+    stylix = {
+      url = "github:danth/stylix/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # v4.7.7 is the final Quickshell-based release; v5 is a beta rewrite.
+    # Follows nixpkgs-unstable like upstream (noctalia needs a recent quickshell).
+    noctalia = {
+      url = "github:noctalia-dev/noctalia?ref=v4.7.7";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     #

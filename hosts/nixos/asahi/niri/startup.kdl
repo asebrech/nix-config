@@ -1,0 +1,6 @@
+// NOTE: see home/common/optional/desktops/niri/config.kdl for baseline startup calls
+//
+// ========== Startup ==========
+//
+// niri does not run xdg autostart entries; spawn session apps here
+spawn-at-startup "protonvpn-app"

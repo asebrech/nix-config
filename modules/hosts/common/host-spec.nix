@@ -70,6 +70,21 @@
           default = false;
           description = "Used to indicate a minimal host";
         };
+        isAutoStyled = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Used to indicate a host that wants stylix auto styling";
+        };
+        theme = lib.mkOption {
+          type = lib.types.str;
+          default = "catppuccin-mocha";
+          description = "The base16 theme name to use for styling (from pkgs.base16-schemes)";
+        };
+        wallpaper = lib.mkOption {
+          type = lib.types.nullOr (lib.types.either lib.types.path lib.types.str);
+          default = null;
+          description = "Path to the wallpaper image used by stylix";
+        };
       };
     };
   };

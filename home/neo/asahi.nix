@@ -15,7 +15,7 @@
         #
         (map (f: "home/common/optional/${f}") [
           "browsers"
-          "cosmic.nix"
+          "desktops"
           "media"
           "office.nix"
           "zed.nix"
@@ -27,14 +27,9 @@
     )
   );
 
-  # Never auto-suspend on AC power on this host: suspending while docked
+  # Only auto-suspend on battery on this host: suspending while docked
   # breaks the external display until the lid is opened (Asahi DCP resume
-  # issue, https://github.com/AsahiLinux/linux/issues/430). Battery
-  # behavior keeps the COSMIC default.
-  wayland.desktopManager.cosmic.idle = {
-    suspend_on_ac_time = {
-      __type = "optional";
-      value = null;
-    };
-  };
+  # issue, https://github.com/AsahiLinux/linux/issues/430).
+  programs.noctalia-shell.settings.idle.suspendCommand =
+    "sh -c 'grep -q 1 /sys/class/power_supply/*/online 2>/dev/null || systemctl suspend'";
 }

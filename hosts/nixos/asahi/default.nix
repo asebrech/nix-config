@@ -24,12 +24,13 @@
         (map (f: "hosts/common/optional/${f}") [
           # Services
           "services/openssh.nix" # allow remote SSH access
-          "services/gnome-keyring.nix" # libsecret keyring daemon, unlocked via cosmic-greeter PAM
+          "services/gnome-keyring.nix" # libsecret keyring daemon
+          "services/greetd.nix" # auto-login straight into niri (LUKS is the real gate)
           "services/protonvpn.nix" # Proton VPN
           "services/docker.nix" # Docker container runtime
 
-          # Desktop Environment
-          "cosmic.nix" # COSMIC desktop with cosmic-greeter
+          # Desktop
+          "niri.nix" # niri compositor, with the noctalia shell on the home side
           #"plymouth.nix" # boot splash screen
         ])
     ))
