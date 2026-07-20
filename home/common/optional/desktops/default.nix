@@ -3,6 +3,7 @@
   imports = [
     ./niri
     ./noctalia.nix
+    ./vicinae.nix
   ];
 
   home.packages = lib.attrValues {

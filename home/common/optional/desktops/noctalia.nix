@@ -31,6 +31,23 @@
       # Weather/calendar location
       location.name = "Nice";
 
+      # Make vicinae the launcher everywhere: replace the bar's Launcher
+      # widget (which opens noctalia's own launcher) with a custom button
+      # that toggles vicinae, keeping the same rocket icon. Only the left
+      # group is overridden; center/right keep their defaults.
+      bar.widgets.left = [
+        {
+          id = "CustomButton";
+          icon = "rocket";
+          leftClickExec = "vicinae toggle";
+          generalTooltipText = "Launcher";
+        }
+        { id = "Clock"; }
+        { id = "SystemMonitor"; }
+        { id = "ActiveWindow"; }
+        { id = "MediaMini"; }
+      ];
+
       # Idle management is off by default; enabling it uses the stock
       # timeouts (screen off 10min, built-in lock 11min, suspend 30min)
       idle.enabled = true;
