@@ -156,6 +156,16 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Zen browser (Firefox-based); not in nixpkgs. Provides the aarch64
+    # build + a home-manager module with betterfox/catppuccin presets.
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+
     #
     # ========= Personal Repositories =========
     #
