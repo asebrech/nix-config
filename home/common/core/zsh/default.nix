@@ -9,8 +9,13 @@
     pkgs.fzf # fuzzy finder
   ];
 
-  # Smarter cd: `z <keyword>` jumps to frecent directories
-  programs.zoxide.enable = true;
+  # Smarter cd: zoxide replaces `cd` (--cmd cd), so `cd <keyword>` jumps to
+  # frecent directories; literal paths still work, `cdi` is interactive, and
+  # the real builtin stays reachable as `builtin cd`.
+  programs.zoxide = {
+    enable = true;
+    options = [ "--cmd cd" ];
+  };
 
   # Typo'd a command? `f` suggests and reruns the fixed version
   # (maintained Rust successor of thefuck)
