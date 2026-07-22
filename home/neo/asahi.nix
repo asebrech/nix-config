@@ -21,6 +21,7 @@
           "zed.nix"
           "zellij.nix"
           "claude-code.nix"
+          "discord.nix"
 
           "sops.nix"
         ])
